@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.eni.projetEni.bo.ARTICLES_VENDUS;
 
-public interface ArticleVendusDao {
+public interface ArticleVendusDAO {
 	public void insert(ARTICLES_VENDUS articleVendus);
 	public void delete(int id);
 	public ARTICLES_VENDUS findByArticleByNo(int id);
