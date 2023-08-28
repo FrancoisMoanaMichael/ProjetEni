@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEni.bo.ARTICLES_VENDUS;
@@ -47,21 +48,52 @@ public class ArticleDaoImpl implements ArticleVendusDao {
 	}
 
 	@Override
-	public void delete(ARTICLES_VENDUS articleVendus) {
-		
-
+	public void delete(int id) {
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(DELETE);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public ARTICLES_VENDUS findByArticleByNo(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		ARTICLES_VENDUS result = new ARTICLES_VENDUS();
+		
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                result = new ARTICLES_VENDUS(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+            }
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public List<ARTICLES_VENDUS> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ARTICLES_VENDUS> result = new ArrayList<>();
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				ARTICLES_VENDUS articleVendus = new ARTICLES_VENDUS(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+				articleVendus.setNo_article(rs.getInt("no_article"));
+				result.add(articleVendus);
+			}
+		}
+		catch(SQLException e) {
+//			throw new DALException("ms_insert");
+			e.printStackTrace();
+		}
+		return result;
 	}
-
 }
