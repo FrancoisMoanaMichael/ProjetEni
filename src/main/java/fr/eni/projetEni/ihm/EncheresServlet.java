@@ -1,7 +1,6 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
+
+/**
+ * Servlet implementation class ChatServlet
+ */
 @WebServlet("/EncheresServlet")
 public class EncheresServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
