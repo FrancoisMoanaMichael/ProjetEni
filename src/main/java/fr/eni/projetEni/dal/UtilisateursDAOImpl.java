@@ -1,0 +1,105 @@
+package fr.eni.projetEni.dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.eni.projetEni.bo.UTILISATEURS;
+import fr.eni.projetEni.utils.ConnectionProvider;
+
+public class UtilisateursDAOImpl implements UtilisateursDAO {
+	final String INSERT			= """ 
+			INSERT INTO ARTICLES_VENDUS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)
+			   					VALUES  (?     , ?  , ?     , ?    ,?         , ?  , ?          , ?    , ?			 , ?	 , ?);			
+			""";
+	final String DELETE			= "DELETE	FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	final String SELECT_BY_ID	= "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	final String SELECT			= "SELECT * FROM UTILISATEURS;";
+	
+	
+	@Override
+	public void insert(UTILISATEURS utilisateur) {
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, utilisateur.getPseudo());
+			stmt.setString(1, utilisateur.getNom());
+			stmt.setString(1, utilisateur.getPrenom());
+			stmt.setString(1, utilisateur.getEmail());
+			stmt.setString(1, utilisateur.getTelephone());
+			stmt.setString(1, utilisateur.getRue());
+			stmt.setString(1, utilisateur.getCode_postal());
+			stmt.setString(1, utilisateur.getVille());
+			stmt.setString(1, utilisateur.getMot_de_passe());
+			stmt.setInt(8, utilisateur.getCredit());
+			stmt.setBoolean(9, utilisateur.getAdministrateur());
+			int nb = stmt.executeUpdate();
+			
+			if(nb>0) {
+				ResultSet rs = stmt.getGeneratedKeys();
+				
+				if(rs.next()) {
+					utilisateur.setNo_utilisateur(rs.getInt(1));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(DELETE);
+			stmt.setInt(1, id);
+			stmt.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public UTILISATEURS findUtilisateurByNo(int id) {
+		UTILISATEURS result = new UTILISATEURS();
+		
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                result = new UTILISATEURS(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+                result.setNo_utilisateur(rs.getInt("no_utilisateur"));
+            }
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<UTILISATEURS> getAll() {
+		List<UTILISATEURS> result = new ArrayList<>();
+		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				UTILISATEURS utilisateur = new UTILISATEURS(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+				utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				result.add(utilisateur);
+			}
+		}
+		catch(SQLException e) {
+//			throw new DALException("ms_insert");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+}

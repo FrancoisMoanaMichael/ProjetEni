@@ -1,5 +1,7 @@
 package fr.eni.projetEni.bo;
 
+import java.time.LocalDate;
+
 public class UTILISATEURS {
 	private Integer no_utilisateur;
 	private String	pseudo;
@@ -18,11 +20,10 @@ public class UTILISATEURS {
 		super();
 	}
 
-	public UTILISATEURS(Integer no_utilisateur, String pseudo, String nom, String prenom, String email,
+	public UTILISATEURS(String pseudo, String nom, String prenom, String email,
 			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
 			Boolean administrateur) {
 		super();
-		this.no_utilisateur = no_utilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
