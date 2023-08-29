@@ -60,7 +60,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+                result = new Retraits(rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
             }
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +78,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Retraits retraits = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				Retraits retraits = new Retraits(rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				retraits.setNo_article(rs.getInt("no_article"));
 				result.add(retraits);
 			}
