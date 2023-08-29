@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.ARTICLES_VENDUS;
+import fr.eni.projetEni.bo.Articles_Vendus;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class ArticleVendusDAOImpl implements ArticleVendusDAO {
@@ -23,7 +23,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 
 	
 	@Override
-	public void insert(ARTICLES_VENDUS articleVendus) {
+	public void insert(Articles_Vendus articleVendus) {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, articleVendus.getNom_article() );
@@ -60,8 +60,8 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	}
 
 	@Override
-	public ARTICLES_VENDUS findByArticleByNo(int id) {
-		ARTICLES_VENDUS result = new ARTICLES_VENDUS();
+	public Articles_Vendus findByArticleByNo(int id) {
+		Articles_Vendus result = new Articles_Vendus();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
@@ -69,7 +69,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new ARTICLES_VENDUS(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+                result = new Articles_Vendus( rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -79,13 +79,13 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	}
 
 	@Override
-	public List<ARTICLES_VENDUS> getAll() {
-		List<ARTICLES_VENDUS> result = new ArrayList<>();
+	public List<Articles_Vendus> getAll() {
+		List<Articles_Vendus> result = new ArrayList<>();
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				ARTICLES_VENDUS articleVendus = new ARTICLES_VENDUS(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+				Articles_Vendus articleVendus = new Articles_Vendus(rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
 				articleVendus.setNo_article(rs.getInt("no_article"));
 				result.add(articleVendus);
 			}
