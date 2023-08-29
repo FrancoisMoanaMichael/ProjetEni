@@ -1,4 +1,4 @@
-package fr.eni.projetEni.bll1;
+package fr.eni.projetEni.bll;
 
 public class RetraisSing {
 	private static RetraisManager instance;

@@ -1,4 +1,4 @@
-package fr.eni.projetEni.bll1;
+package fr.eni.projetEni.bll;
 
 public interface RetraisManager {
 //TODO
