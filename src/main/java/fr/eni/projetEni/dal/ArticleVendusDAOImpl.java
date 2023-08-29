@@ -52,7 +52,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
+			stmt.executeQuery();
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
