@@ -2,11 +2,11 @@ package fr.eni.projetEni.dal;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Articles_Vendus;
+import fr.eni.projetEni.bo.ArticlesVendus;
 
 public interface ArticleVendusDAO {
-	public void insert(Articles_Vendus articleVendus);
+	public void insert(ArticlesVendus articleVendus);
 	public void delete(int id);
-	public Articles_Vendus findByArticleByNo(int id);
-	public List<Articles_Vendus> getAll();
+	public ArticlesVendus findByArticleByNo(int id);
+	public List<ArticlesVendus> getAll();
 }

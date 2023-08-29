@@ -1,32 +1,21 @@
 package fr.eni.projetEni.bo;
 
-
-public class RETRAITS {
+public class Retraits {
 	private Integer no_article;
 	private String 	rue;
 	private String	code_postal;
 	private String	ville;
-	private ARTICLES_VENDUS articles_VENDUS;
 	
-	public RETRAITS() {
+	public Retraits() {
 		super();
 	}
 
-	public RETRAITS(Integer no_article, String rue, String code_postal, String ville, ARTICLES_VENDUS articles_VENDUS) {
+	public Retraits(Integer no_article, String rue, String code_postal, String ville) {
 		super();
 		this.no_article = no_article;
 		this.rue = rue;
 		this.code_postal = code_postal;
 		this.ville = ville;
-		this.articles_VENDUS = articles_VENDUS;
-	}
-
-	public ARTICLES_VENDUS getArticles_VENDUS() {
-		return articles_VENDUS;
-	}
-
-	public void setArticles_VENDUS(ARTICLES_VENDUS articles_VENDUS) {
-		this.articles_VENDUS = articles_VENDUS;
 	}
 
 	public Integer getNo_article() {

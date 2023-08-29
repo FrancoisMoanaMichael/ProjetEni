@@ -2,13 +2,13 @@ package fr.eni.projetEni.dal;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.ENCHERES;
+import fr.eni.projetEni.bo.Encheres;
 
 public interface EncheresDAO {
-	public void insert(ENCHERES encheres);
+	public void insert(Encheres encheres);
 	public void deleteEnchereById(int id);
-	public List<ENCHERES> getAll();
-	public ENCHERES findEnchereByArticleId(int id);
-	public ENCHERES findEnchereByUserId(int id);
-	public ENCHERES findEnchereById(int id);
+	public List<Encheres> getAll();
+	public Encheres findEnchereByArticleId(int id);
+	public Encheres findEnchereByUserId(int id);
+	public Encheres findEnchereById(int id);
 }

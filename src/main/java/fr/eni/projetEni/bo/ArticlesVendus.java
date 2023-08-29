@@ -2,7 +2,7 @@ package fr.eni.projetEni.bo;
 
 import java.time.LocalDate;
 
-public class Articles_Vendus {
+public class ArticlesVendus {
 	private Integer		no_article;
 	private String		nom_article;
 	private String		description;
@@ -13,11 +13,11 @@ public class Articles_Vendus {
 	private Integer		no_utilisateur;
 	private Integer		no_categorie;
 	
-	public Articles_Vendus() {
+	public ArticlesVendus() {
 		super();
 	}
 	
-	public Articles_Vendus(String nom_article, String description, LocalDate date_debut_encheres,
+	public ArticlesVendus(String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Integer no_utilisateur,
 			Integer no_categorie) {
 		super();
