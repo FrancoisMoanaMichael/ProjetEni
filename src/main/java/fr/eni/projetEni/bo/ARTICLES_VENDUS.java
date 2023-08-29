@@ -16,7 +16,7 @@ public class ARTICLES_VENDUS {
 	public ARTICLES_VENDUS() {
 		super();
 	}
-
+	
 	public ARTICLES_VENDUS(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Integer no_utilisateur,
 			Integer no_categorie) {
