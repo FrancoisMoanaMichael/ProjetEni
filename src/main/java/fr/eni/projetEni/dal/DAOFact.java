@@ -13,4 +13,11 @@ public class DAOFact {
 		return new RetraitsDAOImpl();
 	}
 	
+	public static EncheresDAO getEncheresDAO() {
+		return new EncheresDAOImpl();
+	}
+	
+	public static CategorieDAO getCategorieDAO() {
+		return new CategorieDAOImpl();
+	}
 }
