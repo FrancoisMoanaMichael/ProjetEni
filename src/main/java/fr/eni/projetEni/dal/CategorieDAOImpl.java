@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.CATEGORIES;
+import fr.eni.projetEni.bo.Categories;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class CategorieDAOImpl implements CategorieDAO {
@@ -18,8 +18,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 	
 
 	@Override
-	public CATEGORIES findByNo(int id) {
-		CATEGORIES result = new CATEGORIES();
+	public Categories findByNo(int id) {
+		Categories result = new Categories();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORIE_BY_ID);
@@ -27,7 +27,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new CATEGORIES(rs.getInt("no_categorie"), rs.getString("libelle"));
+                result = new Categories(rs.getString("libelle"));
             }
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -37,8 +37,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 	
 	@Override
-	public CATEGORIES findByName(String name) {
-		CATEGORIES result = new CATEGORIES();
+	public Categories findByName(String name) {
+		Categories result = new Categories();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORIE_BY_NAME);
@@ -46,7 +46,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new CATEGORIES(rs.getInt("no_categorie"), rs.getString("libelle"));
+                result = new Categories(rs.getString("libelle"));
             }
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -56,13 +56,13 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 	
 	@Override
-	public List<CATEGORIES> getAll() {
-		List<CATEGORIES> result = new ArrayList<>();
+	public List<Categories> getAll() {
+		List<Categories> result = new ArrayList<>();
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				CATEGORIES categories = new CATEGORIES(rs.getInt("no_categorie"), rs.getString("libelle"));
+				Categories categories = new Categories(rs.getString("libelle"));
 				result.add(categories);
 			}
 		}

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import fr.eni.projetEni.bo.RETRAITS;
+import fr.eni.projetEni.bo.Retraits;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class RetraitsDAOImpl implements RetraitsDAO {
@@ -19,7 +19,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 	final String SELECT_BY_ID = "SELECT no_article, rue , code_postal , ville FROM RETRAITS WHERE = no_article = ?";
 	
 	@Override
-	public void insert(RETRAITS retraits) {
+	public void insert(Retraits retraits) {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt= con.prepareStatement(INSERTE, Statement.RETURN_GENERATED_KEYS );
 			stmt.setString(1, retraits.getRue());
@@ -51,8 +51,8 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 	}
 
 	@Override
-	public RETRAITS findByArticleByNo(int id) {
-		RETRAITS result = new RETRAITS();
+	public Retraits findByArticleByNo(int id) {
+		Retraits result = new Retraits();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
@@ -60,7 +60,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new RETRAITS(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+                result = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
             }
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -72,13 +72,13 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 	
 
 	@Override
-	public List<RETRAITS> getAll() {
-		List<RETRAITS> result = new ArrayList<>();
+	public List<Retraits> getAll() {
+		List<Retraits> result = new ArrayList<>();
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				RETRAITS retraits = new RETRAITS(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				Retraits retraits = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				retraits.setNo_article(rs.getInt("no_article"));
 				result.add(retraits);
 			}
