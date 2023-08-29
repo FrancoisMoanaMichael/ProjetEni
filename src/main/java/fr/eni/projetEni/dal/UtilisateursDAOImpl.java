@@ -17,6 +17,21 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			   					VALUES  (?     , ?  , ?     , ?    ,?         , ?  , ?          , ?    , ?			 , ?	 , ?);			
 			""";
 	final String DELETE			= "DELETE	FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	final String UPDATE			= """ 
+			UPDATE UTILISATEURS	
+			SET pseudo			= ?,
+				nom				= ?,
+				prenom			= ?,
+				email			= ?,
+				telephone		= ?,
+				rue				= ?,
+				code_postal		= ?,
+				ville			= ?,
+				mot_de_passe	= ?,
+				credit			= ?,
+				administrateur	= ?)
+			WHERE no_utilisateur = ?;			
+			""";
 	final String SELECT_BY_ID	= "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
 	final String SELECT_ALL		= "SELECT * FROM UTILISATEURS;";
 	
@@ -57,6 +72,28 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
 			stmt.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+	}
+	
+	public void update(Utilisateurs utilisateur) throws DalException {
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, utilisateur.getPseudo());
+			stmt.setString(2, utilisateur.getNom());
+			stmt.setString(3, utilisateur.getPrenom());
+			stmt.setString(4, utilisateur.getEmail());
+			stmt.setString(5, utilisateur.getTelephone());
+			stmt.setString(6, utilisateur.getRue());
+			stmt.setString(7, utilisateur.getCode_postal());
+			stmt.setString(8, utilisateur.getVille());
+			stmt.setString(9, utilisateur.getMot_de_passe());
+			stmt.setInt(10, utilisateur.getCredit());
+			stmt.setBoolean(11, utilisateur.getAdministrateur());
+			stmt.setInt(12, utilisateur.getNo_utilisateur());
+			stmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
