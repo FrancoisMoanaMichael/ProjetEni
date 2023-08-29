@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.UTILISATEURS;
+import fr.eni.projetEni.bo.Utilisateurs;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.UtilisateursDAO;
@@ -12,8 +12,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	private UtilisateursDAO dao = DAOFact.getUtilisateursDAO();
 
 	@Override
-	public List<UTILISATEURS> getAllUtilisateurs() throws ManagerException {
-		List<UTILISATEURS> lst = new ArrayList<UTILISATEURS>();
+	public List<Utilisateurs> getAllUtilisateurs() throws ManagerException {
+		List<Utilisateurs> lst = new ArrayList<Utilisateurs>();
 		
 		try {
 			lst = dao.getAll();
@@ -26,8 +26,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public UTILISATEURS getUtilisateur(int id) throws ManagerException {
-		UTILISATEURS result = null;
+	public Utilisateurs getUtilisateur(int id) throws ManagerException {
+		Utilisateurs result = null;
 		
 		try {
 			result = dao.findUtilisateurByNo(id);
@@ -40,7 +40,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public void addUtilisateur(UTILISATEURS utilisateur) throws ManagerException {
+	public void addUtilisateur(Utilisateurs utilisateur) throws ManagerException {
 		try {
 			dao.insert(utilisateur);
 		} catch (DalException e) {
@@ -60,7 +60,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public void majUtilisateur(UTILISATEURS utilisateur) throws ManagerException {
+	public void majUtilisateur(Utilisateurs utilisateur) throws ManagerException {
 		// TODO Auto-generated method stub
 		
 	}
