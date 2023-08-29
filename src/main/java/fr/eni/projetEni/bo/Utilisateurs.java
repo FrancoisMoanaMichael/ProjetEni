@@ -2,7 +2,7 @@ package fr.eni.projetEni.bo;
 
 import java.time.LocalDate;
 
-public class UTILISATEURS {
+public class Utilisateurs {
 	private Integer no_utilisateur;
 	private String	pseudo;
 	private String	nom;
@@ -16,11 +16,11 @@ public class UTILISATEURS {
 	private Integer	credit;
 	private Boolean	administrateur;
 	
-	public UTILISATEURS() {
+	public Utilisateurs() {
 		super();
 	}
 
-	public UTILISATEURS(String pseudo, String nom, String prenom, String email,
+	public Utilisateurs(String pseudo, String nom, String prenom, String email,
 			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
 			Boolean administrateur) {
 		super();

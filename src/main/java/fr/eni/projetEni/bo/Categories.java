@@ -1,16 +1,15 @@
 package fr.eni.projetEni.bo;
 
-public class CATEGORIES {
+public class Categories {
 	private Integer no_categorie;
 	private String	libelle;
 	
-	public CATEGORIES() {
+	public Categories() {
 		super();
 	}
 
-	public CATEGORIES(Integer no_categorie, String libelle) {
+	public Categories(String libelle) {
 		super();
-		this.no_categorie = no_categorie;
 		this.libelle = libelle;
 	}
 

@@ -2,12 +2,12 @@ package fr.eni.projetEni.dal;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.CATEGORIES;
+import fr.eni.projetEni.bo.Categories;
 
 public interface CategorieDAO {
 	//public void insert(CATEGORIES categories);
 	//public void delete(int id);
-	public List<CATEGORIES> getAll();
-	public CATEGORIES findByNo(int id);
-	public CATEGORIES findByName(String name);
+	public List<Categories> getAll();
+	public Categories findByNo(int id);
+	public Categories findByName(String name);
 }
