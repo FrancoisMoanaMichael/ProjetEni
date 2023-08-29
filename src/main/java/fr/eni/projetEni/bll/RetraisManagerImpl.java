@@ -1,6 +1,11 @@
 package fr.eni.projetEni.bll;
 
-public class RetraisManagerImpl implements RetraisManager {
-	// TODO
+import fr.eni.projetEni.dal.DAOFact;
+import fr.eni.projetEni.dal.RetraitsDAO;
+import fr.eni.projetEni.dal.UtilisateursDAO;
 
+public class RetraisManagerImpl implements RetraisManager {
+	private RetraitsDAO dao = DAOFact.getRetraitsDAO();
+	
+	
 }
