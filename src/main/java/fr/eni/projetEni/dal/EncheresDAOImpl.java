@@ -71,8 +71,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_enchere"), rs.getInt("no_utilisateur"),
+				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
 						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
+				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {
@@ -95,8 +96,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_enchere"), rs.getInt("no_utilisateur"), rs.getInt("no_article"),
-						localDateTime, rs.getInt("montant_enchere"));
+				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
+				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {
@@ -119,8 +121,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				result = new Encheres(rs.getInt("no_enchere"), rs.getInt("no_utilisateur"), rs.getInt("no_article"),
-						localDateTime, rs.getInt("montant_enchere"));
+				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
+				encheres.setNo_enchere(rs.getInt("no_enchere"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,9 +145,10 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres enchere = new Encheres(rs.getInt("no_enchere"), rs.getInt("no_utilisateur"), rs.getInt("no_article"),
-						localDateTime, rs.getInt("montant_enchere"));
-				result.add(enchere);
+				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
+				encheres.setNo_enchere(rs.getInt("no_enchere"));
+				result.add(encheres);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
