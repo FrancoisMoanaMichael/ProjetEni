@@ -2,6 +2,9 @@ package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
 
+import org.eclipse.tags.shaded.org.apache.xalan.templates.ElemValueOf;
+
+import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo.Utilisateurs;
@@ -42,19 +45,25 @@ public class loginServlet extends HttpServlet{
 		System.out.println(login+" "+ password);
 
 		
-//		Utilisateurs utilisateur = uManager.check(login,password); // TODO: uManager.check
-		Utilisateurs utilisateurCo = new Utilisateurs(login,password) ; // to remove
+		Utilisateurs utilisateur= new Utilisateurs();
+		try {
+			utilisateur = uManager.check(login,password);
+			System.out.println(String.valueOf(utilisateur));
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // TODO: uManager.check
 		HttpSession session = request.getSession();
-		
-		if(utilisateurCo==null) {
-//			if(utilisateur!=null) {
+
+		System.out.println(String.valueOf(utilisateur));
+		if(utilisateur==null) {
 			request.setAttribute("message", "utilisateur inconnnu");
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 		}
 		else {
-			request.getSession().setAttribute("utilisateur", utilisateurCo);
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pagesAccueilNonconnecte.jsp");
+			request.setAttribute("message", "c'est ok ");
+			request.getSession().setAttribute("utilisateur", utilisateur);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 			rd.forward(request, response);
 		}
 

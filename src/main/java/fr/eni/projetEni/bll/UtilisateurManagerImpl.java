@@ -64,5 +64,17 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public Utilisateurs check(String login, String mdp) throws ManagerException {
+		Utilisateurs result = null;
+		try {
+			result = dao.check(login, mdp);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+		return result;
+	}
+	
 }

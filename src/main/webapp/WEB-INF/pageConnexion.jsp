@@ -11,7 +11,7 @@
 
 <body>
 	<h1>Connexion</h1>
-	<form action="pageConnexion" method="post">
+	<form action="loginServlet" method="post">
 	
 		login:<input type="text" name="login"/>
 		
@@ -19,6 +19,7 @@
 		
 		<input type="submit" value="Connexion"/>
 	</form>
+	${message}
 	
 </body>
 </html>
