@@ -3,7 +3,6 @@ package fr.eni.projetEni.bll;
 import java.util.List;
 
 import fr.eni.projetEni.bo.Utilisateurs;
-import fr.eni.projetEni.dal.DalException;
 
 public interface UtilisateurManager {
 	public List<Utilisateurs> getAllUtilisateurs()			throws ManagerException;
