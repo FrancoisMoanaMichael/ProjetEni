@@ -61,16 +61,10 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 	@Override
 	public void majUtilisateur(Utilisateurs utilisateur) throws ManagerException {
-		try {
-			dao.update(utilisateur);
-		} catch (DalException e) {
-			e.printStackTrace();
-			throw new ManagerException(e.getMessage());
-		}
+		// TODO Auto-generated method stub
+		
 	}
-<<<<<<< HEAD
-=======
-	
+	 
 	@Override
 	public Utilisateurs check(String login, String mdp) throws ManagerException {
 		Utilisateurs result = null;
@@ -83,5 +77,4 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 		return result;
 	}
 	
->>>>>>> refs/heads/BrancheFrancois
 }

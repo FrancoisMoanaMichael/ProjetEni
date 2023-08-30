@@ -2,8 +2,6 @@ package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
 
-import org.eclipse.tags.shaded.org.apache.xalan.templates.ElemValueOf;
-
 import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
