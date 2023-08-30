@@ -107,8 +107,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
-			
 			ResultSet rs = stmt.executeQuery();
+			
             while(rs.next()) {
                 result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
                 result.setNo_utilisateur(rs.getInt("no_utilisateur"));
