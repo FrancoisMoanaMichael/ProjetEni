@@ -40,29 +40,29 @@ public class loginServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
-		System.out.println(login+" "+ password);
-
 		
 		Utilisateurs utilisateur= new Utilisateurs();
 		try {
 			utilisateur = uManager.check(login,password);
-			System.out.println(String.valueOf(utilisateur));
 		} catch (ManagerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // TODO: uManager.check
 		HttpSession session = request.getSession();
 
-		System.out.println(String.valueOf(utilisateur));
 		if(utilisateur==null) {
 			request.setAttribute("message", "utilisateur inconnnu");
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
+			System.out.println("notWorking");
+
 		}
 		else {
 			request.setAttribute("message", "c'est ok ");
 			request.getSession().setAttribute("utilisateur", utilisateur);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 			rd.forward(request, response);
+			System.out.println("Working"+utilisateur.getNom());
+
 		}
 
 	}
