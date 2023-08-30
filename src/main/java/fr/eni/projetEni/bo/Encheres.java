@@ -13,10 +13,10 @@ public class Encheres {
 		super();
 	}
 	
-	public Encheres(Integer no_enchere, Integer no_utilisateur, Integer no_article, LocalDateTime date_enchere,
+	public Encheres(Integer no_utilisateur, Integer no_article, LocalDateTime date_enchere,
 			Integer montant_enchere) {
 		super();
-		this.no_enchere = no_enchere;
+		//this.no_enchere = no_enchere;
 		this.no_utilisateur = no_utilisateur;
 		this.no_article = no_article;
 		this.date_enchere = date_enchere;
