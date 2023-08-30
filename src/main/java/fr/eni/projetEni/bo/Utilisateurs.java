@@ -1,7 +1,5 @@
 package fr.eni.projetEni.bo;
 
-import java.time.LocalDate;
-
 public class Utilisateurs {
 	private Integer no_utilisateur;
 	private String	pseudo;
