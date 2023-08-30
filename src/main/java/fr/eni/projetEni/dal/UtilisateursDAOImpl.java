@@ -155,7 +155,6 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
-            	System.out.println("testCheck: "+String.valueOf(result));
                 result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
             }
 		}catch(SQLException e) {

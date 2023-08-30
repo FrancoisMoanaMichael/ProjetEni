@@ -45,24 +45,24 @@ public class loginServlet extends HttpServlet{
 		try {
 			utilisateur = uManager.check(login,password);
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} // TODO: uManager.check
+		} 
 		HttpSession session = request.getSession();
 
-		if(utilisateur==null) {
+		System.out.println("b4 nom : "+String.valueOf(utilisateur));
+		if(utilisateur.getNom() == null) {
 			request.setAttribute("message", "utilisateur inconnnu");
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 			System.out.println("notWorking");
-
 		}
 		else {
 			request.setAttribute("message", "c'est ok ");
 			request.getSession().setAttribute("utilisateur", utilisateur);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 			rd.forward(request, response);
-			System.out.println("Working"+utilisateur.getNom());
-
+			session.setAttribute("utilisateurConnecte", utilisateur);
+			System.out.println("Working nom : "+utilisateur.getNom());
+			request.setAttribute("message", "");
 		}
 
 	}

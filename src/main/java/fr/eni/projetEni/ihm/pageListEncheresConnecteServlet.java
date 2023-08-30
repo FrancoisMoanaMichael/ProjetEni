@@ -21,8 +21,8 @@ public class pageListEncheresConnecteServlet extends HttpServlet {
 			session.invalidate();
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp");
-		rd.forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
+
 		
 	}
 
