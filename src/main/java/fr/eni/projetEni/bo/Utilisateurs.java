@@ -35,6 +35,14 @@ public class Utilisateurs {
 		this.administrateur = administrateur;
 	}
 
+
+
+	public Utilisateurs(String pseudo, String mot_de_passe) {
+		super();
+		this.pseudo = pseudo;
+		this.mot_de_passe = mot_de_passe;
+	}
+
 	public Integer getNo_utilisateur() {
 		return no_utilisateur;
 	}
