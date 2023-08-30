@@ -68,4 +68,20 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 			throw new ManagerException(e.getMessage());
 		}
 	}
+<<<<<<< HEAD
+=======
+	
+	@Override
+	public Utilisateurs check(String login, String mdp) throws ManagerException {
+		Utilisateurs result = null;
+		try {
+			result = dao.check(login, mdp);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+		return result;
+	}
+	
+>>>>>>> refs/heads/BrancheFrancois
 }
