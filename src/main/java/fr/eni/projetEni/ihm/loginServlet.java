@@ -5,6 +5,7 @@ import java.io.IOException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo.Utilisateurs;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ public class loginServlet extends HttpServlet{
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, jakarta.servlet.ServletException {
-		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 	}
 
 	/**
@@ -38,25 +39,23 @@ public class loginServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
+		System.out.println(login+" "+ password);
+
 		
 //		Utilisateurs utilisateur = uManager.check(login,password); // TODO: uManager.check
 		Utilisateurs utilisateurCo = new Utilisateurs(login,password) ; // to remove
 		HttpSession session = request.getSession();
+		
 		if(utilisateurCo==null) {
 //			if(utilisateur!=null) {
 			request.setAttribute("message", "utilisateur inconnnu");
-			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 		}
 		else {
 			request.getSession().setAttribute("utilisateur", utilisateurCo);
 
-			String urlPattern = (String) request.getSession().getAttribute("urlPattern");
-
-			if(urlPattern==null) {
-				urlPattern="/";
-			}
-			
-			response.sendRedirect(this.getServletContext().getContextPath()+urlPattern);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pagesAccueilNonconnecte.jsp");
+			rd.forward(request, response);
 		}
 
 	}

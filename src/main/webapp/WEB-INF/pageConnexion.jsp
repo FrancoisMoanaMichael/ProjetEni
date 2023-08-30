@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +10,15 @@
 </head>
 
 <body>
-	<form action="LoginServlet" method="post">
+	<h1>Connexion</h1>
+	<form action="pageConnexion" method="post">
+	
 		login:<input type="text" name="login"/>
+		
 		password:<input type="password" name="password"/>
-		<input type="submit" value=">>"/>
+		
+		<input type="submit" value="Connexion"/>
 	</form>
+	
 </body>
 </html>
