@@ -3,17 +3,17 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retraits;
+import fr.eni.projetEni.bo.ArticlesVendus;
+import fr.eni.projetEni.dal.ArticleVendusDAO;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
-import fr.eni.projetEni.dal.RetraitsDAO;
 
-public class RetraisManagerImpl implements RetraisManager {
-	private RetraitsDAO dao = DAOFact.getRetraitsDAO();
-	
+public class ArticleVendusManagerImpl implements ArticleVendusManager {
+	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
+
 	@Override
-	public List<Retraits> getAllRetraits() throws ManagerException {
-		List<Retraits> lst = new ArrayList<Retraits>();
+	public List<ArticlesVendus> getAllArticlesVendus() throws ManagerException {
+		List<ArticlesVendus> lst = new ArrayList<ArticlesVendus>();
 		
 		try {
 			lst = dao.getAll();
@@ -26,11 +26,11 @@ public class RetraisManagerImpl implements RetraisManager {
 	}
 
 	@Override
-	public Retraits getRetraitsByArticleNo(int id) throws ManagerException {
-		Retraits result = null;
+	public ArticlesVendus getArticlesVendus(int id) throws ManagerException {
+		ArticlesVendus result = null;
 		
 		try {
-			result = dao.findRetraitsByNoArticle(id);
+			result = dao.findByArticleByNo(id);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -40,9 +40,9 @@ public class RetraisManagerImpl implements RetraisManager {
 	}
 
 	@Override
-	public void addRetraits(Retraits retrait) throws ManagerException {
+	public void addArticlesVendus(ArticlesVendus articleVendu) throws ManagerException {
 		try {
-			dao.insert(retrait);
+			dao.insert(articleVendu);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -50,7 +50,7 @@ public class RetraisManagerImpl implements RetraisManager {
 	}
 
 	@Override
-	public void supprimerRetraits(int id) throws ManagerException {
+	public void supprimerArticlesVendus(int id) throws ManagerException {
 		try {
 			dao.delete(id);
 		} catch (DalException e) {

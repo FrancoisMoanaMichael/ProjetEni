@@ -8,24 +8,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.ArticlesVendus;
 import fr.eni.projetEni.bo.Retraits;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class RetraitsDAOImpl implements RetraitsDAO {
-	final String INSERTE = "";
-	final String SELECT = "SELECT no_article, rue , code_postal , ville FROM RETRAITS";
-	final String DELETE = "DELETE FROM RETRAITS WHERE no_article = ?";
-	final String SELECT_BY_ID = "SELECT no_article, rue , code_postal , ville FROM RETRAITS WHERE = no_article = ?";
+	final String INSERT			= """
+			INSERT INTO RETRAITS	(no_article, rue, code_postal, ville)
+							VALUES	(?		   , ?	, ?			 , ?)
+			""";
+	final String DELETE			= "DELETE FROM RETRAITS WHERE no_article = ?";
+	final String SELECT_ALL		= "SELECT * FROM RETRAITS";
+	final String SELECT_BY_ID	= "SELECT * FROM RETRAITS WHERE = no_article = ?";
 	
 	@Override
-	public void insert(Retraits retraits) {
+	public void insert(Retraits retraits) throws DalException {
 		try(Connection con = ConnectionProvider.getConnection()){
-			PreparedStatement stmt= con.prepareStatement(INSERTE, Statement.RETURN_GENERATED_KEYS );
-			stmt.setString(1, retraits.getRue());
-			stmt.setString(2, retraits.getCode_postal());
-			stmt.setString(3, retraits.getVille());
+			PreparedStatement stmt= con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS );
+			stmt.setInt(1, retraits.getNo_article());
+			stmt.setString(2, retraits.getRue());
+			stmt.setString(3, retraits.getCode_postal());
+			stmt.setString(4, retraits.getVille());
 			int nb = stmt.executeUpdate();
+			
 			if(nb>0) {
 				ResultSet rs = stmt.getGeneratedKeys();
 				if(rs.next()) {
@@ -33,77 +37,59 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DalException(e.getMessage());
 		}
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws DalException {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
 			stmt.executeQuery();
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DalException(e.getMessage());
 		}
 	}
-//
-//	@Override
-//	public Retraits findByArticleByNo(int id) {
-//		Retraits result = new Retraits();
-//		
-//		try(Connection con = ConnectionProvider.getConnection()){
-//			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
-//			stmt.setInt(1, id);
-//			
-//			ResultSet rs = stmt.executeQuery();
-//            while(rs.next()) {
-//                result = new Retraits(rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
-//            }
-//		}catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
-//
-//	
-//
-//	@Override
-//	public List<Retraits> getAll() {
-//		List<Retraits> result = new ArrayList<>();
-//		try (Connection con = ConnectionProvider.getConnection()){
-//			PreparedStatement stmt = con.prepareStatement(SELECT);
-//			ResultSet rs = stmt.executeQuery();
-//			while(rs.next()) {
-//				Retraits retraits = new Retraits(rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
-//				retraits.setNo_article(rs.getInt("no_article"));
-//				result.add(retraits);
-//			}
-//		}
-//		catch(SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
-//
-//	@Override
-//	public Retraits byArticleVendu(ArticlesVendus articleVendus) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	@Override
-	public void update(Retraits retraits) {
-		// TODO Auto-generated method stub
+	public Retraits findRetraitsByNoArticle(int id) throws DalException {
+		Retraits result = new Retraits();
 		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				result = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
-	public Retraits byRetrqitsById(ArticlesVendus articleVendus) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Retraits> getAll() throws DalException {
+		List<Retraits> result = new ArrayList<>();
+		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Retraits retrait = new Retraits(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				result.add(retrait);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+		
+		return result;
 	}
 }

@@ -61,8 +61,24 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 
 	@Override
 	public void majUtilisateur(Utilisateurs utilisateur) throws ManagerException {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.update(utilisateur);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
 	}
-
+	 
+	@Override
+	public Utilisateurs check(String login, String mdp) throws ManagerException {
+		Utilisateurs result = null;
+		try {
+			result = dao.check(login, mdp);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+		return result;
+	}
+	
 }

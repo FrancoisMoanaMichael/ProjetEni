@@ -8,5 +8,4 @@ public class RetraisSing {
 		}
 		return instance;
 	}
-
 }

@@ -36,6 +36,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			""";
 	final String SELECT_BY_ID	= "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
 	final String SELECT_ALL		= "SELECT * FROM UTILISATEURS;";
+	final String SELECT_LOGGIN_PASSWORD = "SELECT * FROM UTILISATEURS u WHERE u.pseudo = ? AND u.mot_de_passe = ?";
 	
 	
 	@Override
@@ -109,8 +110,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
-			
 			ResultSet rs = stmt.executeQuery();
+			
             while(rs.next()) {
                 result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
                 result.setNo_utilisateur(rs.getInt("no_utilisateur"));
@@ -141,6 +142,28 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			throw new DalException(e.getMessage());
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public Utilisateurs check(String login, String password) throws DalException {
+//		List<User> users = dao.findByLoginAndPassword(login, password);
+		Utilisateurs result = new Utilisateurs();
+		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_LOGGIN_PASSWORD);
+			stmt.setString(1, login);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+            	System.out.println("testCheck: "+String.valueOf(result));
+                result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+            }
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
 		return result;
 	}
 }
