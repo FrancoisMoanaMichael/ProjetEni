@@ -34,7 +34,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			""";
 	final String SELECT_BY_ID	= "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
 	final String SELECT_ALL		= "SELECT * FROM UTILISATEURS;";
-	final String SELECT_LOGGIN_PASSWORD = "SELECT * FROM UTILISATEURS u WHERE u.pseudo = '?' AND u.mot_de_passe = '?'";
+	final String SELECT_LOGGIN_PASSWORD = "SELECT * FROM UTILISATEURS u WHERE u.pseudo = ? AND u.mot_de_passe = ?";
 	
 	
 	@Override
@@ -155,8 +155,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
+            	System.out.println("testCheck: "+String.valueOf(result));
                 result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
-                result.setNo_utilisateur(rs.getInt("no_utilisateur"));
             }
 		}catch(SQLException e) {
 			e.printStackTrace();
