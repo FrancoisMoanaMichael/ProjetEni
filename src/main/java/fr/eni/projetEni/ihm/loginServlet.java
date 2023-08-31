@@ -46,7 +46,6 @@ public class loginServlet extends HttpServlet{
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		} 
-		HttpSession session = request.getSession();
 
 
 		if(utilisateur.getNom() == null) {
@@ -54,12 +53,12 @@ public class loginServlet extends HttpServlet{
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("message", "c'est ok ");
-			request.getSession().setAttribute("utilisateur", utilisateur);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
-			rd.forward(request, response);
+			request.setAttribute("message", "c'est ok ");			
+			HttpSession session = request.getSession();
 			session.setAttribute("utilisateurConnecte", utilisateur);
 			request.setAttribute("message", "");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
+			rd.forward(request, response);
 		}
 
 	}
