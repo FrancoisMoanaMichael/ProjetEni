@@ -101,6 +101,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
                 result = new Categories(rs.getString("libelle"));
+                result.setNo_categorie(rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -121,6 +122,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
                 result = new Categories(rs.getString("libelle"));
+                result.setNo_categorie(rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
