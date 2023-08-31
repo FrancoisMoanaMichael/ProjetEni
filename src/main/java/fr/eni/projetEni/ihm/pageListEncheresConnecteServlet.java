@@ -14,10 +14,10 @@ public class pageListEncheresConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String url = request.getServletPath();
 		if(url.equals("/loginServlet")) {
-			HttpSession session = request.getSession();
+			System.out.println("coucou");
+			HttpSession session = request.getSession(); // 'request' est l'objet HttpServletRequest
 			session.invalidate();
 		}
 		request.getRequestDispatcher("/WEB-INF/loginServlet.jsp").forward(request, response);

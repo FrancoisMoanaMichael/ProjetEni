@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>Listes des enchères</h1>
+	<h2>Bonjour ${sessionScope.utilisateurConnecte.pseudo }</h2>
 	<a href="loginServlet">Déconnexion</a>
 </body>
 </html>
