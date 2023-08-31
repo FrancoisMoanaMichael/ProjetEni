@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ChatServlet
@@ -63,12 +64,13 @@ public class CreeComptServlet extends HttpServlet {
 				try {
 					uManager.addUtilisateur(nvUtilisateur);
 					Utilisateur utilisateurAjoute = uManager.getAllUtilisateurs().get(1);
-					System.out.println(String.valueOf(utilisateurAjoute));
+					HttpSession session = request.getSession();
+					session.setAttribute("utilisateurConnecte", utilisateurAjoute);
+					request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);			
 				} catch (ManagerException e) {
 					e.printStackTrace();
 				}
-				request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
-			
+
 			}else {
 //				TODO garder les champs remlis au rechargement si erreur
 //				request.setAttribute("pseudo", pseudo);
