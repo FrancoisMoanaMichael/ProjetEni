@@ -17,8 +17,6 @@
         <div class="card">
           <div class="card-body">
             <h1 class="card-title text-center">Connexion</h1>
-            
-	<h2>Bonjour ${sessionScope.utilisateurConnecte.pseudo }</h2>
             <form action="loginServlet" method="post">
               <div class="form-group">
                 <label for="login">Identifiant:</label>
@@ -36,7 +34,9 @@
             </form>
             <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p>
             ${message}
-            <button class="btn btn-success btn-block" onclick="pagesCreeCompte()">Créer un compte</button>
+            <input class="btn btn-success btn-block" type="button" value="Créer un compte" name="creeUnCompte" onclick="pageCreeCompte.jsp" />
+            <input class="btn btn-success btn-block" type="submit" value="Créer un compte" name="creeUnCompte" />
+            <input class="btn btn-success btn-block" type="button" value="load" onclick="window.location='creeComptServlet'" >
           </div>
         </div>
       </div>
