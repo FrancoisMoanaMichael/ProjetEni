@@ -1,6 +1,6 @@
 package fr.eni.projetEni.bo;
 
-public class Utilisateurs {
+public class Utilisateur {
 	private Integer no_utilisateur;
 	private String	pseudo;
 	private String	nom;
@@ -14,11 +14,11 @@ public class Utilisateurs {
 	private Integer	credit;
 	private Boolean	administrateur;
 	
-	public Utilisateurs() {
+	public Utilisateur() {
 		super();
 	}
 
-	public Utilisateurs(String pseudo, String nom, String prenom, String email,
+	public Utilisateur(String pseudo, String nom, String prenom, String email,
 			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
 			Boolean administrateur) {
 		super();
@@ -37,7 +37,7 @@ public class Utilisateurs {
 
 
 
-	public Utilisateurs(String pseudo, String mot_de_passe) {
+	public Utilisateur(String pseudo, String mot_de_passe) {
 		super();
 		this.pseudo = pseudo;
 		this.mot_de_passe = mot_de_passe;

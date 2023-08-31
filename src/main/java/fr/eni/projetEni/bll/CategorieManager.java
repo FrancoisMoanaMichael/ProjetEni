@@ -2,13 +2,13 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categories;
+import fr.eni.projetEni.bo.Categorie;
 
 public interface CategorieManager {
-	public void addCategorie(Categories categorie)		throws ManagerException;
-	public void majCategorie(Categories categorie)		throws ManagerException;
+	public void addCategorie(Categorie categorie)		throws ManagerException;
+	public void majCategorie(Categorie categorie)		throws ManagerException;
 	public void supprimerCategorie(int id)				throws ManagerException;
-	public List<Categories> getAllCategories()			throws ManagerException;
-	public Categories getCategorieByNo(int id)			throws ManagerException;
-	public Categories getCategorieByName(String name)	throws ManagerException;
+	public List<Categorie> getAllCategories()			throws ManagerException;
+	public Categorie getCategorieByNo(int id)			throws ManagerException;
+	public Categorie getCategorieByName(String name)	throws ManagerException;
 }

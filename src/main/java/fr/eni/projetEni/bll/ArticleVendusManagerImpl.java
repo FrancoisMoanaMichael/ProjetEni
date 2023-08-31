@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.ArticlesVendus;
+import fr.eni.projetEni.bo.ArticlesVendu;
 import fr.eni.projetEni.dal.ArticleVendusDAO;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
@@ -12,8 +12,8 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
 
 	@Override
-	public List<ArticlesVendus> getAllArticlesVendus() throws ManagerException {
-		List<ArticlesVendus> lst = new ArrayList<ArticlesVendus>();
+	public List<ArticlesVendu> getAllArticlesVendus() throws ManagerException {
+		List<ArticlesVendu> lst = new ArrayList<ArticlesVendu>();
 		
 		try {
 			lst = dao.getAll();
@@ -26,8 +26,8 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 	}
 
 	@Override
-	public ArticlesVendus getArticlesVendus(int id) throws ManagerException {
-		ArticlesVendus result = null;
+	public ArticlesVendu getArticlesVendus(int id) throws ManagerException {
+		ArticlesVendu result = null;
 		
 		try {
 			result = dao.findByArticleByNo(id);
@@ -40,7 +40,7 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 	}
 
 	@Override
-	public void addArticlesVendus(ArticlesVendus articleVendu) throws ManagerException {
+	public void addArticlesVendus(ArticlesVendu articleVendu) throws ManagerException {
 		try {
 			dao.insert(articleVendu);
 		} catch (DalException e) {

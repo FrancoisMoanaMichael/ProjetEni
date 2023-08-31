@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.ArticlesVendus;
+import fr.eni.projetEni.bo.ArticlesVendu;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class ArticleVendusDAOImpl implements ArticleVendusDAO {
@@ -21,7 +21,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	final String SELECT_ALL		= "SELECT * FROM ARTICLES_VENDUS;";
 	
 	@Override
-	public void insert(ArticlesVendus articleVendus) throws DalException {
+	public void insert(ArticlesVendu articleVendus) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, articleVendus.getNom_article());
@@ -59,8 +59,8 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	}
 
 	@Override
-	public ArticlesVendus findByArticleByNo(int id) throws DalException {
-		ArticlesVendus result = new ArticlesVendus();
+	public ArticlesVendu findByArticleByNo(int id) throws DalException {
+		ArticlesVendu result = new ArticlesVendu();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
@@ -68,7 +68,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new ArticlesVendus( rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+                result = new ArticlesVendu( rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -79,14 +79,14 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	}
 
 	@Override
-	public List<ArticlesVendus> getAll() throws DalException {
-		List<ArticlesVendus> result = new ArrayList<>();
+	public List<ArticlesVendu> getAll() throws DalException {
+		List<ArticlesVendu> result = new ArrayList<>();
 		
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				ArticlesVendus articleVendus = new ArticlesVendus(rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
+				ArticlesVendu articleVendus = new ArticlesVendu(rs.getString("nom_article"), rs.getString("description"),  rs.getDate("date_debut_encheres").toLocalDate() , rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
 				articleVendus.setNo_article(rs.getInt("no_article"));
 				result.add(articleVendus);
 			}

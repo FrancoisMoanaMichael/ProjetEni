@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Utilisateurs;
+import fr.eni.projetEni.bo.Utilisateur;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.UtilisateursDAO;
@@ -12,8 +12,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	private UtilisateursDAO dao = DAOFact.getUtilisateursDAO();
 
 	@Override
-	public List<Utilisateurs> getAllUtilisateurs() throws ManagerException {
-		List<Utilisateurs> lst = new ArrayList<Utilisateurs>();
+	public List<Utilisateur> getAllUtilisateurs() throws ManagerException {
+		List<Utilisateur> lst = new ArrayList<Utilisateur>();
 		
 		try {
 			lst = dao.getAll();
@@ -26,8 +26,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public Utilisateurs getUtilisateur(int id) throws ManagerException {
-		Utilisateurs result = null;
+	public Utilisateur getUtilisateur(int id) throws ManagerException {
+		Utilisateur result = null;
 		
 		try {
 			result = dao.findUtilisateurByNo(id);
@@ -40,7 +40,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public void addUtilisateur(Utilisateurs utilisateur) throws ManagerException {
+	public void addUtilisateur(Utilisateur utilisateur) throws ManagerException {
 		try {
 			dao.insert(utilisateur);
 		} catch (DalException e) {
@@ -60,7 +60,7 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 
 	@Override
-	public void majUtilisateur(Utilisateurs utilisateur) throws ManagerException {
+	public void majUtilisateur(Utilisateur utilisateur) throws ManagerException {
 		try {
 			dao.update(utilisateur);
 		} catch (DalException e) {
@@ -70,8 +70,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
 	}
 	 
 	@Override
-	public Utilisateurs check(String login, String mdp) throws ManagerException {
-		Utilisateurs result = null;
+	public Utilisateur check(String login, String mdp) throws ManagerException {
+		Utilisateur result = null;
 		try {
 			result = dao.check(login, mdp);
 		} catch (DalException e) {

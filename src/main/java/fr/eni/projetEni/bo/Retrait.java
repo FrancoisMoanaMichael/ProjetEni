@@ -1,16 +1,16 @@
 package fr.eni.projetEni.bo;
 
-public class Retraits {
+public class Retrait {
 	private Integer no_article;
 	private String 	rue;
 	private String	code_postal;
 	private String	ville;
 	
-	public Retraits() {
+	public Retrait() {
 		super();
 	}
 
-	public Retraits(Integer no_article, String rue, String code_postal, String ville) {
+	public Retrait(Integer no_article, String rue, String code_postal, String ville) {
 		super();
 		this.no_article = no_article;
 		this.rue = rue;

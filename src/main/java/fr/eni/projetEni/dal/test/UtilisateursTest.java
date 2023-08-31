@@ -5,7 +5,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import fr.eni.projetEni.bo.Utilisateurs;
+import fr.eni.projetEni.bo.Utilisateur;
 import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.UtilisateursDAO;
 import fr.eni.projetEni.dal.UtilisateursDAOImpl;
@@ -13,7 +13,7 @@ import fr.eni.projetEni.dal.UtilisateursDAOImpl;
 public class UtilisateursTest {
 	
 	 UtilisateursDAO dao = new UtilisateursDAOImpl();
-	 Utilisateurs testUser = new Utilisateurs("teo", "theo", "jacob", "teo@eni.fr", "0652654522", "bd xav", "75000", "paris", "password", 0, false);
+	 Utilisateur testUser = new Utilisateur("teo", "theo", "jacob", "teo@eni.fr", "0652654522", "bd xav", "75000", "paris", "password", 0, false);
 	 
 	
 

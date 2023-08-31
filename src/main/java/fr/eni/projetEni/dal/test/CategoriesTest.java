@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import fr.eni.projetEni.bo.Categories;
+import fr.eni.projetEni.bo.Categorie;
 import fr.eni.projetEni.dal.CategorieDAO;
 import fr.eni.projetEni.dal.CategorieDAOImpl;
 

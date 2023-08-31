@@ -2,18 +2,18 @@ package fr.eni.projetEni.bo;
 
 import java.time.LocalDateTime;
 
-public class Encheres {
+public class Enchere {
 	private Integer			no_enchere;
 	private Integer			no_utilisateur;
 	private Integer			no_article;
 	private LocalDateTime	date_enchere;
 	private Integer			montant_enchere;
 	
-	public Encheres() {
+	public Enchere() {
 		super();
 	}
 	
-	public Encheres(Integer no_utilisateur, Integer no_article, LocalDateTime date_enchere,
+	public Enchere(Integer no_utilisateur, Integer no_article, LocalDateTime date_enchere,
 			Integer montant_enchere) {
 		super();
 		//this.no_enchere = no_enchere;

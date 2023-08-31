@@ -1,14 +1,14 @@
 package fr.eni.projetEni.bo;
 
-public class Categories {
+public class Categorie {
 	private Integer no_categorie;
 	private String	libelle;
 	
-	public Categories() {
+	public Categorie() {
 		super();
 	}
 
-	public Categories(String libelle) {
+	public Categorie(String libelle) {
 		super();
 		this.libelle = libelle;
 	}

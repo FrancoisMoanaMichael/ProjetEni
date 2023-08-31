@@ -2,11 +2,11 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.ArticlesVendus;
+import fr.eni.projetEni.bo.ArticlesVendu;
 
 public interface ArticleVendusManager {
-	public List<ArticlesVendus> getAllArticlesVendus()			throws ManagerException;
-	public ArticlesVendus getArticlesVendus(int id)				throws ManagerException;
-	public void addArticlesVendus(ArticlesVendus articleVendu)	throws ManagerException;
+	public List<ArticlesVendu> getAllArticlesVendus()			throws ManagerException;
+	public ArticlesVendu getArticlesVendus(int id)				throws ManagerException;
+	public void addArticlesVendus(ArticlesVendu articleVendu)	throws ManagerException;
 	public void supprimerArticlesVendus(int id)					throws ManagerException;
 }

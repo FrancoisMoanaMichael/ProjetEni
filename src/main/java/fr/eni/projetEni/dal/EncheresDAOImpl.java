@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Encheres;
+import fr.eni.projetEni.bo.Enchere;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class EncheresDAOImpl implements EncheresDAO {
@@ -24,7 +24,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String SELECT_BY_NO_ENCHERE	= "SELECT * FROM ENCHERES WHERE no_enchere = ?";
 
 	@Override
-	public void insert(Encheres encheres) throws DalException {
+	public void insert(Enchere encheres) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, encheres.getNo_utilisateur() );
@@ -62,8 +62,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 	
 	@Override
-	public List<Encheres> getAll() throws DalException {
-		List<Encheres> result = new ArrayList<>();
+	public List<Enchere> getAll() throws DalException {
+		List<Enchere> result = new ArrayList<>();
 		
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
@@ -71,7 +71,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+				Enchere encheres = new Enchere(rs.getInt("no_utilisateur"),
 						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
 				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);
@@ -85,8 +85,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 
 	@Override                          
-	public List<Encheres> findEnchereByArticleId(int id) throws DalException {
-		List<Encheres> result = new ArrayList<>();
+	public List<Enchere> findEnchereByArticleId(int id) throws DalException {
+		List<Enchere> result = new ArrayList<>();
 
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_NO_ARTICLE);
@@ -96,7 +96,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+				Enchere encheres = new Enchere(rs.getInt("no_utilisateur"),
 						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
 				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);
@@ -110,8 +110,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 	
 	@Override                          
-	public Encheres findEnchereById(int id) throws DalException {
-		Encheres result = new Encheres();
+	public Enchere findEnchereById(int id) throws DalException {
+		Enchere result = new Enchere();
 
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_NO_ENCHERE);
@@ -121,7 +121,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+				Enchere encheres = new Enchere(rs.getInt("no_utilisateur"),
 						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
 				encheres.setNo_enchere(rs.getInt("no_enchere"));
 			}
@@ -134,8 +134,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 	
 	@Override                          
-	public List<Encheres> findEnchereByUserId(int id) throws DalException {
-		List<Encheres> result = new ArrayList<>();
+	public List<Enchere> findEnchereByUserId(int id) throws DalException {
+		List<Enchere> result = new ArrayList<>();
 
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_NO_USER);
@@ -145,7 +145,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Encheres encheres = new Encheres(rs.getInt("no_utilisateur"),
+				Enchere encheres = new Enchere(rs.getInt("no_utilisateur"),
 						rs.getInt("no_article"), localDateTime, rs.getInt("montant_enchere"));
 				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categories;
+import fr.eni.projetEni.bo.Categorie;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class CategorieDAOImpl implements CategorieDAO {
@@ -27,7 +27,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 	final String SELECT_CATEGORIE_BY_NAME	= "SELECT * FROM CATEGORIES WHERE libelle = ?;";
 	
 	@Override
-	public void insert(Categories categorie) throws DalException {
+	public void insert(Categorie categorie) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, categorie.getLibelle());
@@ -47,7 +47,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 
 	@Override
-	public void update(Categories categorie) throws DalException {
+	public void update(Categorie categorie) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, categorie.getLibelle());
@@ -71,14 +71,14 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 	
 	@Override
-	public List<Categories> getAll() throws DalException {
-		List<Categories> result = new ArrayList<>();
+	public List<Categorie> getAll() throws DalException {
+		List<Categorie> result = new ArrayList<>();
 		
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Categories categories = new Categories(rs.getString("libelle"));
+				Categorie categories = new Categorie(rs.getString("libelle"));
 				result.add(categories);
 			}
 		}
@@ -91,8 +91,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 
 	@Override
-	public Categories findByNo(int id) throws DalException {
-		Categories result = new Categories();
+	public Categorie findByNo(int id) throws DalException {
+		Categorie result = new Categorie();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORIE_BY_ID);
@@ -100,7 +100,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new Categories(rs.getString("libelle"));
+                result = new Categorie(rs.getString("libelle"));
                 result.setNo_categorie(rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
@@ -112,8 +112,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 	}
 	
 	@Override
-	public Categories findByName(String name) throws DalException {
-		Categories result = new Categories();
+	public Categorie findByName(String name) throws DalException {
+		Categorie result = new Categorie();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORIE_BY_NAME);
@@ -121,7 +121,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new Categories(rs.getString("libelle"));
+                result = new Categorie(rs.getString("libelle"));
                 result.setNo_categorie(rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {

@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retraits;
+import fr.eni.projetEni.bo.Retrait;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.RetraitsDAO;
@@ -12,8 +12,8 @@ public class RetraisManagerImpl implements RetraisManager {
 	private RetraitsDAO dao = DAOFact.getRetraitsDAO();
 	
 	@Override
-	public List<Retraits> getAllRetraits() throws ManagerException {
-		List<Retraits> lst = new ArrayList<Retraits>();
+	public List<Retrait> getAllRetraits() throws ManagerException {
+		List<Retrait> lst = new ArrayList<Retrait>();
 		
 		try {
 			lst = dao.getAll();
@@ -26,8 +26,8 @@ public class RetraisManagerImpl implements RetraisManager {
 	}
 
 	@Override
-	public Retraits getRetraitsByArticleNo(int id) throws ManagerException {
-		Retraits result = null;
+	public Retrait getRetraitsByArticleNo(int id) throws ManagerException {
+		Retrait result = null;
 		
 		try {
 			result = dao.findRetraitsByNoArticle(id);
@@ -40,7 +40,7 @@ public class RetraisManagerImpl implements RetraisManager {
 	}
 
 	@Override
-	public void addRetraits(Retraits retrait) throws ManagerException {
+	public void addRetraits(Retrait retrait) throws ManagerException {
 		try {
 			dao.insert(retrait);
 		} catch (DalException e) {

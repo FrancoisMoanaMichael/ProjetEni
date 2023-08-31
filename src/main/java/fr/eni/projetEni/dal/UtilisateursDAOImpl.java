@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Utilisateurs;
+import fr.eni.projetEni.bo.Utilisateur;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class UtilisateursDAOImpl implements UtilisateursDAO {
@@ -40,7 +40,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	
 	
 	@Override
-	public void insert(Utilisateurs utilisateur) throws DalException {
+	public void insert(Utilisateur utilisateur) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, utilisateur.getPseudo());
@@ -81,7 +81,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 		}
 	}
 	
-	public void update(Utilisateurs utilisateur) throws DalException {
+	public void update(Utilisateur utilisateur) throws DalException {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, utilisateur.getNo_utilisateur());
@@ -104,8 +104,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	}
 
 	@Override
-	public Utilisateurs findUtilisateurByNo(int id) throws DalException {
-		Utilisateurs result = new Utilisateurs();
+	public Utilisateur findUtilisateurByNo(int id) throws DalException {
+		Utilisateur result = new Utilisateur();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
@@ -113,7 +113,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			ResultSet rs = stmt.executeQuery();
 			
             while(rs.next()) {
-                result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+                result = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
                 result.setNo_utilisateur(rs.getInt("no_utilisateur"));
             }
 		}catch (SQLException e) {
@@ -125,14 +125,14 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	}
 
 	@Override
-	public List<Utilisateurs> getAll() throws DalException {
-		List<Utilisateurs> result = new ArrayList<>();
+	public List<Utilisateur> getAll() throws DalException {
+		List<Utilisateur> result = new ArrayList<>();
 		
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Utilisateurs utilisateur = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+				Utilisateur utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
 				utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				result.add(utilisateur);
 			}
@@ -146,9 +146,9 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	}
 	
 	@Override
-	public Utilisateurs check(String login, String password) throws DalException {
+	public Utilisateur check(String login, String password) throws DalException {
 //		List<User> users = dao.findByLoginAndPassword(login, password);
-		Utilisateurs result = new Utilisateurs();
+		Utilisateur result = new Utilisateur();
 		
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_LOGGIN_PASSWORD);
@@ -157,7 +157,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
-                result = new Utilisateurs(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+                result = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
             }
 		}catch(SQLException e) {
 			e.printStackTrace();

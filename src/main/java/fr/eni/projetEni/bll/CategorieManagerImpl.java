@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categories;
+import fr.eni.projetEni.bo.Categorie;
 import fr.eni.projetEni.dal.CategorieDAO;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
@@ -12,7 +12,7 @@ public class CategorieManagerImpl implements CategorieManager {
 	private CategorieDAO dao = DAOFact.getCategorieDAO();
 	
 	@Override
-	public void addCategorie(Categories categorie) throws ManagerException {
+	public void addCategorie(Categorie categorie) throws ManagerException {
 		try {
 			dao.insert(categorie);
 		} catch (DalException e) {
@@ -22,7 +22,7 @@ public class CategorieManagerImpl implements CategorieManager {
 	}
 
 	@Override
-	public void majCategorie(Categories categorie) throws ManagerException {
+	public void majCategorie(Categorie categorie) throws ManagerException {
 		try {
 			dao.update(categorie);
 		} catch (DalException e) {
@@ -42,8 +42,8 @@ public class CategorieManagerImpl implements CategorieManager {
 	}
 
 	@Override
-	public List<Categories> getAllCategories() throws ManagerException {
-		List<Categories> lst = new ArrayList<Categories>();
+	public List<Categorie> getAllCategories() throws ManagerException {
+		List<Categorie> lst = new ArrayList<Categorie>();
 		
 		try {
 			lst = dao.getAll();
@@ -56,8 +56,8 @@ public class CategorieManagerImpl implements CategorieManager {
 	}
 
 	@Override
-	public Categories getCategorieByNo(int id) throws ManagerException {
-		Categories result = null;
+	public Categorie getCategorieByNo(int id) throws ManagerException {
+		Categorie result = null;
 		
 		try {
 			result = dao.findByNo(id);
@@ -70,8 +70,8 @@ public class CategorieManagerImpl implements CategorieManager {
 	}
 
 	@Override
-	public Categories getCategorieByName(String name) throws ManagerException {
-		Categories result = null;
+	public Categorie getCategorieByName(String name) throws ManagerException {
+		Categorie result = null;
 		
 		try {
 			result = dao.findByName(name);
