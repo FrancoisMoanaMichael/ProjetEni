@@ -36,7 +36,6 @@ public class loginServlet extends HttpServlet{
 	 * @throws ServletException 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
@@ -49,11 +48,10 @@ public class loginServlet extends HttpServlet{
 		} 
 		HttpSession session = request.getSession();
 
-		System.out.println("b4 nom : "+String.valueOf(utilisateur));
+
 		if(utilisateur.getNom() == null) {
 			request.setAttribute("message", "utilisateur inconnnu");
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
-			System.out.println("notWorking");
 		}
 		else {
 			request.setAttribute("message", "c'est ok ");
@@ -61,7 +59,6 @@ public class loginServlet extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 			rd.forward(request, response);
 			session.setAttribute("utilisateurConnecte", utilisateur);
-			System.out.println("Working nom : "+utilisateur.getNom());
 			request.setAttribute("message", "");
 		}
 

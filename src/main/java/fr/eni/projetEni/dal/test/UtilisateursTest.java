@@ -1,6 +1,12 @@
 package fr.eni.projetEni.dal.test;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
 import fr.eni.projetEni.bo.Utilisateurs;
+import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.UtilisateursDAO;
 import fr.eni.projetEni.dal.UtilisateursDAOImpl;
 
@@ -26,7 +32,7 @@ public class UtilisateursTest {
 //	 @Test
 //	 public void testDelete() {
 //	     try {
-//	         int id = 4;
+//	         int id = 2;
 //	         dao.delete(id);
 //	         Utilisateurs utilisateur = dao.findUtilisateurByNo(id);
 //	         assertNull(utilisateur);  

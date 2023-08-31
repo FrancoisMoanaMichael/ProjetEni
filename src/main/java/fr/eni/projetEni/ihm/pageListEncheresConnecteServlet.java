@@ -16,12 +16,11 @@ public class pageListEncheresConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String url = request.getServletPath();
-		if(url.equals("/deconnexion")) {
+		if(url.equals("/loginServlet")) {
 			HttpSession session = request.getSession();
 			session.invalidate();
 		}
-		
-		request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/loginServlet.jsp").forward(request, response);
 
 		
 	}

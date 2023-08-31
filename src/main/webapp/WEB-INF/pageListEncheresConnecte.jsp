@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1>Listes des enchères</h1>
-	<a href="pageConnexion">Déconnexion</a>
+	<a href="loginServlet">Déconnexion</a>
 </body>
 </html>

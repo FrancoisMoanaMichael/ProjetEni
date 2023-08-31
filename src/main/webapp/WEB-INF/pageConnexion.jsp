@@ -16,10 +16,11 @@
 		login:<input type="text" name="login"/>
 		
 		password:<input type="password" name="password"/>
-		
 		<input type="submit" value="Connexion"/>
+		<input type="checkbox" value="Se souvenire de moi">
+		<!-- <a  href="recoverLoginServlet">Mot de passe oublié</a> --> 	
 	</form>
 	${message}
-	
+		<button onclick="pagesCreeCompte">Créer un compte</button>	
 </body>
 </html>
