@@ -34,7 +34,7 @@
             </form>
             ${message}
             <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p>
-            <input class="btn btn-success btn-block" type="button" value="load" onclick="window.location='/ProjetEni/creeUnCompte'" >
+            <input class="btn btn-success btn-block" type="button" value="Créer un compte" onclick="window.location='/ProjetEni/creeUnCompte'" >
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ public class CreeComptServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Utilisateur nvUtilisateur = new Utilisateur();
-
+		Boolean boolCreation= false;
 		String pseudo = String.valueOf(request.getParameter("pseudo"));
 		String nom = (String) request.getParameter("nom");
 		String prenom = (String) request.getParameter("prenom");
@@ -46,8 +46,8 @@ public class CreeComptServlet extends HttpServlet {
 
 		System.out.println("teste mdp :" + motDePasse);
 
-		if (pseudo != "" || prenom != "" || prenom != "" || email != "" || telephone != "" || rue != ""
-				|| codePostal != "" || ville != "" || motDePasse != "" || confirmation != "") {
+		if (pseudo != "" && prenom != "" && prenom != "" && email != "" && telephone != "" && rue != ""
+				&& codePostal != "" && ville != "" && motDePasse != "" && confirmation != "") {
 			nvUtilisateur.setPseudo(pseudo);
 			nvUtilisateur.setNom(nom);
 			nvUtilisateur.setPrenom(prenom);
@@ -63,18 +63,28 @@ public class CreeComptServlet extends HttpServlet {
 				nvUtilisateur.setMot_de_passe(motDePasse);
 				try {
 					uManager.addUtilisateur(nvUtilisateur);
-					Utilisateur utilisateurAjoute = uManager.getAllUtilisateurs().get(1);
-					HttpSession session = request.getSession();
-					session.setAttribute("utilisateurConnecte", utilisateurAjoute);
-					request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);			
 				} catch (ManagerException e) {
 					e.printStackTrace();
 				}
-
+				try {
+					Utilisateur utilisateurAjoute = uManager.check(pseudo,motDePasse);	
+					if(utilisateurAjoute != null) {
+						HttpSession session = request.getSession();
+						session.setAttribute("utilisateurConnecte", utilisateurAjoute);
+						boolCreation = true;
+					}else {
+						boolCreation = false;
+						System.out.println("oups");
+					}
+				}catch (ManagerException e) {
+					e.printStackTrace();
+				}
+			
 			}else {
+				boolCreation = false;
 //				TODO garder les champs remlis au rechargement si erreur
 //				request.setAttribute("pseudo", pseudo);
-//				request.setAttribute("nom", nom);
+//				request.sùetAttribute("nom", nom);
 //				request.setAttribute("prenom", prenom);
 //				request.setAttribute("email", email);
 //				request.setAttribute("telephone", telephone);
@@ -86,7 +96,11 @@ public class CreeComptServlet extends HttpServlet {
 		} else {
 			request.setAttribute("message", "Ne pas laisser de champs vides");
 		}
-		request.getRequestDispatcher("/WEB-INF/pageCreeCompte.jsp").forward(request, response);
+		if(boolCreation == true) {
+			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
+		}else {
+			request.getRequestDispatcher("/WEB-INF/pageCreeCompte.jsp").forward(request, response);
+		}
 
 	}
 
