@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpSession;
  * Servlet implementation class ChatServlet
  */
 @WebServlet("/loginServlet")
-public class loginServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
 	
