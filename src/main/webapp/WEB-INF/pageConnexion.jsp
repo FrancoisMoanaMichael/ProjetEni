@@ -17,7 +17,7 @@
         <div class="card">
           <div class="card-body">
             <h1 class="card-title text-center">Connexion</h1>
-            <form action="loginServlet" method="post">
+            <form action="connexion" method="post">
               <div class="form-group">
                 <label for="login">Identifiant:</label>
                 <input type="text" class="form-control" id="login" name="login">
@@ -32,11 +32,9 @@
               </div>
               <button type="submit" class="btn btn-primary btn-block">Connexion</button>
             </form>
-            <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p>
             ${message}
-            <input class="btn btn-success btn-block" type="button" value="Créer un compte" name="creeUnCompte" onclick="pageCreeCompte.jsp" />
-            <input class="btn btn-success btn-block" type="submit" value="Créer un compte" name="creeUnCompte" />
-            <input class="btn btn-success btn-block" type="button" value="load" onclick="window.location='creeComptServlet'" >
+            <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p>
+            <input class="btn btn-success btn-block" type="button" value="load" onclick="window.location='/ProjetEni/creeUnCompte'" >
           </div>
         </div>
       </div>

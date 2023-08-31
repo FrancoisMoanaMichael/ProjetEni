@@ -49,11 +49,14 @@ public class LoginServlet extends HttpServlet{
 
 
 		if(utilisateur.getNom() == null) {
-			request.setAttribute("message", "utilisateur inconnnu");
+				if(login == "" || password == "") {
+					request.setAttribute("message", "champs vide");
+				}else {					
+						request.setAttribute("message", "utilisateur inconnnu");
+				}
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 		}
-		else {
-			request.setAttribute("message", "c'est ok ");			
+		else {		
 			HttpSession session = request.getSession();
 			session.setAttribute("utilisateurConnecte", utilisateur);
 			request.setAttribute("message", "");
