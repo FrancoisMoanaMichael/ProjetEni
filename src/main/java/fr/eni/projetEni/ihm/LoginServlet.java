@@ -5,7 +5,7 @@ import java.io.IOException;
 import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
-import fr.eni.projetEni.bo.Utilisateur;
+import fr.eni.projetEni.bo2.Utilisateur;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

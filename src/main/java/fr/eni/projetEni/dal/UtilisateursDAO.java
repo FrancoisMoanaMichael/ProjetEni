@@ -2,7 +2,7 @@ package fr.eni.projetEni.dal;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Utilisateur;
+import fr.eni.projetEni.bo2.Utilisateur;
 
 public interface UtilisateursDAO {
 	public void insert(Utilisateur utilisateur) throws DalException;

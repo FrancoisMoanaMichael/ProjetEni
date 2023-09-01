@@ -2,7 +2,7 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Utilisateur;
+import fr.eni.projetEni.bo2.Utilisateur;
 
 public interface UtilisateurManager {
 	public List<Utilisateur> getAllUtilisateurs()			throws ManagerException;

@@ -3,7 +3,7 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Utilisateur;
+import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.dal.DAOFact;
 import fr.eni.projetEni.dal.DalException;
 import fr.eni.projetEni.dal.UtilisateursDAO;
