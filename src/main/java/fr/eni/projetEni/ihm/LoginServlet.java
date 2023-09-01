@@ -37,10 +37,14 @@ public class LoginServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		HttpSession session = request.getSession();
+
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
+        boolean rememberMe = request.getParameter("rememberMe") != null;
 		
 		Utilisateur utilisateur= new Utilisateur();
+		
 		try {
 			utilisateur = uManager.check(login,password);
 		} catch (ManagerException e) {
@@ -57,9 +61,16 @@ public class LoginServlet extends HttpServlet{
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
 		}
 		else {		
-			HttpSession session = request.getSession();
 			session.setAttribute("utilisateurConnecte", utilisateur);
+			if(rememberMe) {
+				session.setAttribute("rememberMe", true);				
+			}else {
+				session.setAttribute("rememberMe", false);								
+			}
 			request.setAttribute("message", "");
+			
+			
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 			rd.forward(request, response);
 		}

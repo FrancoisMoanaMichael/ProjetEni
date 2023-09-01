@@ -14,15 +14,15 @@ import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class UtilisateursDAOImpl implements UtilisateursDAO {
-	final String INSERT			= """ 
+	final String INSERT = """
 			INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)
-			   					VALUES  (?     , ?  , ?     , ?    ,?         , ?  , ?          , ?    , ?			 , ?	 , ?);			
+			   					VALUES  (?     , ?  , ?     , ?    ,?         , ?  , ?          , ?    , ?			 , ?	 , ?);
 			""";
-	
-	final String DELETE			= "DELETE	FROM UTILISATEURS WHERE no_utilisateur = ?;";
-	
-	final String UPDATE			= """ 
-			UPDATE UTILISATEURS	
+
+	final String DELETE = "DELETE	FROM UTILISATEURS WHERE no_utilisateur = ?;";
+
+	final String UPDATE = """
+			UPDATE UTILISATEURS
 			SET pseudo			= ?,
 				nom				= ?,
 				prenom			= ?,
@@ -34,18 +34,24 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 				mot_de_passe	= ?,
 				credit			= ?,
 				administrateur	= ?
-			WHERE no_utilisateur = ?;			
+			WHERE no_utilisateur = ?;
 			""";
-	final String SELECT_BY_ID	= "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
-	final String SELECT_ALL		= "SELECT * FROM UTILISATEURS;";
+	final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	final String SELECT_ARTICLE_ENCHERE_BY_ID	= """ 
+			SELECT * FROM UTILISATEURS 
+			INNER JOIN ENCHERES e ON u.no_utilisateur=e.no_utilisateur
+			INNER JOIN ARTICLES_VENDUS a ON u.no_utilisateur= a.no_utilisateur
+			WHERE e.no_utilisateur=?""";
+
+	final String SELECT_ALL = "SELECT * FROM UTILISATEURS;";
 	final String SELECT_LOGGIN_PASSWORD = "SELECT * FROM UTILISATEURS u WHERE u.pseudo = ? AND u.mot_de_passe = ?";
-	
-	private EncheresDAO			daoEnchere = DAOFact.getEncheresDAO();
-	private ArticleVendusDAO	daoArticle = DAOFact.getArticleVenduDAO();
-	
+
+	private EncheresDAO daoEnchere = DAOFact.getEncheresDAO();
+	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
+
 	@Override
 	public void insert(Utilisateur utilisateur) throws DalException {
-		try (Connection con = ConnectionProvider.getConnection()){
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, utilisateur.getPseudo());
 			stmt.setString(2, utilisateur.getNom());
@@ -59,11 +65,11 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			stmt.setInt(10, utilisateur.getCredit());
 			stmt.setBoolean(11, utilisateur.getAdministrateur());
 			int nb = stmt.executeUpdate();
-			
-			if(nb>0) {
+
+			if (nb > 0) {
 				ResultSet rs = stmt.getGeneratedKeys();
-				
-				if(rs.next()) {
+
+				if (rs.next()) {
 					utilisateur.setNo_utilisateur(rs.getInt(1));
 				}
 			}
@@ -75,18 +81,18 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 
 	@Override
 	public void delete(int id) throws DalException {
-		try(Connection con = ConnectionProvider.getConnection()){
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
 			stmt.executeQuery();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
 	}
-	
+
 	public void update(Utilisateur utilisateur) throws DalException {
-		try(Connection con = ConnectionProvider.getConnection()){
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, utilisateur.getNo_utilisateur());
 			stmt.setString(2, utilisateur.getPseudo());
@@ -101,27 +107,56 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			stmt.setInt(11, utilisateur.getCredit());
 			stmt.setBoolean(12, utilisateur.getAdministrateur());
 			stmt.executeUpdate();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
 	}
-
+//
+//	@Override
+//	public Utilisateur findUtilisateurByNo(int id) throws DalException {
+//		Utilisateur result = new Utilisateur();
+//
+//		try (Connection con = ConnectionProvider.getConnection()) {
+//			PreparedStatement stmt = con.prepareStatement(SELECT_ARTICLE_ENCHERE_BY_ID);
+//			stmt.setInt(1, id);
+//			ResultSet rs = stmt.executeQuery();
+//
+//			while (rs.next()) {
+//				List<Enchere> encheres;
+//				encheres.se (rs.getString("no_enchere"));
+//				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+//						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+//						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+//						rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DalException(e.getMessage());
+//		}
+//
+//		return result;
+//	}
+	
 	@Override
 	public Utilisateur findUtilisateurByNo(int id) throws DalException {
 		Utilisateur result = new Utilisateur();
 		
-		try(Connection con = ConnectionProvider.getConnection()){
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			
-            while(rs.next()) {
-            	List<Enchere>		encheres = daoEnchere.findEnchereByUserId(rs.getInt("no_utilisateur"));
-            	List<ArticlesVendu>	articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
-                result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
-            }
-		}catch (SQLException e) {
+			while (rs.next()) {
+				List<Enchere> encheres = daoEnchere.findEnchereByUserId(rs.getInt("no_utilisateur"));
+				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
+				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+						rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
@@ -132,42 +167,47 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	@Override
 	public List<Utilisateur> getAll() throws DalException {
 		List<Utilisateur> result = new ArrayList<>();
-		
-		try (Connection con = ConnectionProvider.getConnection()){
+
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+			while (rs.next()) {
+				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+						rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
+						rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"),
+						rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
 				result.add(utilisateur);
 			}
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public Utilisateur check(String login, String password) throws DalException {
 //		List<User> users = dao.findByLoginAndPassword(login, password);
 		Utilisateur result = new Utilisateur();
-		
-		try (Connection con = ConnectionProvider.getConnection()){
+
+		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_LOGGIN_PASSWORD);
 			stmt.setString(1, login);
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()) {
-                result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
-            }
-		}catch(SQLException e) {
+			while (rs.next()) {
+				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+						rs.getInt("credit"), rs.getBoolean("administrateur"));
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
-		
+
 		return result;
 	}
 }
