@@ -16,13 +16,14 @@ import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class ArticleVendusDAOImpl implements ArticleVendusDAO {
-	final String INSERT			= """ 
-							INSERT INTO ARTICLES_VENDUS (nom_article, description   , date_debut_encheres   , date_fin_encheres , prix_initial  , prix_vente, no_utilisateur, no_categorie)
-						    VALUES  (?          , ?             , ?                     , ?                 ,?              , ?         , ?             , ?);			
-							""";
-	final String DELETE			= "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	final String SELECT_BY_ID	= "SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	final String SELECT_ALL		= "SELECT * FROM ARTICLES_VENDUS;";
+	final String INSERT					= """ 
+			INSERT INTO ARTICLES_VENDUS (nom_article, description   , date_debut_encheres   , date_fin_encheres , prix_initial  , prix_vente, no_utilisateur, no_categorie)
+								VALUES  (?          , ?             , ?                     , ?                 ,?              , ?         , ?             , ?);			
+			""";
+	final String DELETE					= "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
+	final String SELECT_BY_ID_ARTICLE	= "SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?;";
+	final String SELECT_ALL				= "SELECT * FROM ARTICLES_VENDUS;";
+	final String SELECT_BY_ID_CATEGORIE	= "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
 	
 	private UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
 	private CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
@@ -72,7 +73,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 		ArticlesVendu result = new ArticlesVendu();
 		
 		try(Connection con = ConnectionProvider.getConnection()){
-			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID_ARTICLE);
 			stmt.setInt(1, id);
 			
 			ResultSet rs = stmt.executeQuery();
@@ -81,7 +82,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
             	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
             	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
             	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
-                result = new ArticlesVendu( rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
             }
 		}catch (SQLException e) {
@@ -105,9 +106,36 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
             	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
             	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
             	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-            	article = new ArticlesVendu(rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
-            	article.setNo_article(rs.getInt("no_article"));
+				result.add(article);
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<ArticlesVendu> findByCategorieByNo(int id) throws DalException {
+		List<ArticlesVendu> result = new ArrayList<>();
+		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID_CATEGORIE);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				ArticlesVendu article	= new ArticlesVendu();
+				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
+            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
+            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
 				result.add(article);
 			}
 		}

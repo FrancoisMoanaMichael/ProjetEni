@@ -34,10 +34,17 @@ public class ArticlesVendu {
 		this.categorie = categorie;
 	}
 
-	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
+	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
+			Categorie categorie) {
+		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie);
+		this.no_article = no_article;
+	}
+
+	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
 			Categorie categorie, Retrait retrait, List<Enchere> lstEnceres) {
-		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie);
+		this(no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie);
 		this.retrait = retrait;
 		this.lstEncheres = lstEnceres;
 	}
@@ -130,7 +137,7 @@ public class ArticlesVendu {
 		this.lstEncheres = lstEncheres;
 	}
 	
-	public void getEncheres(Enchere enchere) {
+	public void addEncheres(Enchere enchere) {
 		this.lstEncheres.add(enchere);
 	}
 
