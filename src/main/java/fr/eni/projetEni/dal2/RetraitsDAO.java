@@ -2,7 +2,7 @@ package fr.eni.projetEni.dal2;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retrait;
+import fr.eni.projetEni.bo2.Retrait;
 
 public interface RetraitsDAO {
 	public void insert(Retrait retraits)			throws DalException;

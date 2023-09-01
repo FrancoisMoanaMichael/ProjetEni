@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retrait;
+import fr.eni.projetEni.bo2.Retrait;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class RetraitsDAOImpl implements RetraitsDAO {

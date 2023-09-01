@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categorie;
+import fr.eni.projetEni.bo2.Categorie;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
 public class CategorieDAOImpl implements CategorieDAO {
