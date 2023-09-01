@@ -1,29 +1,29 @@
 package fr.eni.projetEni.bo2;
 
 public class Retrait {
-	private Integer no_article;
-	private String 	rue;
-	private String	code_postal;
-	private String	ville;
+	private ArticlesVendu	article;
+	private String 			rue;
+	private String			code_postal;
+	private String			ville;
 	
 	public Retrait() {
 		super();
 	}
-
-	public Retrait(Integer no_article, String rue, String code_postal, String ville) {
+	
+	public Retrait(ArticlesVendu article, String rue, String code_postal, String ville) {
 		super();
-		this.no_article = no_article;
+		this.article = article;
 		this.rue = rue;
 		this.code_postal = code_postal;
 		this.ville = ville;
 	}
-
-	public Integer getNo_article() {
-		return no_article;
+	
+	public ArticlesVendu getArticle() {
+		return article;
 	}
 
-	public void setNo_article(Integer no_article) {
-		this.no_article = no_article;
+	public void setArticle(ArticlesVendu article) {
+		this.article = article;
 	}
 
 	public String getRue() {
@@ -52,8 +52,8 @@ public class Retrait {
 
 	@Override
 	public String toString() {
-		return "RETRAITS [no_article=" + no_article + ", rue=" + rue + ", code_postal=" + code_postal + ", ville="
-				+ ville + "]";
+		return "Retrait [article=" + article + ", rue=" + rue + ", code_postal=" + code_postal + ", ville=" + ville
+				+ "]";
 	}
 	
 }

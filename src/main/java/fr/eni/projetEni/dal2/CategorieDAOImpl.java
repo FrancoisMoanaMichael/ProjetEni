@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Categorie;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
@@ -25,6 +26,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 	final String SELECT_ALL					= "SELECT * FROM CATEGORIES;";
 	final String SELECT_CATEGORIE_BY_ID		= "SELECT * FROM CATEGORIES WHERE no_categorie = ?;";
 	final String SELECT_CATEGORIE_BY_NAME	= "SELECT * FROM CATEGORIES WHERE libelle = ?;";
+	
+	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
 	
 	@Override
 	public void insert(Categorie categorie) throws DalException {
@@ -78,7 +81,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Categorie categories = new Categorie(rs.getString("libelle"));
+				List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie")); 
+				Categorie categories = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
 				result.add(categories);
 			}
 		}
@@ -100,7 +104,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new Categorie(rs.getString("libelle"));
+            	List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
+                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
                 result.setNo_categorie(rs.getInt("no_categorie"));
             }
 		}catch (SQLException e) {
@@ -121,8 +126,8 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-                result = new Categorie(rs.getString("libelle"));
-                result.setNo_categorie(rs.getInt("no_categorie"));
+            	List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
+                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
