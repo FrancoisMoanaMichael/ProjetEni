@@ -1,25 +1,28 @@
 package fr.eni.projetEni.bo2;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ArticlesVendu {
-	private Integer		no_article;
-	private String		nom_article;
-	private String		description;
-	private LocalDate	date_debut_encheres;
-	private LocalDate	date_fin_encheres;
-	private Integer		prix_initial;
-	private Integer		prix_vente;
-	private Integer		no_utilisateur;
-	private Integer		no_categorie;
+	private Integer			no_article;
+	private String			nom_article;
+	private String			description;
+	private LocalDate		date_debut_encheres;
+	private LocalDate		date_fin_encheres;
+	private Integer			prix_initial;
+	private Integer			prix_vente;
+	private Utilisateur		utilisateur;
+	private Categorie		categorie;
+	private Retrait			retrait;
+	private List<Enchere>	lstEncheres;
 	
 	public ArticlesVendu() {
 		super();
 	}
 	
 	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
-			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Integer no_utilisateur,
-			Integer no_categorie) {
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
+			Categorie categorie) {
 		super();
 		this.nom_article = nom_article;
 		this.description = description;
@@ -27,8 +30,16 @@ public class ArticlesVendu {
 		this.date_fin_encheres = date_fin_encheres;
 		this.prix_initial = prix_initial;
 		this.prix_vente = prix_vente;
-		this.no_utilisateur = no_utilisateur;
-		this.no_categorie = no_categorie;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+	}
+
+	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
+			Categorie categorie, Retrait retrait, List<Enchere> lstEnceres) {
+		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie);
+		this.retrait = retrait;
+		this.lstEncheres = lstEnceres;
 	}
 
 	public Integer getNo_article() {
@@ -87,29 +98,49 @@ public class ArticlesVendu {
 		this.prix_vente = prix_vente;
 	}
 
-	public Integer getNo_utilisateur() {
-		return no_utilisateur;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setNo_utilisateur(Integer no_utilisateur) {
-		this.no_utilisateur = no_utilisateur;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
-	public Integer getNo_categorie() {
-		return no_categorie;
+	public Categorie getCategorie() {
+		return categorie;
 	}
 
-	public void setNo_categorie(Integer no_categorie) {
-		this.no_categorie = no_categorie;
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+	
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
+
+	public List<Enchere> getLstEncheres() {
+		return lstEncheres;
+	}
+
+	public void setLstEncheres(List<Enchere> lstEncheres) {
+		this.lstEncheres = lstEncheres;
+	}
+	
+	public void getEncheres(Enchere enchere) {
+		this.lstEncheres.add(enchere);
 	}
 
 	@Override
 	public String toString() {
-		return "ARTICLES_VENDUS [no_article=" + no_article + ", nom_article=" + nom_article + ", description="
+		return "ArticlesVendu [no_article=" + no_article + ", nom_article=" + nom_article + ", description="
 				+ description + ", date_debut_encheres=" + date_debut_encheres + ", date_fin_encheres="
-				+ date_fin_encheres + ", prix_initial=" + prix_initial + ", prix_vente=" + prix_vente
-				+ ", no_utilisateur=" + no_utilisateur + ", no_categorie=" + no_categorie + "]";
+				+ date_fin_encheres + ", prix_initial=" + prix_initial + ", prix_vente=" + prix_vente + ", utilisateur="
+				+ utilisateur + ", categorie=" + categorie + ", retrait=" + retrait + ", lstEncheres=" + lstEncheres
+				+ "]";
 	}
-	
 	
 }

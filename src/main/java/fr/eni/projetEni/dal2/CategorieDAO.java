@@ -2,7 +2,7 @@ package fr.eni.projetEni.dal2;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categorie;
+import fr.eni.projetEni.bo2.Categorie;
 
 public interface CategorieDAO {
 	public void insert(Categorie categorie)	throws DalException;
