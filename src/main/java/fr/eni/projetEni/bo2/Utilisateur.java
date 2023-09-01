@@ -1,28 +1,37 @@
 package fr.eni.projetEni.bo2;
 
+import java.util.List;
+
 public class Utilisateur {
-	private Integer no_utilisateur;
-	private String	pseudo;
-	private String	nom;
-	private String	prenom;
-	private String	email;
-	private String	telephone;
-	private String	rue;
-	private String	code_postal;
-	private String	ville;
-	private String	mot_de_passe;
-	private Integer	credit;
-	private Boolean	administrateur;
+	private Integer 			no_utilisateur;
+	private String				pseudo;
+	private String				nom;
+	private String				prenom;
+	private String				email;
+	private String				telephone;
+	private String				rue;
+	private String				code_postal;
+	private String				ville;
+	private String				mot_de_passe;
+	private Integer				credit;
+	private Boolean				administrateur;
+	private List<Enchere>		lstEncheres;
+	private List<ArticlesVendu>	lstArticles;
 	
 	public Utilisateur() {
 		super();
+	}
+	
+	public Utilisateur(String pseudo, String mot_de_passe) {
+		super();
+		this.pseudo = pseudo;
+		this.mot_de_passe = mot_de_passe;
 	}
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email,
 			String telephone, String rue, String code_postal, String ville, String mot_de_passe, Integer credit,
 			Boolean administrateur) {
-		super();
-		this.pseudo = pseudo;
+		this(pseudo, mot_de_passe);
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -30,17 +39,22 @@ public class Utilisateur {
 		this.rue = rue;
 		this.code_postal = code_postal;
 		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
-
-
-
-	public Utilisateur(String pseudo, String mot_de_passe) {
-		super();
-		this.pseudo = pseudo;
-		this.mot_de_passe = mot_de_passe;
+	
+	public Utilisateur(Integer no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String code_postal, String ville, String mot_de_passe, Integer credit, Boolean administrateur) {
+		this(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
+		this.no_utilisateur = no_utilisateur;
+	}
+	
+	public Utilisateur(Integer no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String code_postal, String ville, String mot_de_passe, Integer credit, Boolean administrateur,
+			List<Enchere> lstEncheres, List<ArticlesVendu> lstArticles) {
+		this(no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
+		this.lstEncheres = lstEncheres;
+		this.lstArticles = lstArticles;
 	}
 
 	public Integer getNo_utilisateur() {
@@ -138,14 +152,38 @@ public class Utilisateur {
 	public void setAdministrateur(Boolean administrateur) {
 		this.administrateur = administrateur;
 	}
+	
+	public List<Enchere> getLstEncheres() {
+		return lstEncheres;
+	}
+
+	public void setLstEncheres(List<Enchere> lstEncheres) {
+		this.lstEncheres = lstEncheres;
+	}
+	
+	public void AddEnchere(Enchere enchere) {
+		this.lstEncheres.add(enchere);
+	}
+
+	public List<ArticlesVendu> getLstArticles() {
+		return lstArticles;
+	}
+
+	public void setLstArticles(List<ArticlesVendu> lstArticles) {
+		this.lstArticles = lstArticles;
+	}
+	
+	public void AddArticle(ArticlesVendu article) {
+		this.lstArticles.add(article);
+	}
 
 	@Override
 	public String toString() {
-		return "UTILISATEURS [no_utilisateur=" + no_utilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+		return "Utilisateur [no_utilisateur=" + no_utilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
 				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", code_postal="
 				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
-				+ ", administrateur=" + administrateur + "]";
+				+ ", administrateur=" + administrateur + ", lstEncheres=" + lstEncheres + ", lstArticles=" + lstArticles
+				+ "]";
 	}
-	
 	
 }
