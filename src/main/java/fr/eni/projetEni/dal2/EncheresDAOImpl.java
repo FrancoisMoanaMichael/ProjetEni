@@ -25,8 +25,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String SELECT_BY_NO_USER		= "SELECT * FROM ENCHERES WHERE no_utilisateur = ?";
 	final String SELECT_BY_NO_ENCHERE	= "SELECT * FROM ENCHERES WHERE no_enchere = ?";
 	
-	private UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
-	private ArticleVendusDAO daoArticle		= DAOFact.getArticleVenduDAO();
+	private UtilisateursDAO daoUtilisateur;
+	private ArticleVendusDAO daoArticle;
+
 
 	@Override
 	public void insert(Enchere encheres) throws DalException {
