@@ -42,16 +42,16 @@ public class ArticleVendusTest {
 //    }
 
 
-//    @Test
-//    public void testFindByArticleByNo() {
-//        int id = 2;  // Again, get this dynamically or set up via a fixture
-//        try {
-//            ArticlesVendu article = articleVendusDAO.findByArticleByNo(id);
-//            assertNotNull("Article should not be null", article);
-//        } catch (DalException e) {
-//            fail("FindByArticleByNo failed: " + e.getMessage());
-//        }
-//    }
+    @Test
+    public void testFindByArticleByNo() {
+        int id = 2;  // Again, get this dynamically or set up via a fixture
+        try {
+            ArticlesVendu article = articleVendusDAO.findByArticleByNo(id);
+            assertNotNull("Article should not be null", article);
+        } catch (DalException e) {
+            fail("FindByArticleByNo failed: " + e.getMessage());
+        }
+    }
     
 //    @Test
 //    public void testGetAll() {
