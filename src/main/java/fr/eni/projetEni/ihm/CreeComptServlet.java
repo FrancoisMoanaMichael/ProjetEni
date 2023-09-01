@@ -79,7 +79,6 @@ public class CreeComptServlet extends HttpServlet {
 				}catch (ManagerException e) {
 					e.printStackTrace();
 				}
-			
 			}else {
 				boolCreation = false;
 //				TODO garder les champs remlis au rechargement si erreur
