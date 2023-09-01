@@ -20,22 +20,17 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 	final String SELECT_ALL		= "SELECT * FROM RETRAITS";
 	final String SELECT_BY_ID	= "SELECT * FROM RETRAITS WHERE = no_article = ?";
 	
+	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
+	
 	@Override
 	public void insert(Retrait retraits) throws DalException {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt= con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS );
-			stmt.setInt(1, retraits.getNo_article());
+			stmt.setInt(1, retraits.getArticle().getNo_article());
 			stmt.setString(2, retraits.getRue());
 			stmt.setString(3, retraits.getCode_postal());
 			stmt.setString(4, retraits.getVille());
-			int nb = stmt.executeUpdate();
-			
-			if(nb>0) {
-				ResultSet rs = stmt.getGeneratedKeys();
-				if(rs.next()) {
-					retraits.setNo_article(rs.getInt(1));
-				}
-			}
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
@@ -64,7 +59,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				result = new Retrait(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				result = new Retrait(dao.findByArticleByNo(rs.getInt("no_article")), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,7 +77,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Retrait retrait = new Retrait(rs.getInt("no_article"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				Retrait retrait = new Retrait(dao.findByArticleByNo(rs.getInt("no_article")), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				result.add(retrait);
 			}
 		} catch (SQLException e) {
