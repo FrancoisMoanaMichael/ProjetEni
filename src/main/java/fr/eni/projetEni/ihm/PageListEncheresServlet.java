@@ -40,19 +40,19 @@ public class PageListEncheresServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur= new Utilisateur();
 		System.out.println(session.getAttribute("utilisateurConnecte").toString());
-		
-		if (session.getAttribute("utilisateurConnecte") == null) {
-			request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
-		} else {
-			Utilisateur utilisateur = session.getAttribute("utilisateurConnecte");
-			try {
-				utilisateur = uManager.check(login,password);
-			} catch (ManagerException e) {
-				e.printStackTrace();
-			} 
-			
-			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
-		}
+//		
+//		if (session.getAttribute("utilisateurConnecte") == null) {
+//			request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
+//		} else {
+//			Utilisateur utilisateur = session.getAttribute("utilisateurConnecte");
+//			try {
+//				utilisateur = uManager.check(login,password);
+//			} catch (ManagerException e) {
+//				e.printStackTrace();
+//			} 
+//			
+//			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
+//		}
 		
 	}
 
