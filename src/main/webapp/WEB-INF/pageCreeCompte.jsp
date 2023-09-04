@@ -20,23 +20,23 @@
 						<div class="form-section">
 							<div class="form-group">
 								<label for="pseudo">Pseudo :</label> <input type="text"
-									class="form-control" name="pseudo">
+									class="form-control" name="pseudo" maxlength="30">
 							</div>
 							<div class="form-group">
 								<label for="prenom">Prénom :</label> <input type="text"
-									class="form-control" name="prenom">
+									class="form-control" name="prenom" maxlength="30">
 							</div>
 							<div class="form-group">
 								<label for="telephone">Téléphone :</label> <input type="text"
-									class="form-control" name="telephone">
+									class="form-control" name="telephone" maxlength="30">
 							</div>
 							<div class="form-group">
 								<label for="codePostal">Code postal :</label> <input
-									type="number" class="form-control" name="codePostal">
+									type="number" class="form-control" name="codePostal" maxlength="10">
 							</div>
 							<div class="form-group">
 								<label for="motDePasse">Mot de passe :</label> <input
-									type="password" class="form-control" name="motDePasse">
+									type="password" class="form-control" name="motDePasse" maxlength="30">
 							</div>
 						</div>
 					</div>
@@ -48,19 +48,19 @@
 							</div>
 							<div class="form-group">
 								<label for="email">Email :</label> <input type="text"
-									class="form-control" name="email">
+									class="form-control" name="email" maxlength="50">
 							</div>
 							<div class="form-group">
 								<label for="rue">Rue :</label> <input type="text"
-									class="form-control" name="rue">
+									class="form-control" name="rue" maxlength="50">
 							</div>
 							<div class="form-group">
 								<label for="ville">Ville :</label> <input type="text"
-									class="form-control" name="ville">
+									class="form-control" name="ville" maxlength="30">
 							</div>
 							<div class="form-group">
 								<label for="confirmation">Confirmation :</label> <input
-									type="password" class="form-control" name="confirmation">
+									type="password" class="form-control" name="confirmation" maxlength="30">
 							</div>
 						</div>
 					</div>

@@ -6,7 +6,6 @@ import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo2.Utilisateur;
-import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,8 +30,9 @@ public class CreeComptServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String mess = "";
 		Utilisateur nvUtilisateur = new Utilisateur();
-		Boolean boolCreation= false;
+		Boolean boolCreation = false;
 		String pseudo = String.valueOf(request.getParameter("pseudo"));
 		String nom = (String) request.getParameter("nom");
 		String prenom = (String) request.getParameter("prenom");
@@ -43,44 +43,71 @@ public class CreeComptServlet extends HttpServlet {
 		String ville = (String) request.getParameter("ville");
 		String motDePasse = (String) request.getParameter("motDePasse");
 		String confirmation = (String) request.getParameter("confirmation");
-
-		System.out.println("teste mdp :" + motDePasse);
-		
 		if (pseudo != "" && prenom != "" && prenom != "" && email != "" && telephone != "" && rue != ""
 				&& codePostal != "" && ville != "" && motDePasse != "" && confirmation != "") {
-			nvUtilisateur.setPseudo(pseudo);
-			nvUtilisateur.setNom(nom);
-			nvUtilisateur.setPrenom(prenom);
-			nvUtilisateur.setEmail(email);
-			nvUtilisateur.setTelephone(telephone);
-			nvUtilisateur.setRue(rue);
-			nvUtilisateur.setCode_postal(codePostal);
-			nvUtilisateur.setVille(ville);
-			nvUtilisateur.setCredit(0);
-			nvUtilisateur.setAdministrateur(false);
 
-			if (motDePasse.equals(confirmation)) {
-				nvUtilisateur.setMot_de_passe(motDePasse);
-				try {
-					uManager.addUtilisateur(nvUtilisateur);
-				} catch (ManagerException e) {
-					e.printStackTrace();
-				}
-				try {
-					Utilisateur utilisateurAjoute = uManager.check(pseudo,motDePasse);	
-					if(utilisateurAjoute != null) {
-						HttpSession session = request.getSession();
-						session.setAttribute("utilisateurConnecte", utilisateurAjoute);
-						boolCreation = true;
-					}else {
-						boolCreation = false;
-						System.out.println("oups");
+			if (pseudo.length() > 30) {
+				mess = mess + "le pseudo est trop long, max 30 carractères. ";
+			}
+			if (prenom.length() > 30) {
+				mess = mess + "le prénom est trop long, max 30 carractères. ";
+			}
+			if (nom.length() > 30) {
+				mess = mess + "le nom est trop long, max 30 carractères. ";
+			}
+			if (email.length() > 50) {
+				mess = mess + "l'email est trop long, max 50 carractères. ";
+			}
+			if (telephone.length() > 30) {
+				mess = mess + "le telephone est trop long, max 15 carractères. ";
+			}
+			if (rue.length() > 30) {
+				mess = mess + "le nom de la rue est trop long, max 50 carractères. ";
+			}
+			if (codePostal.length() > 30) {
+				mess = mess + "le code postal est trop long, max 10 carractères. ";
+			}
+			if (ville.length() > 30) {
+				mess = mess + "le nom de ville est trop long, max 30 carractères. ";
+			}
+			if (motDePasse.length() > 30) {
+				mess = mess + "le mot de passe est trop long, max 10 carractères. ";
+			}
+			if (mess != "") {
+				request.setAttribute("message", mess);
+			} else {
+				nvUtilisateur.setPseudo(pseudo);
+				nvUtilisateur.setNom(nom);
+				nvUtilisateur.setPrenom(prenom);
+				nvUtilisateur.setEmail(email);
+				nvUtilisateur.setTelephone(telephone);
+				nvUtilisateur.setRue(rue);
+				nvUtilisateur.setCode_postal(codePostal);
+				nvUtilisateur.setVille(ville);
+				nvUtilisateur.setCredit(0);
+				nvUtilisateur.setAdministrateur(false);
+
+				if (motDePasse.equals(confirmation)) {
+					nvUtilisateur.setMot_de_passe(motDePasse);
+					try {
+						uManager.addUtilisateur(nvUtilisateur);
+					} catch (ManagerException e) {
+						e.printStackTrace();
 					}
-				}catch (ManagerException e) {
-					e.printStackTrace();
-				}
-			}else {
-				boolCreation = false;
+					try {
+						Utilisateur utilisateurAjoute = uManager.check(pseudo, motDePasse);
+						if (utilisateurAjoute != null) {
+							HttpSession session = request.getSession();
+							session.setAttribute("utilisateurConnecte", utilisateurAjoute);
+							boolCreation = true;
+						} else {
+							boolCreation = false;
+						}
+					} catch (ManagerException e) {
+						e.printStackTrace();
+					}
+				} else {
+					boolCreation = false;
 //				TODO garder les champs remlis au rechargement si erreur
 //				request.setAttribute("pseudo", pseudo);
 //				request.sùetAttribute("nom", nom);
@@ -90,14 +117,17 @@ public class CreeComptServlet extends HttpServlet {
 //				request.setAttribute("rue", rue);
 //				request.setAttribute("codePostal", codePostal);
 //				request.setAttribute("ville", ville);
-				request.setAttribute("message", "Les mots de passe ne sont pas identiques.");
+					mess = "Les mots de passe ne sont pas identiques.";
+					request.setAttribute("message", mess);
+				}
 			}
 		} else {
-			request.setAttribute("message", "Ne pas laisser de champs vides");
+			mess = "Ne pas laisser de champs vides";
+			request.setAttribute("message", mess);
 		}
-		if(boolCreation == true) {
+		if (boolCreation == true) {
 			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
-		}else {
+		} else {
 			request.getRequestDispatcher("/WEB-INF/pageCreeCompte.jsp").forward(request, response);
 		}
 
