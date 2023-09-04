@@ -26,14 +26,14 @@
                 <label for="password">Mot de passe:</label>
                 <input type="password" class="form-control" id="password" name="password">
               </div>
-              <div class="form-group form-check">
+              <!-- <div class="form-group form-check">
               <input type="checkbox" name="rememberMe" id="rememberMe"> 
                 <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-              </div>
+              </div> -->
               <button type="submit" class="btn btn-primary btn-block">Connexion</button>
             </form>
             ${message}
-            <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p>
+            <!-- <p class="mt-3"><a href="recoverLoginServlet">Mot de passe oublié</a></p> -->
             <input class="btn btn-success btn-block" type="button" value="Créer un compte" onclick="window.location='/ProjetEni/creeUnCompte'" >
           </div>
         </div>

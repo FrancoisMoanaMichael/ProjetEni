@@ -45,7 +45,7 @@ public class CreeComptServlet extends HttpServlet {
 		String confirmation = (String) request.getParameter("confirmation");
 
 		System.out.println("teste mdp :" + motDePasse);
-
+		
 		if (pseudo != "" && prenom != "" && prenom != "" && email != "" && telephone != "" && rue != ""
 				&& codePostal != "" && ville != "" && motDePasse != "" && confirmation != "") {
 			nvUtilisateur.setPseudo(pseudo);
