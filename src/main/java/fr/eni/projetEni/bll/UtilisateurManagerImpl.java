@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEni.bo2.Utilisateur;
-import fr.eni.projetEni.dal.DAOFact;
-import fr.eni.projetEni.dal.DalException;
-import fr.eni.projetEni.dal.UtilisateursDAO;
+import fr.eni.projetEni.dal2.DAOFact;
+import fr.eni.projetEni.dal2.DalException;
+import fr.eni.projetEni.dal2.UtilisateursDAO;
 
 public class UtilisateurManagerImpl implements UtilisateurManager {
 	private UtilisateursDAO dao = DAOFact.getUtilisateursDAO();

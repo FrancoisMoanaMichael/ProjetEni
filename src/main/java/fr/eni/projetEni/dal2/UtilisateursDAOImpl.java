@@ -46,8 +46,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 	final String SELECT_ALL = "SELECT * FROM UTILISATEURS;";
 	final String SELECT_LOGGIN_PASSWORD = "SELECT * FROM UTILISATEURS u WHERE u.pseudo = ? AND u.mot_de_passe = ?";
 
-	private EncheresDAO daoEnchere = DAOFact.getEncheresDAO();
-	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
+//	private EncheresDAO daoEnchere = DAOFact.getEncheresDAO();
+//	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
 
 	@Override
 	public void insert(Utilisateur utilisateur) throws DalException {
@@ -112,33 +112,6 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			throw new DalException(e.getMessage());
 		}
 	}
-//
-//	@Override
-//	public Utilisateur findUtilisateurByNo(int id) throws DalException {
-//		Utilisateur result = new Utilisateur();
-//
-//		try (Connection con = ConnectionProvider.getConnection()) {
-//			PreparedStatement stmt = con.prepareStatement(SELECT_ARTICLE_ENCHERE_BY_ID);
-//			stmt.setInt(1, id);
-//			ResultSet rs = stmt.executeQuery();
-//
-//			while (rs.next()) {
-//				Enchere enchere= new Enchere();
-//				enchere(rs.getInt("no_enchere"), rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
-//				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
-//				if(rs.)
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DalException(e.getMessage());
-//		}
-//		result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-//				rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-//				rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-//				rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
-//
-//		return result;
-//	}
 
 	@Override
 	public Utilisateur findUtilisateurByNo(int id) throws DalException {
@@ -150,12 +123,20 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				List<Enchere> encheres = daoEnchere.findEnchereByUserId(rs.getInt("no_utilisateur"));
-				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
-				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
+//				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
+				result = new Utilisateur(
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"), 
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur"));				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,6 +145,31 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 
 		return result;
 	}
+//
+//	@Override
+//	public Utilisateur findUtilisateurByNo(int id) throws DalException {
+//		Utilisateur result = new Utilisateur();
+//
+//		try (Connection con = ConnectionProvider.getConnection()) {
+//			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+//			stmt.setInt(1, id);
+//			ResultSet rs = stmt.executeQuery();
+//
+//			while (rs.next()) {
+//				List<Enchere> encheres = daoEnchere.findEnchereByUserId(rs.getInt("no_utilisateur"));
+//				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+//						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+//						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+//						rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new DalException(e.getMessage());
+//		}
+//
+//		return result;
+//	}
 
 	@Override
 	public List<Utilisateur> getAll() throws DalException {
