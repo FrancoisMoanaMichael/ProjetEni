@@ -22,6 +22,13 @@ public class Enchere {
 		this.montant_enchere = montant_enchere;
 	}
 
+	public Enchere(Integer no_enchere, LocalDateTime date_enchere, Integer montant_enchere) {
+		super();
+		this.no_enchere = no_enchere;
+		this.date_enchere = date_enchere;
+		this.montant_enchere = montant_enchere;
+	}
+
 	public Integer getNo_enchere() {
 		return no_enchere;
 	}

@@ -37,8 +37,8 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			WHERE no_utilisateur = ?;
 			""";
 	final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?;";
-	final String SELECT_ARTICLE_ENCHERE_BY_ID	= """ 
-			SELECT * FROM UTILISATEURS 
+	final String SELECT_ARTICLE_ENCHERE_BY_ID = """
+			SELECT * FROM UTILISATEURS
 			INNER JOIN ENCHERES e ON u.no_utilisateur=e.no_utilisateur
 			INNER JOIN ARTICLES_VENDUS a ON u.no_utilisateur= a.no_utilisateur
 			WHERE e.no_utilisateur=?""";
@@ -123,31 +123,32 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 //			ResultSet rs = stmt.executeQuery();
 //
 //			while (rs.next()) {
-//				List<Enchere> encheres;
-//				encheres.se (rs.getString("no_enchere"));
+//				Enchere enchere= new Enchere();
+//				enchere(rs.getInt("no_enchere"), rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
 //				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
-//				result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-//						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-//						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-//						rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
+//				if(rs.)
 //			}
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //			throw new DalException(e.getMessage());
 //		}
+//		result = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+//				rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+//				rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+//				rs.getInt("credit"), rs.getBoolean("administrateur"), encheres, articles);
 //
 //		return result;
 //	}
-	
+
 	@Override
 	public Utilisateur findUtilisateurByNo(int id) throws DalException {
 		Utilisateur result = new Utilisateur();
-		
+
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
-			
+
 			while (rs.next()) {
 				List<Enchere> encheres = daoEnchere.findEnchereByUserId(rs.getInt("no_utilisateur"));
 				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
@@ -160,7 +161,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
-		
+
 		return result;
 	}
 
