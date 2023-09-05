@@ -1,9 +1,12 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
+import java.util.List;
 
-import fr.eni.projetEni.bll.UtilisateurManager;
-import fr.eni.projetEni.bll.UtilisateurManagerSing;
+import fr.eni.projetEni.bll2.EnchereManager;
+import fr.eni.projetEni.bll2.EnchereManagerSing;
+import fr.eni.projetEni.bll2.ManagerException;
+import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,11 +21,18 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/")
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+//	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private EnchereManager eManager =  EnchereManagerSing.getInstance();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		try {
+			List<Enchere> lstEnchere=  eManager.getAll();
+			lstEnchere.forEach(element -> System.out.println(element));
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String url = request.getServletPath();
 
 		if (url.equals("/ProjetEni/acceuil")) {
