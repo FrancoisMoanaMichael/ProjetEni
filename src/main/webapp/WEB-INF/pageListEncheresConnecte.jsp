@@ -16,7 +16,7 @@
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">ENI-Encheres</a>
+			<a class="navbar-brand" href="/ProjetEni/acceuil">ENI-Encheres</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 						<a class="nav-link" href="enchaeres">Enchères</a>
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
 						<a class="nav-link" href="mon_profil">Mon Profil</a>
-						<a class="nav-link" href="acceuil">Déconnexion</a>
+						<a class="nav-link" type="deconexion" href="acceuil">Déconnexion</a>
 					</li>
 				</ul>
 			</div>
