@@ -2,8 +2,8 @@ package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
 
-import fr.eni.projetEni.bll.EnchereManager;
-import fr.eni.projetEni.bll2.EnchereManagerSing;
+import fr.eni.projetEni.bll.UtilisateurManager;
+import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo2.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/")
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private EnchereManager eManager = (EnchereManager) EnchereManagerSing.getInstance();
+	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
