@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * Servlet implementation class ChatServlet
  */
-@WebServlet("/acceuil")
+@WebServlet("/")
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
@@ -27,33 +27,49 @@ public class PageListEncheresServlet extends HttpServlet {
 
 		String url = request.getServletPath();
 
-		if (url.equals("/acceuil")) {
-			HttpSession session = request.getSession();
+		if (url.equals("/ProjetEni/acceuil")) {
+		HttpSession session = request.getSession();
 			session.invalidate();
+			response.sendRedirect("/ProjetEni/acceuil");
+			return;
+		} else {
+		HttpSession session = request.getSession();
+			if (session.getAttribute("utilisateurConnecte") == null) {
+				session.invalidate();
+				request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
+			} else {
+				Utilisateur utilisateur = new Utilisateur();
+				utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+				request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
+			}
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp");
-		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
-		Utilisateur utilisateur= new Utilisateur();
-		System.out.println(session.getAttribute("utilisateurConnecte").toString());
-//		
-//		if (session.getAttribute("utilisateurConnecte") == null) {
-//			request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
-//		} else {
-//			Utilisateur utilisateur = session.getAttribute("utilisateurConnecte");
-//			try {
-//				utilisateur = uManager.check(login,password);
-//			} catch (ManagerException e) {
-//				e.printStackTrace();
-//			} 
-//			
-//			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
-//		}
-		
+		Utilisateur utilisateur = new Utilisateur();
+		if(request.getParameter("deconnexion").equalsIgnoreCase("deconnexion")) {
+		System.out.println("test:  " + session.getAttribute("utilisateurConnecte").toString());
+			session.invalidate();
+		};
+
+		if (session.getAttribute("utilisateurConnecte") == null) {
+			request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
+		} else {
+			utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+			try {
+				utilisateur = uManager.check(login, password);
+			} catch (ManagerException e) {
+				e.printStackTrace();
+			}
+
+			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
+		}
+
 	}
 
 }
