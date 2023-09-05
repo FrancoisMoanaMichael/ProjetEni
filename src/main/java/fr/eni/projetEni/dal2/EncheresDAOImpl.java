@@ -25,8 +25,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String SELECT_BY_NO_USER		= "SELECT * FROM ENCHERES WHERE no_utilisateur = ?";
 	final String SELECT_BY_NO_ENCHERE	= "SELECT * FROM ENCHERES WHERE no_enchere = ?";
 	
-	private UtilisateursDAO daoUtilisateur = DAOFact.getUtilisateursDAO();
-	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
+//	private UtilisateursDAO daoUtilisateur = DAOFact.getUtilisateursDAO();
+//	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
 
 
 	@Override
@@ -77,11 +77,12 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article
-						, localDateTime, rs.getInt("montant_enchere"));
-				encheres.setNo_enchere(rs.getInt("no_enchere"));
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
+//				Enchere encheres = new Enchere(utilisateur, article
+//						, localDateTime, rs.getInt("montant_enchere"));
+//				encheres.setNo_enchere(rs.getInt("no_enchere"));
+				Enchere encheres = new Enchere(rs.getInt("no_enchere"), localDateTime, rs.getInt("montant_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {
@@ -104,10 +105,11 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article
-						, localDateTime, rs.getInt("montant_enchere"));
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
+//				Enchere encheres = new Enchere(utilisateur, article
+//						, localDateTime, rs.getInt("montant_enchere"));
+				Enchere encheres = new Enchere(rs.getInt("no_enchere"), localDateTime, rs.getInt("montant_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {
@@ -130,11 +132,12 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article
-						, localDateTime, rs.getInt("montant_enchere"));
-				encheres.setNo_enchere(rs.getInt("no_enchere"));
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
+//				Enchere encheres = new Enchere(utilisateur, article
+//						, localDateTime, rs.getInt("montant_enchere"));
+//				encheres.setNo_enchere(rs.getInt("no_enchere"));
+				Enchere encheres = new Enchere(rs.getInt("no_enchere"), localDateTime, rs.getInt("montant_enchere"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -156,11 +159,12 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article
-						, localDateTime, rs.getInt("montant_enchere"));
-				encheres.setNo_enchere(rs.getInt("no_enchere"));
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
+//				Enchere encheres = new Enchere(utilisateur, article
+//						, localDateTime, rs.getInt("montant_enchere"));
+//				encheres.setNo_enchere(rs.getInt("no_enchere"));
+				Enchere encheres = new Enchere(rs.getInt("no_enchere"), localDateTime, rs.getInt("montant_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {
