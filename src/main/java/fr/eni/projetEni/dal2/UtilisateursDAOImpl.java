@@ -19,7 +19,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 			   					VALUES  (?     , ?  , ?     , ?    ,?         , ?  , ?          , ?    , ?			 , ?	 , ?);
 			""";
 
-	final String DELETE = "DELETE	FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?;";
 
 	final String UPDATE = """
 			UPDATE UTILISATEURS
@@ -84,7 +84,7 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
