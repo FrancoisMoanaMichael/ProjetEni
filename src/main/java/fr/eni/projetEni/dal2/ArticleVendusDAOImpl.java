@@ -26,10 +26,10 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	final String SELECT_BY_ID_CATEGORIE		= "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
 	final String SELECT_BY_ID_UTILISATEUR	= "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 	
-	private UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
-	private CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
-	private RetraitsDAO		daoRetrait		= DAOFact.getRetraitsDAO();
-	private EncheresDAO		daoEnchere		= DAOFact.getEncheresDAO();
+//	private UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
+//	private CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
+//	private RetraitsDAO		daoRetrait		= DAOFact.getRetraitsDAO();
+//	private EncheresDAO		daoEnchere		= DAOFact.getEncheresDAO();
 	
 	@Override
 	public void insert(ArticlesVendu articleVendus) throws DalException {
@@ -79,12 +79,16 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-            	Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
-            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
-                result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//            	UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
+//            	CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
+//            	Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
+//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
+//                result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+            	 result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -103,12 +107,15 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				ArticlesVendu article	= new ArticlesVendu();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
+//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
+//            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				result.add(article);
+				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				result.add(article);
 			}
 		}
@@ -131,12 +138,15 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				ArticlesVendu article	= new ArticlesVendu();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
+//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
+//            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				result.add(article);
+				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				result.add(article);
 			}
 		}
@@ -159,12 +169,15 @@ List<ArticlesVendu> result = new ArrayList<>();
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				ArticlesVendu article	= new ArticlesVendu();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
+//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
+//            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+//				result.add(article);
+				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				result.add(article);
 			}
 		}

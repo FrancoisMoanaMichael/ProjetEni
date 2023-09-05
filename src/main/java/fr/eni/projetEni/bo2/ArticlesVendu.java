@@ -21,8 +21,7 @@ public class ArticlesVendu {
 	}
 	
 	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
-			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
-			Categorie categorie) {
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente) {
 		super();
 		this.nom_article = nom_article;
 		this.description = description;
@@ -30,10 +29,22 @@ public class ArticlesVendu {
 		this.date_fin_encheres = date_fin_encheres;
 		this.prix_initial = prix_initial;
 		this.prix_vente = prix_vente;
+	}
+	
+	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
+			Categorie categorie) {
+		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 	}
-
+	
+	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente) {
+		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
+		this.no_article = no_article;
+	}
+	
 	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente, Utilisateur utilisateur,
 			Categorie categorie) {
