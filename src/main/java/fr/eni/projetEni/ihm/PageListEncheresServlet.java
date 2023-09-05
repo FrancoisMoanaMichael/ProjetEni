@@ -27,13 +27,14 @@ public class PageListEncheresServlet extends HttpServlet {
 
 		String url = request.getServletPath();
 
-		HttpSession session = request.getSession(false);
 		if (url.equals("/ProjetEni/acceuil")) {
+		HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("/ProjetEni/acceuil");
 			return;
 		} else {
-			if (session != null) {
+		HttpSession session = request.getSession();
+			if (session.getAttribute("utilisateurConnecte") == null) {
 				session.invalidate();
 				request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
 			} else {
