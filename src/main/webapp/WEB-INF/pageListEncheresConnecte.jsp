@@ -61,12 +61,12 @@
 	</section>
 	<article class="container mt-5">
 		<div class="row">
-			<c:forEach var="i" begin="1" end="5">
+			<c:forEach item="${encheres} }" var="cher" begin="1" end="5">
 				<div class="col-md-4 mb-4">
 					<div class="card">
 						<img class="card-img-top" src="" alt="Image">
 						<div class="card-body">
-							<h3 class="card-title">Titre</h3>
+							<h3 class="card-title">${cher.montant_enchere} Titre</h3>
 							<p class="card-text">Prix : 210 points</p>
 							<p class="card-text">Fin de l'enchère : 10/08/2018</p>
 							<p class="card-text">Vendeur : jojo44</p>

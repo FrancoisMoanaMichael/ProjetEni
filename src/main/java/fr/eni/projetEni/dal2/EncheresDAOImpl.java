@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,14 +74,18 @@ public class EncheresDAOImpl implements EncheresDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
-				LocalDateTime localDateTime = timestamp.toLocalDateTime();
+//				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
+//				LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
 //				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
 //				Enchere encheres = new Enchere(utilisateur, article
 //						, localDateTime, rs.getInt("montant_enchere"));
-//				encheres.setNo_enchere(rs.getInt("no_enchere"));
-				Enchere encheres = new Enchere(rs.getInt("no_enchere"),rs.getInt("no_utilisateur"),rs.getInt("no_article"), rs.getInt("montant_enchere"));
+//				encheres.setNo_enchere(rs.getInt("no_enchere"));	
+
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		        LocalDateTime date_enchere = LocalDate.parse(String.valueOf( rs.getDate("date_enchere")), formatter).atStartOfDay();
+				
+		        Enchere encheres = new Enchere(rs.getInt("no_enchere"),rs.getInt("no_utilisateur"),rs.getInt("no_article"),date_enchere, rs.getInt("montant_enchere"));
 				result.add(encheres);
 			}
 		} catch (SQLException e) {

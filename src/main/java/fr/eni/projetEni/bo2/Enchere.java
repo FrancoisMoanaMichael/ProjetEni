@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 public class Enchere {
 	private Integer			no_enchere;
+	private Integer no_utilisateur;
+	private Integer no_article;
+
 	private Utilisateur		utilisateur;
 	private ArticlesVendu	article;
 	private LocalDateTime	date_enchere;
@@ -25,6 +28,15 @@ public class Enchere {
 	public Enchere(Integer no_enchere, LocalDateTime date_enchere, Integer montant_enchere) {
 		super();
 		this.no_enchere = no_enchere;
+		this.date_enchere = date_enchere;
+		this.montant_enchere = montant_enchere;
+	}
+	public Enchere(Integer no_enchere, Integer no_utilisateur, Integer no_article, LocalDateTime date_enchere,
+			Integer montant_enchere) {
+		super();
+		this.no_enchere = no_enchere;
+		this.no_utilisateur =no_utilisateur;
+		this.no_article = no_article;
 		this.date_enchere = date_enchere;
 		this.montant_enchere = montant_enchere;
 	}
@@ -69,10 +81,26 @@ public class Enchere {
 		this.montant_enchere = montant_enchere;
 	}
 
+	
+	public Integer getNo_article() {
+		return no_article;
+	}
+	
+	public void setNo_article(Integer no_article) {
+		this.no_article = no_article;
+	}
 	@Override
 	public String toString() {
 		return "Enchere [no_enchere=" + no_enchere + ", utilisateur=" + utilisateur + ", article=" + article
 				+ ", date_enchere=" + date_enchere + ", montant_enchere=" + montant_enchere + "]";
+	}
+
+	public Integer getNo_utilisateur() {
+		return no_utilisateur;
+	}
+
+	public void setNo_utilisateur(Integer no_utilisateur) {
+		this.no_utilisateur = no_utilisateur;
 	}
 	
 }

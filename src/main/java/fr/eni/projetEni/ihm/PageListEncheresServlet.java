@@ -28,7 +28,7 @@ public class PageListEncheresServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			List<Enchere> lstEnchere=  eManager.getAll();
-			lstEnchere.forEach(element -> System.out.println(element));
+			request.setAttribute("encheres", lstEnchere);
 		} catch (ManagerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
