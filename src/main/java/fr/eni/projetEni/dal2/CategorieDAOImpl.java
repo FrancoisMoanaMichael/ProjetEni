@@ -81,8 +81,9 @@ public class CategorieDAOImpl implements CategorieDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie")); 
-				Categorie categories = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
+				//List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie")); 
+				//Categorie categories = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
+				Categorie categories = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
 				result.add(categories);
 			}
 		}
@@ -104,9 +105,9 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-            	List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
-                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
-                result.setNo_categorie(rs.getInt("no_categorie"));
+            	//List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
+                //result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
+                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -126,8 +127,9 @@ public class CategorieDAOImpl implements CategorieDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-            	List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
-                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
+            	//List<ArticlesVendu> articles = dao.findByCategorieByNo(rs.getInt("no_categorie"));
+                //result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"), articles);
+                result = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
