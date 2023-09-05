@@ -3,10 +3,10 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Enchere;
-import fr.eni.projetEni.dal.DAOFact;
-import fr.eni.projetEni.dal.DalException;
-import fr.eni.projetEni.dal.EncheresDAO;
+import fr.eni.projetEni.bo2.Enchere;
+import fr.eni.projetEni.dal2.DAOFact;
+import fr.eni.projetEni.dal2.DalException;
+import fr.eni.projetEni.dal2.EncheresDAO;
 
 public class EnchereManagerImpl implements EnchereManager {
 	private EncheresDAO dao = DAOFact.getEncheresDAO();

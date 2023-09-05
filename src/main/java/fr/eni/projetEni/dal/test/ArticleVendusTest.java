@@ -1,21 +1,23 @@
 package fr.eni.projetEni.dal.test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
 
 import org.junit.Test;
 
-import fr.eni.projetEni.bo.ArticlesVendu;
-import fr.eni.projetEni.dal.ArticleVendusDAO;
-import fr.eni.projetEni.dal.ArticleVendusDAOImpl;
-import fr.eni.projetEni.dal.DalException;
+import fr.eni.projetEni.bll.CategorieManager;
+import fr.eni.projetEni.bll.CategorieManagerSing;
+import fr.eni.projetEni.bll.ManagerException;
+import fr.eni.projetEni.bll.UtilisateurManager;
+import fr.eni.projetEni.bll.UtilisateurManagerSing;
+import fr.eni.projetEni.bo2.Utilisateur;
 
 public class ArticleVendusTest {
 
-    private ArticleVendusDAO articleVendusDAO = new ArticleVendusDAOImpl();
+    //private ArticleVendusDAO articleVendusDAO = new ArticleVendusDAOImpl();
+	//private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	//private CategorieManager cManager = CategorieManagerSing.getInstance();
+	//private RetraisManager rManager = RetraisSing.getInstance();
+//	private EnchereManager eManager = EnchereManagerSing.getInstance();
 
 
 //    @Test
@@ -42,15 +44,25 @@ public class ArticleVendusTest {
 //    }
 
 
-    @Test
-    public void testFindByArticleByNo() {
-        int id = 2;  // Again, get this dynamically or set up via a fixture
-        try {
-            ArticlesVendu article = articleVendusDAO.findByArticleByNo(id);
-            assertNotNull("Article should not be null", article);
-        } catch (DalException e) {
-            fail("FindByArticleByNo failed: " + e.getMessage());
-        }
+//	 @Test
+//    public void testFindArticleByNo() throws ManagerException  {
+//        ArticlesVendu article = aManager.getArticlesVendus(2);
+//        System.out.println(article);
+//		assertNotNull(article);
+//    }
+	 
+
+	 @Test
+    public void DEBUG() throws ManagerException  {
+		 
+        //ArticlesVendu article = aManager.getArticlesVendus(2);
+		 UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+        Utilisateur user = uManager.getUtilisateur(5);
+        CategorieManager cManager = CategorieManagerSing.getInstance();
+        System.out.println(user);
+        
+        
+		assertNotNull(user);
     }
     
 //    @Test

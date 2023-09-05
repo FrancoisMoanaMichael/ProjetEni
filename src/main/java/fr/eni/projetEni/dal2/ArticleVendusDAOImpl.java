@@ -8,6 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.projetEni.bll.CategorieManager;
+import fr.eni.projetEni.bll.CategorieManagerSing;
+import fr.eni.projetEni.bll.EnchereManager;
+import fr.eni.projetEni.bll.EnchereManagerSing;
+import fr.eni.projetEni.bll.ManagerException;
+import fr.eni.projetEni.bll.RetraisManager;
+import fr.eni.projetEni.bll.RetraisSing;
+import fr.eni.projetEni.bll.UtilisateurManager;
+import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Categorie;
 import fr.eni.projetEni.bo2.Enchere;
@@ -30,6 +39,12 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	private CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
 	private RetraitsDAO		daoRetrait		= DAOFact.getRetraitsDAO();
 	private EncheresDAO		daoEnchere		= DAOFact.getEncheresDAO();
+	
+	
+	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private CategorieManager cManager = CategorieManagerSing.getInstance();
+	private RetraisManager rManager = RetraisSing.getInstance();
+	private EnchereManager eManager = EnchereManagerSing.getInstance();
 	
 	@Override
 	public void insert(ArticlesVendu articleVendus) throws DalException {
@@ -79,16 +94,26 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-            	Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
-            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
+            	//Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+            	Utilisateur user = uManager.getUtilisateur(rs.getInt("no_utilisateur"));
+            	
+            	//Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
+            	Categorie categorie = cManager.getCategorieByNo(rs.getInt("no_categorie"));
+            	
+            	//Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
+            	Retrait		retrait		= rManager.getRetraitsByArticleNo(id);
+            	
+            	//List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
+            	List<Enchere> encheres	= eManager.getEncheresByArticleID(id);
+            	
                 result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), user, categorie, retrait, encheres);
             }
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
+		} catch (ManagerException e) {
+			e.printStackTrace();
 		}
 		
 		return result;

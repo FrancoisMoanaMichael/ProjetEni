@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.projetEni.bll.ArticleVendusManager;
+import fr.eni.projetEni.bll.ArticleVendusManagerSing;
+import fr.eni.projetEni.bll.ManagerException;
+import fr.eni.projetEni.bll.UtilisateurManager;
+import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
@@ -25,8 +30,11 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String SELECT_BY_NO_USER		= "SELECT * FROM ENCHERES WHERE no_utilisateur = ?";
 	final String SELECT_BY_NO_ENCHERE	= "SELECT * FROM ENCHERES WHERE no_enchere = ?";
 	
-	private UtilisateursDAO daoUtilisateur;
-	private ArticleVendusDAO daoArticle;
+	private UtilisateursDAO daoUtilisateur = DAOFact.getUtilisateursDAO();
+	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
+	
+	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private ArticleVendusManager aManager = ArticleVendusManagerSing.getInstance();
 
 
 	@Override
@@ -77,9 +85,13 @@ public class EncheresDAOImpl implements EncheresDAO {
 			while (rs.next()) {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-				ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article
+				//Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
+				Utilisateur user = uManager.getUtilisateur(rs.getInt("no_utilisateur"));
+				
+				//ArticlesVendu article	= daoArticle.findByArticleByNo(rs.getInt("no_article"));
+				ArticlesVendu article = aManager.getArticlesVendus(rs.getInt("no_article"));
+				
+				Enchere encheres = new Enchere(user, article
 						, localDateTime, rs.getInt("montant_enchere"));
 				encheres.setNo_enchere(rs.getInt("no_enchere"));
 				result.add(encheres);
@@ -87,6 +99,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
+		} catch (ManagerException e) {
+			e.printStackTrace();
 		}
 		
 		return result;

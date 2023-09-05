@@ -2,7 +2,7 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categorie;
+import fr.eni.projetEni.bo2.Categorie;
 
 public interface CategorieManager {
 	public void addCategorie(Categorie categorie)		throws ManagerException;

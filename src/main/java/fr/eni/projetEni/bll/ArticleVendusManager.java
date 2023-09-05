@@ -2,7 +2,7 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.ArticlesVendu;
+import fr.eni.projetEni.bo2.ArticlesVendu;
 
 public interface ArticleVendusManager {
 	public List<ArticlesVendu> getAllArticlesVendus()			throws ManagerException;

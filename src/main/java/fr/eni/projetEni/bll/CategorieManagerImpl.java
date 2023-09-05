@@ -3,10 +3,10 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Categorie;
-import fr.eni.projetEni.dal.CategorieDAO;
-import fr.eni.projetEni.dal.DAOFact;
-import fr.eni.projetEni.dal.DalException;
+import fr.eni.projetEni.bo2.Categorie;
+import fr.eni.projetEni.dal2.CategorieDAO;
+import fr.eni.projetEni.dal2.DAOFact;
+import fr.eni.projetEni.dal2.DalException;
 
 public class CategorieManagerImpl implements CategorieManager {
 	private CategorieDAO dao = DAOFact.getCategorieDAO();

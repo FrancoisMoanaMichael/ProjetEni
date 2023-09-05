@@ -1,11 +1,16 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
+import java.util.List;
 
+import fr.eni.projetEni.bll.EnchereManager;
+import fr.eni.projetEni.bll.EnchereManagerSing;
 import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
+import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
+import fr.eni.projetEni.dal.DalException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,9 +26,22 @@ import jakarta.servlet.http.HttpSession;
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private EnchereManager eManager = EnchereManagerSing.getInstance();
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		List<Enchere> listeEncheres = null;
+		
+		 try {
+			listeEncheres = eManager.getAll();
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 request.setAttribute("listeEncheres", listeEncheres);
 
 		String url = request.getServletPath();
 

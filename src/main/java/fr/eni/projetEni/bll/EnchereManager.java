@@ -2,7 +2,7 @@ package fr.eni.projetEni.bll;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Enchere;
+import fr.eni.projetEni.bo2.Enchere;
 
 public interface EnchereManager {
 	public List<Enchere> getAll()							throws ManagerException;

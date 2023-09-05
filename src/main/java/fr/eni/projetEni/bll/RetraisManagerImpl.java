@@ -3,10 +3,10 @@ package fr.eni.projetEni.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retrait;
-import fr.eni.projetEni.dal.DAOFact;
-import fr.eni.projetEni.dal.DalException;
-import fr.eni.projetEni.dal.RetraitsDAO;
+import fr.eni.projetEni.bo2.Retrait;
+import fr.eni.projetEni.dal2.DAOFact;
+import fr.eni.projetEni.dal2.DalException;
+import fr.eni.projetEni.dal2.RetraitsDAO;
 
 public class RetraisManagerImpl implements RetraisManager {
 	private RetraitsDAO dao = DAOFact.getRetraitsDAO();
