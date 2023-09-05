@@ -25,12 +25,13 @@
 						<a class="nav-link" href="acceuil">Enchères</a>
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
 						<a class="nav-link" href="mon_profil">Mon Profil</a>
-						<a class="nav-link" href="acceuil">Déconnexion</a>
+						<a class="nav-link" href="deconnexion">Déconnexion</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
 	</header>
+	<h4 style="color:red">${message}</h4>
 	<h2>Mettre un article en vente</h2>
 	<div class="row">
 		<div class="col-md-6">
@@ -46,11 +47,11 @@
 				</div>
 				<div class="form-group">
 					<label for="nom_article">Nom de l'article :</label>
-					<input type="text" class="form-control" id="nom_article" name="nom_article">
+					<input type="text" class="form-control" id="nom_article" name="nom_article" maxlength="30">
 				</div>
 				<div class="form-group">
 					<label for="description">Description :</label>
-					<textarea class="form-control" id="description" name="description"></textarea>
+					<textarea class="form-control" id="description" name="description" maxlength="300"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="date_debut_encheres">Date de début d'enchères :</label>
@@ -63,10 +64,6 @@
 				<div class="form-group">
 					<label for="prix_initial">Prix initial :</label>
 					<input type="number" class="form-control" id="prix_initial" name="prix_initial">
-				</div>
-				<div class="form-group">
-					<label for="prix_vente">Prix de vente :</label>
-					<input type="number" class="form-control" id="prix_vente" name="prix_vente">
 				</div>
 				<button type="submit" class="btn btn-primary">Vendre</button>
 			</form>
