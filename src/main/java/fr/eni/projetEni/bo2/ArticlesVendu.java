@@ -39,6 +39,7 @@ public class ArticlesVendu {
 		this.categorie = categorie;
 	}
 	
+	
 	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente) {
 		this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
