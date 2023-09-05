@@ -28,7 +28,7 @@
 						<a class="nav-link" href="enchaeres">Enchères</a>
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
 						<a class="nav-link" href="mon_profil">Mon Profil</a>
-						<a class="nav-link" type="deconexion" href="acceuil">Déconnexion</a>
+						<a class="nav-link" href="deconnexion">Déconnexion</a>
 					</li>
 				</ul>
 			</div>

@@ -11,9 +11,25 @@
 	rel="stylesheet">
 </head>
 <body>
+
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="acceuil">ENI-Encheres</a>
+			<a class="navbar-brand" href="/ProjetEni/acceuil">ENI-Encheres</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="enchaeres">Enchères</a>
+						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
+						<a class="nav-link" href="mon_profil">Mon Profil</a>
+						<a class="nav-link" type="deconexion" href="deconnexion">Déconnexion</a>
+					</li>
+				</ul>
+			</div>
 		</nav>
 	</header>
 	<section>

@@ -6,7 +6,6 @@ import fr.eni.projetEni.bll.ManagerException;
 import fr.eni.projetEni.bll.UtilisateurManager;
 import fr.eni.projetEni.bll.UtilisateurManagerSing;
 import fr.eni.projetEni.bo2.Utilisateur;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,13 +27,15 @@ public class PageListEncheresServlet extends HttpServlet {
 		String url = request.getServletPath();
 
 		if (url.equals("/ProjetEni/acceuil")) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 			session.invalidate();
 			response.sendRedirect("/ProjetEni/acceuil");
 			return;
 		} else {
 		HttpSession session = request.getSession();
+		
 			if (session.getAttribute("utilisateurConnecte") == null) {
+				System.out.println(session.getAttribute("utilisateurConnecte"));
 				session.invalidate();
 				request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
 			} else {

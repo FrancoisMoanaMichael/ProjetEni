@@ -15,17 +15,21 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, jakarta.servlet.ServletException {
-		request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		HttpSession session = request.getSession(false); // Ne crée pas de nouvelle session si elle n'existe pas
 
 		if (session != null) {
 			session.invalidate(); // Invalide la session actuelle
 		}
-		response.sendRedirect("WEB-INF/PageAccueilNonConnecte.jsp"); // Par exemple, redirigez vers une page de
-																		// connexion
+		request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+//		HttpSession session = request.getSession(false); // Ne crée pas de nouvelle session si elle n'existe pas
+//
+//		if (session != null) {
+//			session.invalidate(); // Invalide la session actuelle
+//		}
+//		request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
 	}
 }
