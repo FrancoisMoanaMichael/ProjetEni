@@ -23,7 +23,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
-						<a class="nav-link" href="mon_profil">Mon Profil</a> <a
+						<a class="nav-link" href="/ProjetEni/mon_profil">Mon Profil</a> <a
 						class="nav-link" href="acceuil">Déconnexion</a></li>
 				</ul>
 			</div>
@@ -60,6 +60,16 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Enchérir</button>
 			</form>
+
+			<%
+			if (request.getAttribute("erreur") != null) {
+			%>
+			<div class="alert alert-danger">
+				<%=request.getAttribute("erreur")%>
+			</div>
+			<%
+			}
+			%>
 
 
 		</div>

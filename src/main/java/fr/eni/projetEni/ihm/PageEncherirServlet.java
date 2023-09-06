@@ -43,16 +43,16 @@ public class PageEncherirServlet extends HttpServlet {
 			}
 
 			request.setAttribute("enchere", enchere);
-			
+			System.out.println(enchere);
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageEncherir.jsp");
 			rd.forward(request, response);
-			
+
 		} else {
 			// Gérez ici le cas où l'ID est null si nécessaire
 			return;
 		}
 
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -60,20 +60,23 @@ public class PageEncherirServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		// Utilisateur utilisateur = new Utilisateur();
+		request.setAttribute("erreur", "salut");
+
+		String id_enchere = request.getParameter("id_enchere");
+		int num = Integer.parseInt(id_enchere);
 
 		if (session.getAttribute("utilisateurConnecte") == null) {
-			//session.invalidate();
-			response.sendRedirect("/ProjetEni/");
+			session.invalidate();
+			request.setAttribute("erreur", "Merci de vous connecter!");
+			response.sendRedirect("/ProjetEni/encherir/" + num);
 			return;
 		} else {
-			
+
 			Utilisateur utilisateur = new Utilisateur();
 			utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
-			
-			String montant = request.getParameter("montant");
-			String id_enchere = request.getParameter("id_enchere");
 
-			int num = Integer.parseInt(id_enchere);
+			String montant = request.getParameter("montant");
+
 			int montant_int = Integer.parseInt(montant);
 
 			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
@@ -83,19 +86,30 @@ public class PageEncherirServlet extends HttpServlet {
 			} catch (DalException e) {
 				e.printStackTrace();
 			}
-			
 
 			if (enchere.getMontant_enchere() >= montant_int) {
-				// TODO
+				request.setAttribute("erreur", "Merci de mettre un montant plus élevé que l'offre en cours!");
+				response.sendRedirect("/ProjetEni/encherir/" + num);
 				return;
 			}
-			
-			//System.out.println(utilisateur.getNo_utilisateur());
+
+			if (enchere.getMontant_enchere() <= utilisateur.getCredit()) {
+				request.setAttribute("erreur", "Vous n'avez pas assez de crédit!");
+				response.sendRedirect("/ProjetEni/encherir/" + num);
+				return;
+			}
+
 			try {
-				encheresDAO.update(enchere, num, montant_int);
+				enchere.setNo_utilisateur(num);
+				enchere.setMontant_enchere(montant_int);
+				encheresDAO.update(enchere);
 			} catch (DalException e) {
+				request.setAttribute("erreur", "Erreur lors de la mise à jour de l'enchère");
 				e.printStackTrace();
 			}
+
+			response.sendRedirect("/ProjetEni/encherir/" + num);
+			return;
 
 		}
 

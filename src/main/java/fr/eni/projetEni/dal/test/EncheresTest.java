@@ -50,7 +50,9 @@ public class EncheresTest {
     public void testFindEnchereByArticleId() throws DalException {
 		enchereDAO = new EncheresDAOImpl();
         Enchere x =  enchereDAO.findEnchereById(3);
-        enchereDAO.update(x, 7, 500);
+        x.setNo_utilisateur(7);
+        x.setMontant_enchere(506);
+        enchereDAO.update(x);
     }
 
 }
