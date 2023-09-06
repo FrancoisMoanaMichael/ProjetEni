@@ -146,6 +146,39 @@ public class UtilisateursDAOImpl implements UtilisateursDAO {
 
 		return result;
 	}
+	
+	@Override
+	public Utilisateur findUtilisateurByNo2(int id) throws DalException {
+		Utilisateur result = new Utilisateur();
+
+		try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+//				List<ArticlesVendu> articles = daoArticle.findByUtilisateurByNo(rs.getInt("no_utilisateur"));
+				result = new Utilisateur(
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"), 
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur"));				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+
+		return result;
+	}
 //
 //	@Override
 //	public Utilisateur findUtilisateurByNo(int id) throws DalException {

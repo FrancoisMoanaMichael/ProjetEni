@@ -17,4 +17,6 @@ public interface UtilisateursDAO {
 
 	public Utilisateur check(String login, String password) throws DalException;
 
+	Utilisateur findUtilisateurByNo2(int id) throws DalException;
+
 }
