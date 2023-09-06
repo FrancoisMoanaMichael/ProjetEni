@@ -24,7 +24,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="enchaeres">Enchères</a>
+					<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
 						<a class="nav-link" href="mon_profil">Mon Profil</a> <a
 						class="nav-link" href="deconnexion">Déconnexion</a></li>
@@ -51,6 +51,9 @@
 							<option value="vetement">Vêtement</option>
 							<option value="sportLoisirs">Sport & Loisirs</option>
 						</select>
+					</div>
+					<div class = "form-group">
+					
 					</div>
 					<button type="submit" class="btn btn-primary">Rechercher</button>
 				</form>

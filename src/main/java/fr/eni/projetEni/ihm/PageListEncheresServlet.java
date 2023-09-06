@@ -35,9 +35,7 @@ public class PageListEncheresServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		String url = request.getServletPath();
-		if(url.equals("/ProjetEni/connexion")) {
-			response.sendRedirect("/ProjetEni/acceuil");
-		}
+		
 		if (url.equals("/ProjetEni/acceuil") || url.equals("/ProjetEni")) {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
