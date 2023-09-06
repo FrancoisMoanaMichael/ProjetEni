@@ -24,7 +24,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String SELECT_BY_NO_ARTICLE = "SELECT * FROM ENCHERES WHERE no_article=?;";
 	final String SELECT_BY_NO_USER = "SELECT * FROM ENCHERES WHERE no_utilisateur = ?";
 	final String SELECT_BY_NO_ENCHERE = "SELECT * FROM ENCHERES WHERE no_enchere = ?";
-	final String UPDATE_BY_ID = "UPDATE ENCHERES SET no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=? WHERE no_enchere=?";
+	final String UPDATE_BY_ID = "UPDATE ENCHERES SET no_utilisateur=?, montant_enchere=? WHERE no_enchere=?";
 
 //	private UtilisateursDAO daoUtilisateur = DAOFact.getUtilisateursDAO();
 //	private ArticleVendusDAO daoArticle = DAOFact.getArticleVenduDAO();
@@ -190,18 +190,12 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 
 	@Override
-	public void update(Enchere enchere) throws DalException {
+	public void update(Enchere enchere, int no_utilisateur, int montant_enchere) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(UPDATE_BY_ID);
-			stmt.setInt(1, enchere.getUtilisateur().getNo_utilisateur());
-			stmt.setInt(2, enchere.getArticle().getNo_article());
-
-			LocalDateTime ldt = enchere.getDate_enchere();
-			java.sql.Date sqlDate = java.sql.Date.valueOf(ldt.toLocalDate());
-			stmt.setDate(3, sqlDate);
-
-			stmt.setInt(4, enchere.getMontant_enchere());
-			stmt.setInt(5, enchere.getNo_enchere());
+			stmt.setInt(1, no_utilisateur);
+			stmt.setInt(2, montant_enchere);
+			stmt.setInt(3, enchere.getNo_enchere());
 
 			int nb = stmt.executeUpdate();
 
