@@ -18,8 +18,11 @@ import fr.eni.projetEni.bll2.ArticleVendusManagerSing;
 import fr.eni.projetEni.bll2.CategorieManager;
 import fr.eni.projetEni.bll2.CategorieManagerSing;
 import fr.eni.projetEni.bll2.ManagerException;
+import fr.eni.projetEni.bll2.RetraisManager;
+import fr.eni.projetEni.bll2.RetraisManagerSing;
 import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Categorie;
+import fr.eni.projetEni.bo2.Retrait;
 import fr.eni.projetEni.bo2.Utilisateur;
 
 /**
@@ -28,7 +31,8 @@ import fr.eni.projetEni.bo2.Utilisateur;
 @WebServlet("/vendre_un_article")
 public class VendreArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArticleVendusManager AVManager	= ArticleVendusManagerSing.getInstance();
+	private ArticleVendusManager 	AVManager	= ArticleVendusManagerSing.getInstance();
+	private RetraisManager			rManager	= RetraisManagerSing.getInstance();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,8 +51,9 @@ public class VendreArticleServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
-		ArticlesVendu newArticle = null;
-		Categorie categorie = new Categorie();
+		ArticlesVendu	newArticle	= null;
+		Retrait			newRetrait	= null;
+		Categorie		categorie	= new Categorie();
 		categorie.setNo_categorie(Integer.parseInt(request.getParameter("categorie")));
 			
 		if (session.getAttribute("utilisateurConnecte") == null) {
@@ -65,12 +70,16 @@ public class VendreArticleServlet extends HttpServlet {
 						Integer.parseInt(request.getParameter("prix_initial")));
 				newArticle.setCategorie(categorie);
 				newArticle.setUtilisateur(utilisateur);
+				
+				newRetrait = new Retrait(request.getParameter("rue"), request.getParameter("code_postal"), request.getParameter("ville"));
 			} catch (NumberFormatException e) {
 				request.setAttribute("message", "L'un des champs saisi doit contenir un numérique");
 			}
 			
 			try {
 				AVManager.addArticlesVendus(newArticle);
+				newRetrait.setArticle(newArticle);
+				rManager.addRetraits(newRetrait);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
 				rd.forward(request, response);
 			} catch (ManagerException e) {

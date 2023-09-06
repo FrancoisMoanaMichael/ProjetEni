@@ -10,12 +10,16 @@ public class Retrait {
 		super();
 	}
 	
-	public Retrait(ArticlesVendu article, String rue, String code_postal, String ville) {
+	public Retrait(String rue, String code_postal, String ville) {
 		super();
-		this.article = article;
 		this.rue = rue;
 		this.code_postal = code_postal;
 		this.ville = ville;
+	}
+	
+	public Retrait(ArticlesVendu article, String rue, String code_postal, String ville) {
+		this(rue, code_postal, ville);
+		this.article = article;
 	}
 	
 	public ArticlesVendu getArticle() {

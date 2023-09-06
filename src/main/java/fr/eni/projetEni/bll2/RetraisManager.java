@@ -2,7 +2,7 @@ package fr.eni.projetEni.bll2;
 
 import java.util.List;
 
-import fr.eni.projetEni.bo.Retrait;
+import fr.eni.projetEni.bo2.Retrait;
 
 public interface RetraisManager {
 	public List<Retrait> getAllRetraits()			throws ManagerException;
