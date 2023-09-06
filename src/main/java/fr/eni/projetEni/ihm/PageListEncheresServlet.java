@@ -55,7 +55,6 @@ public class PageListEncheresServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			if (session.getAttribute("utilisateurConnecte") == null) {
 				session.invalidate();
-				request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
 			} else {
 				// code generation des enchères connecter
 //				Utilisateur utilisateur = new Utilisateur();
@@ -71,8 +70,8 @@ public class PageListEncheresServlet extends HttpServlet {
 //				request.setAttribute("articles", lstArticleUtilisateur);
 
 				request.setAttribute("articles", lstArticle);
-				request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
 			}
+			request.getRequestDispatcher("/WEB-INF/pageListEncheres.jsp").forward(request, response);
 		}
 	}
 
@@ -109,11 +108,10 @@ public class PageListEncheresServlet extends HttpServlet {
 		
 		if (session.getAttribute("utilisateurConnecte") == null) {
 			System.out.println("btn off:"+btn);
-			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
 		} else {
 			System.out.println("btn on:"+btn);
-			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
 		}
+		request.getRequestDispatcher("/WEB-INF/pageListEncheres.jsp").forward(request, response);
 
 	}
 

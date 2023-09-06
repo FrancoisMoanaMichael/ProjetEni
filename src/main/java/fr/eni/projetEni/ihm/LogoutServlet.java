@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
 		if (session != null) {
 			session.invalidate(); // Invalide la session actuelle
 		}
-		request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
+		response.sendRedirect("/ProjetEni/acceuil");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
