@@ -10,7 +10,6 @@ import java.util.List;
 
 import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Categorie;
-import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Retrait;
 import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.utils.ConnectionProvider;
@@ -22,7 +21,6 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			""";
 	final String DELETE						= "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	final String SELECT_BY_ID_ARTICLE		= "SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?;";
-//	final String SELECT_ALL					= "SELECT * FROM ARTICLES_VENDUS;";
 	final String SELECT_ALL					= """
             SELECT *
             FROM ARTICLES_VENDUS a
@@ -32,11 +30,19 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
                 """;
 	final String SELECT_BY_ID_CATEGORIE		= "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
 	final String SELECT_BY_ID_UTILISATEUR	= "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
-	
-//	private UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
-//	private CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
-//	private RetraitsDAO		daoRetrait		= DAOFact.getRetraitsDAO();
-//	private EncheresDAO		daoEnchere		= DAOFact.getEncheresDAO();
+	final String SELECT_FIN_ENCHERES		= """
+				SELECT *
+				FROM ARTICLES_VENDUS
+				WHERE date_fin_encheres  <= GETDATE()
+				  AND transaction_realise = 0;
+			""";
+	final String UPDATE						= """
+				UPDATE ARTICLES_VENDUS
+				SET
+					prix_vente			= ?,
+					transaction_realise = ?
+				WHERE no_article = ?
+			""";
 	
 	@Override
 	public void insert(ArticlesVendu articleVendus) throws DalException {
@@ -75,6 +81,20 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			throw new DalException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public void update(ArticlesVendu articleVendus) throws DalException{
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
+			stmt.setInt(3, articleVendus.getPrix_vente());
+			stmt.setBoolean(3, articleVendus.getTransaction_realise());
+			stmt.setInt(3, articleVendus.getNo_article());
+			stmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DalException(e.getMessage());
+		}
+	}
 
 	@Override
 	public ArticlesVendu findByArticleByNo(int id) throws DalException {
@@ -86,14 +106,6 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			
 			ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
-//            	UtilisateursDAO daoUtilisateur	= DAOFact.getUtilisateursDAO();
-//            	CategorieDAO	daoCategorie	= DAOFact.getCategorieDAO();
-//            	Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(id);
-//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(id);
-//                result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
             	 result = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                  		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
             }
@@ -104,35 +116,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 		
 		return result;
 	}
-//
-//	@Override
-//	public List<ArticlesVendu> getAll() throws DalException {
-//		List<ArticlesVendu> result = new ArrayList<>();
-//		
-//		try (Connection con = ConnectionProvider.getConnection()){
-//			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
-//			ResultSet rs = stmt.executeQuery();
-//			while(rs.next()) {
-//				ArticlesVendu article	= new ArticlesVendu();
-////				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-////            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-////            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-////            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-////            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-////                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
-////				result.add(article);
-//				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
-//				result.add(article);
-//			}
-//		}
-//		catch(SQLException e) {
-//			e.printStackTrace();
-//			throw new DalException(e.getMessage());
-//		}
-//		
-//		return result;
-//	}
+	
     @Override
     public List<ArticlesVendu> getAll() throws DalException {
 
@@ -162,13 +146,6 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				ArticlesVendu article	= new ArticlesVendu();
-//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-//            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
-//				result.add(article);
 				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				result.add(article);
@@ -184,7 +161,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 
 	@Override
 	public List<ArticlesVendu> findByUtilisateurByNo(int id) throws DalException {
-List<ArticlesVendu> result = new ArrayList<>();
+		List<ArticlesVendu> result = new ArrayList<>();
 		
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID_UTILISATEUR);
@@ -193,13 +170,6 @@ List<ArticlesVendu> result = new ArrayList<>();
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				ArticlesVendu article	= new ArticlesVendu();
-//				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo(rs.getInt("no_utilisateur"));
-//            	Categorie	categorie	= daoCategorie.findByNo(rs.getInt("no_categorie"));
-//            	Retrait		retrait		= daoRetrait.findRetraitsByNoArticle(rs.getInt("no_article"));
-//            	List<Enchere> encheres	= daoEnchere.findEnchereByArticleId(rs.getInt("no_article"));
-//            	article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-//                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, retrait, encheres);
-//				result.add(article);
 				article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				result.add(article);
