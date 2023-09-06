@@ -65,9 +65,9 @@
 						<img class="card-img-top" src="" alt="Image">
 						<div class="card-body">
 							<h3 class="card-title">${art.nom_article}</h3>
-							<p class="card-text">Prix : 210 points</p>
-							<p class="card-text">Fin de l'enchère : 10/08/2018</p>
-							<p class="card-text">Vendeur : jojo44</p>
+							<p class="card-text">Prix : ${art.prix_vente} points</p>
+							<p class="card-text">Fin de l'enchère : ${art.date_fin_encheres}</p>
+							<p class="card-text">Vendeur : ${art.utilisateur.pseudo}</p>
 						</div>
 					</div>
 				</div>
