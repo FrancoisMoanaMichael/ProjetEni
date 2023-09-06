@@ -25,20 +25,22 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-auto">
 					<c:if test="${sessionScope.utilisateurConnecte != null}">
-						<p>bonjour ${sessionScope.utilisateurConnecte.pseudo}</p>
+						<li class="nav-item"><a class="nav-link dark"
+							href="mon_profil"><p>Bonjour
+									${sessionScope.utilisateurConnecte.pseudo}</p></a></li>
+						<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="vendre_un_article">Vendre un article</a></li>
+						<li class="nav-item"><a class="nav-link" href="mon_profil">Mon
+								Profil</a></li>
+						<li class="nav-item"><a class="nav-link" href="deconnexion">Déconnexion</a>
+						</li>
 					</c:if>
-					<li class="nav-item">
-						<c:if test="${sessionScope.utilisateurConnecte == null}">
-								<a class="nav-link" href="connexion">Connection</a>
-						</c:if> 
-						<c:if test="${sessionScope.utilisateurConnecte != null}">
-								<a class="nav-link" href="acceuil">Enchères</a>
-								<a class="nav-link" href="vendre_un_article">Vendre un
-									article</a>
-								<a class="nav-link" href="mon_profil">Mon Profil</a>
-								<a class="nav-link" href="deconnexion">Déconnexion</a>
-						</c:if>
-					</li>
+					<c:if test="${sessionScope.utilisateurConnecte == null}">
+						<li class="nav-item"><a class="nav-link" href="connexion">Connexion</a>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 		</nav>
@@ -62,7 +64,52 @@
 							</c:forEach>
 						</select>
 					</div>
-					<div class="form-group"></div>
+					<c:if test="${sessionScope.utilisateurConnecte != null}">
+						<div class="form-group">
+							<div>
+								<div>
+									<input type="radio" name="achat"  id="achat" class="form-check-input">
+									<label class="form-check-label">Achats</label>
+								</div>
+								<div>
+									<input type="checkbox" name="enchereOuvert" id="enchereOuvert"
+										class="form-check-input"> <label
+										class="form-check-label">enchères ouvertes</label>
+								</div>
+								<div>
+									<input type="checkbox" name="enchèreEnCours"
+										id="enchereEnCours" class="form-check-input"> <label
+										class="form-check-label">mes enchères en cours</label>
+								</div>
+								<div>
+									<input type="checkbox" name="enchereRemporter"
+										id="enchereRemporter" class="form-check-input"> <label
+										class="form-check-label">mes enchères remportées</label>
+								</div>
+							</div>
+							<div>
+								<div>
+									<input type="radio" id="achat2" class="form-check-input">
+									<label class="form-check-label">Mes ventes</label>
+								</div>
+								<div>
+									<input type="checkbox" name="ventEnCours"
+										id="enchereOuvert2" class="form-check-input"> <label
+										class="form-check-label">mes ventes en cours</label>
+								</div>
+								<div>
+									<input type="checkbox" name="ventNonDebutees"
+										id="enchereEnCours2" class="form-check-input"> <label
+										class="form-check-label">ventes non débutées</label>
+								</div>
+								<div>
+									<input type="checkbox" name="ventesTerminee"
+										id="enchereRemporter2" class="form-check-input"> <label
+										class="form-check-label">ventes terminées</label>
+								</div>
+							</div>
+						</div>
+					</c:if>
 					<button type="submit" name="btnRechercher" value="rechercher"
 						class="btn btn-primary">Rechercher</button>
 				</form>
