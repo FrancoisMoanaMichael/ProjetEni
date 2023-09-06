@@ -83,6 +83,7 @@ public class PageListEncheresServlet extends HttpServlet {
 		List<ArticlesVendu> lstArticleFiltre = new ArrayList<ArticlesVendu>();
 		List<Categorie> lstCategorie = new ArrayList<Categorie>();
 		String categorie = request.getParameter("categorie");
+		String bAchats = request.getParameter("achat");
 		try {
 			lstCategorie = cManager.getAllCategories();
 			request.setAttribute("categories", lstCategorie);
@@ -93,11 +94,9 @@ public class PageListEncheresServlet extends HttpServlet {
 			lstArticle = aManager.getAllArticlesVendus();
 //			lstArticle = lstArticle.stream().filter(e->  e.getCategorie().getNo_categorie() == 16).forEach(e -> System.out.println("testt: "+ e.getCategorie().getLibelle()));
 			if(categorie.isBlank()) {
-				System.out.println("c'est vide");
 				request.setAttribute("articles", lstArticle);
 				request.setAttribute("categorie", categorie);
 			}else {
-				System.out.println("c'est pas vide");
 				lstArticle.stream().filter(e->  e.getCategorie().getNo_categorie() == Integer.valueOf(categorie)).forEach(e -> lstArticleFiltre.add(e));
 				request.setAttribute("articles", lstArticleFiltre);
 				request.setAttribute("categorie",categorie);
@@ -107,9 +106,7 @@ public class PageListEncheresServlet extends HttpServlet {
 		}
 		
 		if (session.getAttribute("utilisateurConnecte") == null) {
-			System.out.println("btn off:"+btn);
 		} else {
-			System.out.println("btn on:"+btn);
 		}
 		request.getRequestDispatcher("/WEB-INF/pageListEncheres.jsp").forward(request, response);
 
