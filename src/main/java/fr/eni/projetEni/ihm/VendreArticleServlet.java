@@ -28,7 +28,7 @@ import fr.eni.projetEni.bo2.Utilisateur;
 @WebServlet("/vendre_un_article")
 public class VendreArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArticleVendusManager	AVManager	= ArticleVendusManagerSing.getInstance();
+	private ArticleVendusManager AVManager	= ArticleVendusManagerSing.getInstance();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,34 +45,39 @@ public class VendreArticleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
 		
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
 		ArticlesVendu newArticle = null;
 		Categorie categorie = new Categorie();
 		categorie.setNo_categorie(Integer.parseInt(request.getParameter("categorie")));
-		
-		try {
-			newArticle = new ArticlesVendu(
-					request.getParameter("nom_article"),
-					request.getParameter("description"),
-					LocalDate.parse(request.getParameter("date_debut_encheres")),
-					LocalDate.parse(request.getParameter("date_fin_encheres")),
-					Integer.parseInt(request.getParameter("prix_initial")),
-					Integer.parseInt(request.getParameter("prix_vente")));
-			newArticle.setCategorie(categorie);
-			newArticle.setUtilisateur(utilisateur);
-		} catch (NumberFormatException e) {
-			request.setAttribute("message", "L'un des champs saisi doit contenir un numérique");
-		}
-		
-		try {
-			AVManager.addArticlesVendus(newArticle);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
-			rd.forward(request, response);
-		} catch (ManagerException e) {
-			request.setAttribute("message", "L'un des champs saisi doit contenir un numérique");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageVendreUnArticle.jsp");
-			rd.forward(request, response);
+			
+		if (session.getAttribute("utilisateurConnecte") == null) {
+			System.out.println(session.getAttribute("utilisateurConnecte"));
+			session.invalidate();
+			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
+		} else {
+			try {
+				newArticle = new ArticlesVendu(
+						request.getParameter("nom_article"),
+						request.getParameter("description"),
+						LocalDate.parse(request.getParameter("date_debut_encheres")),
+						LocalDate.parse(request.getParameter("date_fin_encheres")),
+						Integer.parseInt(request.getParameter("prix_initial")));
+				newArticle.setCategorie(categorie);
+				newArticle.setUtilisateur(utilisateur);
+			} catch (NumberFormatException e) {
+				request.setAttribute("message", "L'un des champs saisi doit contenir un numérique");
+			}
+			
+			try {
+				AVManager.addArticlesVendus(newArticle);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
+				rd.forward(request, response);
+			} catch (ManagerException e) {
+				request.setAttribute("message", e);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageVendreUnArticle.jsp");
+				rd.forward(request, response);
+			}
 		}
 	}
 	
