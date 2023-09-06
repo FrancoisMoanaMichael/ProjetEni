@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Retrait;
 import fr.eni.projetEni.utils.ConnectionProvider;
 
@@ -17,10 +18,17 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 							VALUES	(?		   , ?	, ?			 , ?)
 			""";
 	final String DELETE			= "DELETE FROM RETRAITS WHERE no_article = ?";
-	final String SELECT_ALL		= "SELECT * FROM RETRAITS";
-	final String SELECT_BY_ID	= "SELECT * FROM RETRAITS WHERE = no_article = ?";
-	
-	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
+	final String SELECT_ALL		= """
+			SELECT r.no_article, r.rue, r.code_postal, r.ville, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, av.prix_initial, av.prix_vente
+			FROM RETRAITS				AS r
+			INNER JOIN ARTICLES_VENDUS	AS av ON av.no_article = r.no_article;
+			""";
+	final String SELECT_BY_ID	= """
+			SELECT r.no_article, r.rue, r.code_postal, r.ville, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, av.prix_initial, av.prix_vente
+			FROM RETRAITS				AS r
+			INNER JOIN ARTICLES_VENDUS	AS av ON av.no_article = r.no_article
+			WHERE = av.no_article = ?;
+			""";
 	
 	@Override
 	public void insert(Retrait retraits) throws DalException {
@@ -42,7 +50,7 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, id);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
@@ -57,9 +65,10 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
+			ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_initial"));
 			
 			while(rs.next()) {
-				result = new Retrait(dao.findByArticleByNo(rs.getInt("no_article")), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				result = new Retrait(article, rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,8 +85,10 @@ public class RetraitsDAOImpl implements RetraitsDAO {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
+			ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_initial"));
+			
 			while(rs.next()) {
-				Retrait retrait = new Retrait(dao.findByArticleByNo(rs.getInt("no_article")), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				Retrait retrait = new Retrait(article, rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				result.add(retrait);
 			}
 		} catch (SQLException e) {

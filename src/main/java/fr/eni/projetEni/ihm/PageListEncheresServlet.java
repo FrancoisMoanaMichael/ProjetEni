@@ -1,15 +1,13 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEni.bll2.ArticleVendusManager;
 import fr.eni.projetEni.bll2.ArticleVendusManagerSing;
-import fr.eni.projetEni.bll2.EnchereManager;
-import fr.eni.projetEni.bll2.EnchereManagerSing;
 import fr.eni.projetEni.bll2.ManagerException;
 import fr.eni.projetEni.bo2.ArticlesVendu;
-import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,37 +23,44 @@ import jakarta.servlet.http.HttpSession;
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 //	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
-	private ArticleVendusManager aManager =  ArticleVendusManagerSing.getInstance();
+	private ArticleVendusManager aManager = ArticleVendusManagerSing.getInstance();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		List<ArticlesVendu> lstArticle = new ArrayList<ArticlesVendu>();
 		try {
-			List<ArticlesVendu> lstArticle=  aManager.getAllArticlesVendus();
-			lstArticle.stream().forEach(System.out::println);
+			lstArticle = aManager.getAllArticlesVendus();
 			request.setAttribute("articles", lstArticle);
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
 		String url = request.getServletPath();
-
-		if (url.equals("/ProjetEni/acceuil")) {
-		HttpSession session = request.getSession(false);
+		
+		if (url.equals("/ProjetEni/acceuil") || url.equals("/ProjetEni")) {
+			HttpSession session = request.getSession(false);
 			session.invalidate();
 			response.sendRedirect("/ProjetEni/acceuil");
 			return;
 		} else {
-		HttpSession session = request.getSession();
-		
+			HttpSession session = request.getSession();
 			if (session.getAttribute("utilisateurConnecte") == null) {
-				System.out.println(session.getAttribute("utilisateurConnecte"));
 				session.invalidate();
 				request.getRequestDispatcher("/WEB-INF/pagesAccueilNonConnecte.jsp").forward(request, response);
 			} else {
-				Utilisateur utilisateur = new Utilisateur();
-				utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
 				// code generation des enchères connecter
+//				Utilisateur utilisateur = new Utilisateur();
+//				List<ArticlesVendu> lstArticleUtilisateur = new ArrayList<ArticlesVendu>();
+//				
+//				utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+//				Integer noUtilisateur = utilisateur.getNo_utilisateur();
+//				
+//				lstArticle.stream().filter(e -> e.getUtilisateur().getNo_utilisateur() == noUtilisateur)
+//						.forEach(e -> lstArticleUtilisateur.add(e));
+//
+////				lstArticleUtilisateur.forEach(System.out::println);
+//				request.setAttribute("articles", lstArticleUtilisateur);
 				
-				
+				request.setAttribute("articles", lstArticle);
 				request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
 			}
 		}

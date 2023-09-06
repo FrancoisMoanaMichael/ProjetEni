@@ -69,8 +69,9 @@ public class LoginServlet extends HttpServlet {
 			}
 			request.setAttribute("message", "");
 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("/ProjetEni/acceuil");
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
+//			rd.forward(request, response);
 		}
 
 	}

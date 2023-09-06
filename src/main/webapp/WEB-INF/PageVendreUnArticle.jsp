@@ -65,6 +65,19 @@
 					<label for="prix_initial">Prix initial :</label>
 					<input type="number" class="form-control" id="prix_initial" name="prix_initial">
 				</div>
+				<h3>Modalités du retrait</h3>
+				<div class="form-group">
+					<label for="rue">Rue :</label>
+					<input type="text" class="form-control" id="rue" name="rue" maxlength="30">
+				</div>
+				<div class="form-group">
+					<label for="code_postal">Nom de l'article :</label>
+					<input type="text" class="form-control" id="code_postal" name="code_postal" maxlength="15">
+				</div>
+				<div class="form-group">
+					<label for="ville">Nom de l'article :</label>
+					<input type="text" class="form-control" id="ville" name="ville" maxlength="30">
+				</div>
 				<button type="submit" class="btn btn-primary">Vendre</button>
 			</form>
 		</div>
