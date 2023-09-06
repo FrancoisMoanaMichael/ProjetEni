@@ -65,7 +65,7 @@
 			<c:forEach var="art" items="${articles}" >
 				<div class="col-md-4 mb-4">
 					<div class="card">
-						<img class="card-img-top" src="" alt="Image">
+						<img class="card-img-top" src="https://picsum.photos/200?random=${art.no_article}" alt="Image">
 						<div class="card-body">
 							<h3 class="card-title">${art.nom_article}</h3>
 							<p class="card-text">Prix : ${art.prix_vente} points</p>
