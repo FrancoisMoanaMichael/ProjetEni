@@ -17,5 +17,5 @@ public interface EncheresDAO {
 
 	public Enchere findEnchereById(int id) throws DalException;
 
-	public void updateById(Enchere enchere) throws DalException;
+	void update(Enchere enchere) throws DalException;
 }

@@ -49,7 +49,7 @@ public class EncheresTest {
 	@Test
     public void testFindEnchereByArticleId() throws DalException {
 		enchereDAO = new EncheresDAOImpl();
-        List<Enchere> x =  enchereDAO.getAll();
+        Enchere x =  enchereDAO.findEnchereById(3);
         System.out.println(x);
     }
 

@@ -125,7 +125,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	@Override
 	public Enchere findEnchereById(int id) throws DalException {
-		Enchere result = new Enchere();
+		Enchere enchere = new Enchere();
 		UtilisateursDAOImpl daoUtilisateur = new UtilisateursDAOImpl();
 		ArticleVendusDAOImpl daoArticleVendus = new ArticleVendusDAOImpl();
 
@@ -147,16 +147,15 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo2(rs.getInt("no_utilisateur"));
 				ArticlesVendu article = daoArticleVendus.findByArticleByNo(rs.getInt("no_article"));
-				Enchere encheres = new Enchere(utilisateur, article, localDateTime, rs.getInt("montant_enchere"));
-				encheres.setNo_enchere(rs.getInt("no_enchere"));
-				result = encheres;
+				enchere = new Enchere(utilisateur, article, localDateTime, rs.getInt("montant_enchere"));
+				enchere.setNo_enchere(rs.getInt("no_enchere"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DalException(e.getMessage());
 		}
 
-		return result;
+		return enchere;
 	}
 
 	@Override
@@ -191,7 +190,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 	}
 
 	@Override
-	public void updateById(Enchere enchere) throws DalException {
+	public void update(Enchere enchere) throws DalException {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(UPDATE_BY_ID);
 			stmt.setInt(1, enchere.getUtilisateur().getNo_utilisateur());
