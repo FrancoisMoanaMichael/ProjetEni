@@ -11,6 +11,7 @@ public class ArticlesVendu {
 	private LocalDate		date_fin_encheres;
 	private Integer			prix_initial;
 	private Integer			prix_vente;
+	private Boolean			transaction_realise;
 	private Utilisateur		utilisateur;
 	private Categorie		categorie;
 	private Retrait			retrait;
@@ -29,6 +30,7 @@ public class ArticlesVendu {
 		this.date_fin_encheres = date_fin_encheres;
 		this.prix_initial = prix_initial;
 		this.prix_vente = 0;
+		this.transaction_realise = false;
 	}
 	
 	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
@@ -133,6 +135,14 @@ public class ArticlesVendu {
 	public void setPrix_vente(Integer prix_vente) {
 		this.prix_vente = prix_vente;
 	}
+	
+	public Boolean getTransaction_realise() {
+		return transaction_realise;
+	}
+
+	public void setTransaction_realise(Boolean transaction_realise) {
+		this.transaction_realise = transaction_realise;
+	}
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
@@ -174,9 +184,9 @@ public class ArticlesVendu {
 	public String toString() {
 		return "ArticlesVendu [no_article=" + no_article + ", nom_article=" + nom_article + ", description="
 				+ description + ", date_debut_encheres=" + date_debut_encheres + ", date_fin_encheres="
-				+ date_fin_encheres + ", prix_initial=" + prix_initial + ", prix_vente=" + prix_vente + ", utilisateur="
-				+ utilisateur + ", categorie=" + categorie + ", retrait=" + retrait + ", lstEncheres=" + lstEncheres
-				+ "]";
+				+ date_fin_encheres + ", prix_initial=" + prix_initial + ", prix_vente=" + prix_vente
+				+ ", transaction_realise=" + transaction_realise + ", utilisateur=" + utilisateur + ", categorie="
+				+ categorie + ", retrait=" + retrait + ", lstEncheres=" + lstEncheres + "]";
 	}
 	
 }
