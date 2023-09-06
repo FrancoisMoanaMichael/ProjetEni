@@ -24,9 +24,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-auto">
-							 <li class="nav-item">
-		                        <a class="nav-link" href="connexion">Connection</a>
-		                    </li> 
+					<li class="nav-item"><a class="nav-link" href="connexion">Connection</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -35,7 +34,7 @@
 		<h2>Liste des enchères</h2>
 		<div class="row">
 			<div class="col-md-6">
-				<form action="connexion" method="post">
+				<form action="acceuil" method="post">
 					<h3>Filtres:</h3>
 					<div class="form-group">
 						<input type="search" class="form-control" name="recherche"
@@ -44,28 +43,31 @@
 					<div class="form-group">
 						<label for="categorie">Catégorie :</label> <select
 							class="form-control" id="categorie" name="categorie">
-							<option value=""></option>
-							<option value="informatique">Informatique</option>
-							<option value="ameublement">Ameublement</option>
-							<option value="vetement">Vêtement</option>
-							<option value="sportLoisirs">Sport & Loisirs</option>
+							<option value="">aucun</option>
+							<c:forEach var="cat" items="${categories}">
+								<option value="${cat.no_categorie}">${cat.libelle}</option>
+							</c:forEach>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary">Rechercher</button>
+					<button type="submit" name="btnRechercher" value="rechercher"
+						class="btn btn-primary">Rechercher</button>
 				</form>
 			</div>
 		</div>
 	</section>
 	<article class="container mt-5">
 		<div class="row">
-			<c:forEach var="art" items="${articles}" >
+			<c:forEach var="art" items="${articles}">
 				<div class="col-md-4 mb-4">
 					<div class="card">
-						<img class="card-img-top" src="https://picsum.photos/200?random=${art.no_article}" alt="Image">
+						<img class="card-img-top"
+							src="https://picsum.photos/200?random=${art.no_article}"
+							alt="Image">
 						<div class="card-body">
 							<h3 class="card-title">${art.nom_article}</h3>
 							<p class="card-text">Prix : ${art.prix_vente} points</p>
-							<p class="card-text">Fin de l'enchère : ${art.date_fin_encheres}</p>
+							<p class="card-text">Fin de l'enchère :
+								${art.date_fin_encheres}</p>
 							<p class="card-text">Vendeur : ${art.utilisateur.pseudo}</p>
 						</div>
 					</div>
