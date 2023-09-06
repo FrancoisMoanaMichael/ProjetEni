@@ -1,9 +1,15 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
+import java.util.List;
 
-import fr.eni.projetEni.bll.UtilisateurManager;
-import fr.eni.projetEni.bll.UtilisateurManagerSing;
+import fr.eni.projetEni.bll2.ArticleVendusManager;
+import fr.eni.projetEni.bll2.ArticleVendusManagerSing;
+import fr.eni.projetEni.bll2.EnchereManager;
+import fr.eni.projetEni.bll2.EnchereManagerSing;
+import fr.eni.projetEni.bll2.ManagerException;
+import fr.eni.projetEni.bo2.ArticlesVendu;
+import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,11 +24,18 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/")
 public class PageListEncheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+//	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private ArticleVendusManager aManager =  ArticleVendusManagerSing.getInstance();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		try {
+			List<ArticlesVendu> lstArticle=  aManager.getAllArticlesVendus();
+			lstArticle.stream().forEach(System.out::println);
+			request.setAttribute("articles", lstArticle);
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
 		String url = request.getServletPath();
 
 		if (url.equals("/ProjetEni/acceuil")) {
