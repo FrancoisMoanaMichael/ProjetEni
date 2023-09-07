@@ -17,11 +17,29 @@ public class ArticlesVendu {
 	private Retrait			retrait;
 	private List<Enchere>	lstEncheres;
 	private String nomCat ;
+		private String nomUtilisateur;
+		private String nomCategorie;
 	
 	public ArticlesVendu() {
 		super();
 	}
 	
+	public ArticlesVendu(Integer no_article, String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, Integer prix_initial, Integer prix_vente,
+			Retrait retrait, String nomCat, String nomUtilisateur) {
+		super();
+		this.no_article = no_article;
+		this.nom_article = nom_article;
+		this.description = description;
+		this.date_debut_encheres = date_debut_encheres;
+		this.date_fin_encheres = date_fin_encheres;
+		this.prix_initial = prix_initial;
+		this.prix_vente = prix_vente;
+		this.retrait = retrait;
+		this.nomCat = nomCat;
+		this.nomUtilisateur = nomUtilisateur;
+	}
+
 	public ArticlesVendu(String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, Integer prix_initial) {
 		super();
@@ -99,6 +117,22 @@ public class ArticlesVendu {
 
 	public String getNomCat() {
 		return nomCat;
+	}
+
+	public String getNomUtilisateur() {
+		return nomUtilisateur;
+	}
+
+	public void setNomUtilisateur(String nomUtilisateur) {
+		this.nomUtilisateur = nomUtilisateur;
+	}
+
+	public String getNomCategorie() {
+		return nomCategorie;
+	}
+
+	public void setNomCategorie(String nomCategorie) {
+		this.nomCategorie = nomCategorie;
 	}
 
 	public void setNomCat(String nomCat) {

@@ -47,30 +47,30 @@
 
 	<div class="row p-5">
 		<div class="col-md-6">
-			<img
+			 <img
 				src="https://t3.ftcdn.net/jpg/05/17/82/24/360_F_517822417_cW17ljcETUNX8BylhlNesxWyhxHXO3Nc.jpg"
-				alt="${enchere.article.nom_article}" class="img-fluid" />
+				alt="${enchere.article.nom_article}" class="img-fluid" /> 
 		</div>
 		<div class="col-md-6">
 
-			<h3 class="text-uppercase">${enchere.article.nom_article}</h3>
-			<p>Description : ${enchere.article.description}</p>
-			<p>Catégorie : ${enchere.article.categorie}</p>
-			<p>Meilleur offre : ${enchere.montant_enchere} pts par
-				${enchere.utilisateur.pseudo}</p>
-			<p>Mise à prix : ${enchere.article.prix_initial} points</p>
-			<p>Fin de l'enchère : ${enchere.article.date_fin_encheres}</p>
-			<p>Retrait : ${enchere.article.retrait}</p>
-			<p>Vendeur : ${enchere.article.utilisateur}</p>
-
+			<h3 class="text-uppercase">${article.nom_article}</h3>
+			<p>Description : ${article.description}</p>
+			<p>Catégorie : ${article.nomCat}</p>
+			<p>Meilleur offre : ${article.prix_vente} pts par
+				${article.nomUtilisateur}</p>
+			<p>Mise à prix : ${article.prix_initial} points</p>
+			<p>Fin de l'enchère : ${article.date_fin_encheres}</p>
+			<p>Retrait : ${article.retrait.rue}, ${article.retrait.code_postal } ${article.retrait.ville }  </p>
+			<p>Vendeur : ${article.nomUtilisateur}</p>
+ 
 			<form id="formEncherir" method="post">
 				<div class="form-group">
 					<label for="montant">Ma proposition:</label> <input type="number"
-						value=${enchere.montant_enchere }
-						min=${enchere.montant_enchere
+						value=${article.prix_vente}
+						min=${article.prix_vente
 						} class="form-control"
 						id="montant" name="montant"> <input type="hidden"
-						name="id_enchere" value="${enchere.no_enchere}">
+						name="id_enchere" value="${article.no_article}">
 				</div>
 				<button type="submit" class="btn btn-primary">Enchérir</button>
 			</form>
