@@ -23,7 +23,7 @@
 				<ul class="navbar-nav ml-auto">
 					<c:if test="${sessionScope.utilisateurConnecte != null}">
 						<li class="nav-item"><a class="nav-link dark"
-							href="mon_profil"><p>Bonjour
+							href="/ProjetEni/mon_profil"><p>Bonjour
 									${sessionScope.utilisateurConnecte.pseudo}</p></a></li>
 						<li class="nav-item"><a class="nav-link" href="/ProjetEni/acceuil">Enchères</a>
 						</li>
