@@ -100,11 +100,17 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 		for (int i = 0; i < lstArticles.size(); i++) {
 			try {
 				enchereGagnante = eDAO.findEnchereGagnante(lstArticles.get(i).getNo_article());
-				acheteur		= uDAO.findUtilisateurByNo2(enchereGagnante.getNo_utilisateur());
-				vendeur			= lstArticles.get(i).getUtilisateur();
 				
-				acheteur.setCredit(acheteur.getCredit() - enchereGagnante.getMontant_enchere());
-				vendeur.setCredit(vendeur.getCredit() - enchereGagnante.getMontant_enchere());
+				if (enchereGagnante.getNo_enchere() != null) {
+					acheteur		= uDAO.findUtilisateurByNo2(enchereGagnante.getUtilisateur().getNo_utilisateur());
+					vendeur			= lstArticles.get(i).getUtilisateur();
+					
+					acheteur.setCredit(acheteur.getCredit() - enchereGagnante.getMontant_enchere());
+					vendeur.setCredit(vendeur.getCredit() + enchereGagnante.getMontant_enchere());
+					uDAO.update(acheteur);
+					uDAO.update(vendeur);
+				}
+				
 				lstArticles.get(i).setTransaction_realise(true);
 				AVdao.update(lstArticles.get(i));
 			} catch (DalException e) {

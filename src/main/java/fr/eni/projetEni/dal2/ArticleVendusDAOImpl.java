@@ -87,8 +87,8 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	public void update(ArticlesVendu articleVendus) throws DalException{
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
-			stmt.setInt(3, articleVendus.getPrix_vente());
-			stmt.setBoolean(3, articleVendus.getTransaction_realise());
+			stmt.setInt(1, articleVendus.getPrix_vente());
+			stmt.setBoolean(2, articleVendus.getTransaction_realise());
 			stmt.setInt(3, articleVendus.getNo_article());
 			stmt.executeUpdate();
 		}catch (SQLException e) {
@@ -217,9 +217,9 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 						rs.getString("mot_de_passe"),
 						rs.getInt("credit"),
 						rs.getBoolean("administrateur"));
-            	utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
             	ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
                 		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+            	article.setUtilisateur(utilisateur);
                 result.add(article);
             }
         } catch (SQLException e) {
