@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,52 +42,59 @@
 			</div>
 		</nav>
 	</header>
-	<h4 style="color:red">${message}</h4>
-	<h2>Mettre un article en vente</h2>
+	<h4 style="color: red">${message}</h4>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 mx-auto">
+			<h2>Mettre un article en vente</h2>
 			<form action="vendre_un_article" method="post">
 				<div class="form-group">
-				    <label for="categorie">Catégorie :</label>
-				    <select class="form-control" id="categorie" name="categorie">
-				        <option value=""></option>
-				        <c:forEach items="${categories}" var="c">
-				            <option value="${c.no_categorie}"><c:out value="${c.libelle}"/></option>
-				        </c:forEach>
-				    </select>
+					<label for="categorie">Catégorie :</label> <select
+						class="form-control" id="categorie" name="categorie">
+						<option value=""></option>
+						<c:forEach items="${categories}" var="c">
+							<option value="${c.no_categorie}"><c:out
+									value="${c.libelle}" /></option>
+						</c:forEach>
+					</select>
 				</div>
 				<div class="form-group">
-					<label for="nom_article">Nom de l'article :</label>
-					<input type="text" class="form-control" id="nom_article" name="nom_article" maxlength="30">
+					<label for="nom_article">Nom de l'article :</label> <input
+						type="text" class="form-control" id="nom_article"
+						name="nom_article" maxlength="30">
 				</div>
 				<div class="form-group">
 					<label for="description">Description :</label>
-					<textarea class="form-control" id="description" name="description" maxlength="300"></textarea>
+					<textarea class="form-control" id="description" name="description"
+						maxlength="300"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="date_debut_encheres">Date de début d'enchères :</label>
-					<input type="date" class="form-control" id="date_debut_encheres" name="date_debut_encheres">
+					<input type="date" class="form-control" id="date_debut_encheres"
+						name="date_debut_encheres">
 				</div>
 				<div class="form-group">
-					<label for="date_fin_encheres">Date de fin d'enchères :</label>
-					<input type="date" class="form-control" id="date_fin_encheres" name="date_fin_encheres">
+					<label for="date_fin_encheres">Date de fin d'enchères :</label> <input
+						type="date" class="form-control" id="date_fin_encheres"
+						name="date_fin_encheres">
 				</div>
 				<div class="form-group">
-					<label for="prix_initial">Prix initial :</label>
-					<input type="number" class="form-control" id="prix_initial" name="prix_initial">
+					<label for="prix_initial">Prix initial :</label> <input
+						type="number" class="form-control" id="prix_initial"
+						name="prix_initial">
 				</div>
 				<h3>Modalités du retrait</h3>
 				<div class="form-group">
-					<label for="rue">Rue :</label>
-					<input type="text" class="form-control" id="rue" name="rue" maxlength="30">
+					<label for="rue">Rue :</label> <input type="text"
+						class="form-control" id="rue" name="rue" maxlength="30">
 				</div>
 				<div class="form-group">
-					<label for="code_postal">Code Postal :</label>
-					<input type="text" class="form-control" id="code_postal" name="code_postal" maxlength="15">
+					<label for="code_postal">Code Postal :</label> <input type="text"
+						class="form-control" id="code_postal" name="code_postal"
+						maxlength="15">
 				</div>
 				<div class="form-group">
-					<label for="ville">Ville :</label>
-					<input type="text" class="form-control" id="ville" name="ville" maxlength="30">
+					<label for="ville">Ville :</label> <input type="text"
+						class="form-control" id="ville" name="ville" maxlength="30">
 				</div>
 				<button type="submit" class="btn btn-primary">Vendre</button>
 			</form>
