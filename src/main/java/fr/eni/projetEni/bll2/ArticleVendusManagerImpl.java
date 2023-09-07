@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEni.bo2.ArticlesVendu;
+import fr.eni.projetEni.bo2.Enchere;
+import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.dal2.ArticleVendusDAO;
 import fr.eni.projetEni.dal2.DAOFact;
 import fr.eni.projetEni.dal2.DalException;
+import fr.eni.projetEni.dal2.EncheresDAO;
+import fr.eni.projetEni.dal2.UtilisateursDAO;
 
 public class ArticleVendusManagerImpl implements ArticleVendusManager {
-	private ArticleVendusDAO dao = DAOFact.getArticleVenduDAO();
+	private ArticleVendusDAO AVdao = DAOFact.getArticleVenduDAO();
 
 	@Override
 	public List<ArticlesVendu> getAllArticlesVendus() throws ManagerException {
 		List<ArticlesVendu> lst = new ArrayList<ArticlesVendu>();
 		
 		try {
-			lst = dao.getAll();
+			lst = AVdao.getAll();
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -30,7 +34,7 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 		ArticlesVendu result = null;
 		
 		try {
-			result = dao.findByArticleByNo(id);
+			result = AVdao.findByArticleByNo(id);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -50,7 +54,17 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 		}
 		
 		try {
-			dao.insert(articleVendu);
+			AVdao.insert(articleVendu);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void majArticlesVendus(ArticlesVendu articleVendu) throws ManagerException {
+		try {
+			AVdao.update(articleVendu);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -60,10 +74,44 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 	@Override
 	public void supprimerArticlesVendus(int id) throws ManagerException {
 		try {
-			dao.delete(id);
+			AVdao.delete(id);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
 		}
 	}
+
+	@Override
+	public void majTransactions() throws ManagerException {
+		EncheresDAO			eDAO			= DAOFact.getEncheresDAO();
+		UtilisateursDAO		uDAO			= DAOFact.getUtilisateursDAO();
+		List<ArticlesVendu> lstArticles		= new ArrayList<ArticlesVendu>();
+		Enchere				enchereGagnante = null;
+		Utilisateur			vendeur			= null;
+		Utilisateur			acheteur		= null;
+		
+		try {
+			lstArticles = AVdao.findTransaction();
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+		
+		for (int i = 0; i < lstArticles.size(); i++) {
+			try {
+				enchereGagnante = eDAO.findEnchereGagnante(lstArticles.get(i).getNo_article());
+				acheteur		= uDAO.findUtilisateurByNo2(enchereGagnante.getNo_utilisateur());
+				vendeur			= lstArticles.get(i).getUtilisateur();
+				
+				acheteur.setCredit(acheteur.getCredit() - enchereGagnante.getMontant_enchere());
+				vendeur.setCredit(vendeur.getCredit() - enchereGagnante.getMontant_enchere());
+				lstArticles.get(i).setTransaction_realise(true);
+				AVdao.update(lstArticles.get(i));
+			} catch (DalException e) {
+				e.printStackTrace();
+				throw new ManagerException(e.getMessage());
+			}
+		}
+	}
+	
 }

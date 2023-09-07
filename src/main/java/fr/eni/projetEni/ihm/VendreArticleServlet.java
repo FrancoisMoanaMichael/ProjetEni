@@ -39,6 +39,12 @@ public class VendreArticleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		afficherCategories(request);
+		try {
+			AVManager.majTransactions();
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/PageVendreUnArticle.jsp");
 		rd.forward(request, response);

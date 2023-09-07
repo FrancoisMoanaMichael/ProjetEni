@@ -32,9 +32,10 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	final String SELECT_BY_ID_UTILISATEUR	= "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 	final String SELECT_FIN_ENCHERES		= """
 				SELECT *
-				FROM ARTICLES_VENDUS
-				WHERE date_fin_encheres  <= GETDATE()
-				  AND transaction_realise = 0;
+				FROM ARTICLES_VENDUS	AS a
+			    INNER JOIN UTILISATEURS	AS u ON a.no_utilisateur = u.no_utilisateur
+				WHERE a.date_fin_encheres  <= GETDATE()
+				  AND a.transaction_realise = 0;
 			""";
 	final String UPDATE						= """
 				UPDATE ARTICLES_VENDUS
@@ -203,7 +204,22 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
             PreparedStatement stmt = con.prepareStatement(SELECT_FIN_ENCHERES);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-            	ArticlesVendu article = map(rs);
+            	Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"), 
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur"));
+            	utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+            	ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+                		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
                 result.add(article);
             }
         } catch (SQLException e) {

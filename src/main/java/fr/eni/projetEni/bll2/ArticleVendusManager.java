@@ -8,5 +8,7 @@ public interface ArticleVendusManager {
 	public List<ArticlesVendu> getAllArticlesVendus()			throws ManagerException;
 	public ArticlesVendu getArticlesVendus(int id)				throws ManagerException;
 	public void addArticlesVendus(ArticlesVendu articleVendu)	throws ManagerException;
+	public void majArticlesVendus(ArticlesVendu articleVendu)	throws ManagerException;
 	public void supprimerArticlesVendus(int id)					throws ManagerException;
+	public void majTransactions()								throws ManagerException;
 }
