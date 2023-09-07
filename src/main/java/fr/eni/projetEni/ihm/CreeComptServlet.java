@@ -126,7 +126,7 @@ public class CreeComptServlet extends HttpServlet {
 			request.setAttribute("message", mess);
 		}
 		if (boolCreation == true) {
-			request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pageListEncheres.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/WEB-INF/pageCreeCompte.jsp").forward(request, response);
 		}

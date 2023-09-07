@@ -85,7 +85,7 @@ public class PageEncherirServlet extends HttpServlet {
 //			String montant = request.getParameter("montant");
 			int montantPoints = Integer.parseInt(request.getParameter("montant"));
 			
-			System.out.println("points: "+ montantPoints+ " idUtilisateur: "+utilisateur.getNo_utilisateur());
+			System.out.println("points: "+ montantPoints+ " idUtilisateur: "+utilisateur.getNo_utilisateur()+"nbpoint: "+ utilisateur.getCredit());
 //			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
 //			Enchere enchere = null;
 			ArticlesVendu article = null;
@@ -96,12 +96,17 @@ public class PageEncherirServlet extends HttpServlet {
 			System.out.println("article avant "+article.getPrix_vente());
 			article.setPrix_vente(montantPoints);
 			System.out.println("article après "+article.getPrix_vente());
-//			try {
-//				aManager.majArticlesVendus(article);
-//			} catch (ManagerException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			if(utilisateur.getCredit() >= montantPoints) {
+				try {
+					aManager.majArticlesVendus(article);
+				} catch (ManagerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				request.setAttribute("erreur", "t'es trop pauvre mon vieux..");
+				
+			}
 //			try {
 //				enchere= eManager.findEnchereByArticleId(num);
 //				System.out.println(enchere);

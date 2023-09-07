@@ -239,7 +239,6 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	public List<ArticlesVendu> findTransaction() throws DalException {
 		List<ArticlesVendu> result = new ArrayList<>();
 
-<<<<<<< HEAD
         try (Connection con = ConnectionProvider.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(SELECT_FIN_ENCHERES);
             ResultSet rs = stmt.executeQuery();
@@ -267,27 +266,27 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
         }
         
         return result;
-=======
-		try (Connection con = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = con.prepareStatement(SELECT_FIN_ENCHERES);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
-						rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
-						rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"),
-						rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
-				utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
-				ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-						rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
-						rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
-						rs.getInt("prix_vente"));
-				result.add(article);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
-		return result;
->>>>>>> refs/heads/BrancheFrancois
+//
+//		try (Connection con = ConnectionProvider.getConnection()) {
+//			PreparedStatement stmt = con.prepareStatement(SELECT_FIN_ENCHERES);
+//			ResultSet rs = stmt.executeQuery();
+//			while (rs.next()) {
+//				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+//						rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
+//						rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"),
+//						rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur"));
+//				utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+//				ArticlesVendu article = new ArticlesVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+//						rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+//						rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
+//						rs.getInt("prix_vente"));
+//				result.add(article);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return result;
 	}
 }

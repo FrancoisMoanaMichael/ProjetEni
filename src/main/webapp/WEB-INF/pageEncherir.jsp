@@ -21,22 +21,21 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-auto">
-				
 					<c:if test="${sessionScope.utilisateurConnecte != null}">
 						<li class="nav-item"><a class="nav-link dark"
 							href="mon_profil"><p>Bonjour
 									${sessionScope.utilisateurConnecte.pseudo}</p></a></li>
-						<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
+						<li class="nav-item"><a class="nav-link" href="/ProjetEni/acceuil">Enchères</a>
 						</li>
 						<li class="nav-item"><a class="nav-link"
-							href="vendre_un_article">Vendre un article</a></li>
-						<li class="nav-item"><a class="nav-link" href="mon_profil">Mon
+							href="/ProjetEni/vendre_un_article">Vendre un article</a></li>
+						<li class="nav-item"><a class="nav-link" href="/ProjetEni/mon_profil">Mon
 								Profil</a></li>
-						<li class="nav-item"><a class="nav-link" href="deconnexion">Déconnexion</a>
+						<li class="nav-item"><a class="nav-link" href="/ProjetEni/deconnexion">Déconnexion</a>
 						</li>
 					</c:if>
 					<c:if test="${sessionScope.utilisateurConnecte == null}">
-						<li class="nav-item"><a class="nav-link" href="connexion">Connexion</a>
+						<li class="nav-item"><a class="nav-link" href="/ProjetEni/connexion">Connexion</a>
 						</li>
 					</c:if>
 				</ul>
@@ -49,7 +48,7 @@
 		<div class="col-md-6">
 			 <img
 				src="https://t3.ftcdn.net/jpg/05/17/82/24/360_F_517822417_cW17ljcETUNX8BylhlNesxWyhxHXO3Nc.jpg"
-				alt="${enchere.article.nom_article}" class="img-fluid" /> 
+				alt="${article.nom_article}" class="img-fluid" /> 
 		</div>
 		<div class="col-md-6">
 
@@ -74,8 +73,9 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Enchérir</button>
 			</form>
-
-
+				<p>
+				${erreur}
+				</p>
 		</div>
 	</div>
 
