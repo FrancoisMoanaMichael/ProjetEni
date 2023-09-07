@@ -86,7 +86,7 @@ public class VendreArticleServlet extends HttpServlet {
 				AVManager.addArticlesVendus(newArticle);
 				newRetrait.setArticle(newArticle);
 				rManager.addRetraits(newRetrait);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheresConnecte.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageListEncheres.jsp");
 				rd.forward(request, response);
 			} catch (ManagerException e) {
 				request.setAttribute("message", e);

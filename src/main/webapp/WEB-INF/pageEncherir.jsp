@@ -13,7 +13,7 @@
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">ENI-Encheres</a>
+			<a class="navbar-brand" href="/ProjetEni/acceuil">ENI-Encheres</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -25,6 +25,23 @@
 						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
 						<a class="nav-link" href="/ProjetEni/mon_profil">Mon Profil</a> <a
 						class="nav-link" href="acceuil">Déconnexion</a></li>
+					<c:if test="${sessionScope.utilisateurConnecte != null}">
+						<li class="nav-item"><a class="nav-link dark"
+							href="mon_profil"><p>Bonjour
+									${sessionScope.utilisateurConnecte.pseudo}</p></a></li>
+						<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="vendre_un_article">Vendre un article</a></li>
+						<li class="nav-item"><a class="nav-link" href="mon_profil">Mon
+								Profil</a></li>
+						<li class="nav-item"><a class="nav-link" href="deconnexion">Déconnexion</a>
+						</li>
+					</c:if>
+					<c:if test="${sessionScope.utilisateurConnecte == null}">
+						<li class="nav-item"><a class="nav-link" href="connexion">Connexion</a>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 		</nav>
@@ -60,16 +77,6 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Enchérir</button>
 			</form>
-
-			<%
-			if (request.getAttribute("erreur") != null) {
-			%>
-			<div class="alert alert-danger">
-				<%=request.getAttribute("erreur")%>
-			</div>
-			<%
-			}
-			%>
 
 
 		</div>

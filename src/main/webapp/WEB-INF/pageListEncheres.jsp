@@ -68,8 +68,9 @@
 						<div class="form-group">
 							<div>
 								<div>
-									<input type="radio" name="achat"  id="achat" class="form-check-input">
-									<label class="form-check-label">Achats</label>
+									<input type="radio" name="achat" id="achat"
+										class="form-check-input"> <label
+										class="form-check-label">Achats</label>
 								</div>
 								<div>
 									<input type="checkbox" name="enchereOuvert" id="enchereOuvert"
@@ -93,8 +94,8 @@
 									<label class="form-check-label">Mes ventes</label>
 								</div>
 								<div>
-									<input type="checkbox" name="ventEnCours"
-										id="enchereOuvert2" class="form-check-input"> <label
+									<input type="checkbox" name="ventEnCours" id="enchereOuvert2"
+										class="form-check-input"> <label
 										class="form-check-label">mes ventes en cours</label>
 								</div>
 								<div>
@@ -119,20 +120,22 @@
 	<article class="container mt-5">
 		<div class="row">
 			<c:forEach var="art" items="${articles}">
-				<div class="col-md-4 mb-4">
-					<div class="card">
-						<img class="card-img-top"
+					<div class="col-md-4 mb-4">
+						<div class="card">
+						<a href="encherir/${art.no_article}"> <img
+							class="card-img-top"
 							src="https://picsum.photos/200?random=${art.no_article}"
 							alt="Image">
+						</a>
 						<div class="card-body">
-							<h3 class="card-title">${art.nom_article}</h3>
-							<p class="card-text">Prix : ${art.prix_vente} points</p>
-							<p class="card-text">Fin de l'enchère :
-								${art.date_fin_encheres}</p>
-							<p class="card-text">Vendeur : ${art.utilisateur.pseudo}</p>
+								<h3 class="card-title">${art.nom_article}</h3>
+								<p class="card-text">Prix : ${art.prix_vente} points</p>
+								<p class="card-text">Fin de l'enchère :
+									${art.date_fin_encheres}</p>
+								<p class="card-text">Vendeur : ${art.utilisateur.pseudo}</p>
+							</div>
 						</div>
 					</div>
-				</div>
 			</c:forEach>
 		</div>
 	</article>
