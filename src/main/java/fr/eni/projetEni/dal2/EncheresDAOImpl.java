@@ -37,9 +37,10 @@ public class EncheresDAOImpl implements EncheresDAO {
 	final String UPDATE_BY_ID = "UPDATE ENCHERES SET no_utilisateur=?, montant_enchere=? WHERE no_enchere=?";
 	final String SELECT_ENCHERE_GAGNANTE = """
 			SELECT TOP 1 *
-			FROM ENCHERES
-			WHERE no_article = ?
-			ORDER BY montant_enchere DESC;
+			FROM ENCHERES			AS e
+			INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = e.no_utilisateur
+			WHERE e.no_article = ?
+			ORDER BY e.montant_enchere DESC;
 			""";
 
 //	private UtilisateursDAO daoUtilisateur = DAOFact.getUtilisateursDAO();
@@ -111,11 +112,11 @@ public class EncheresDAOImpl implements EncheresDAO {
 		return result;
 	}
 
-	@Override
-	public List<Enchere> findEnchereByArticleId(int id) throws DalException {
-		Enchere result = new Enchere();
-		ArticlesVendu article = new ArticlesVendu()
-		Retrait retrait= new Retrait()
+//	@Override
+//	public List<Enchere> findEnchereByArticleId(int id) throws DalException {
+//		Enchere result = new Enchere();
+//		ArticlesVendu article = new ArticlesVendu()
+//		Retrait retrait= new Retrait()
 //		UtilisateursDAOImpl daoUtilisateur = new UtilisateursDAOImpl();
 //		ArticleVendusDAOImpl daoArticleVendus = new ArticleVendusDAOImpl();
 
@@ -263,7 +264,6 @@ public class EncheresDAOImpl implements EncheresDAO {
 	@Override
 	public Enchere findEnchereGagnante(int id) throws DalException {
 		Enchere enchere = new Enchere();
-		UtilisateursDAOImpl daoUtilisateur = new UtilisateursDAOImpl();
 		ArticleVendusDAOImpl daoArticleVendus = new ArticleVendusDAOImpl();
 
 		try (Connection con = ConnectionProvider.getConnection()) {
@@ -275,7 +275,19 @@ public class EncheresDAOImpl implements EncheresDAO {
 				java.sql.Timestamp timestamp = rs.getTimestamp("date_enchere");
 				LocalDateTime localDateTime = timestamp.toLocalDateTime();
 
-				Utilisateur utilisateur = daoUtilisateur.findUtilisateurByNo2(rs.getInt("no_utilisateur"));
+				Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"), 
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur"));
 				ArticlesVendu article = daoArticleVendus.findByArticleByNo(rs.getInt("no_article"));
 				enchere = new Enchere(utilisateur, article, localDateTime, rs.getInt("montant_enchere"));
 				enchere.setNo_enchere(rs.getInt("no_enchere"));
