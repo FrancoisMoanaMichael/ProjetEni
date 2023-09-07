@@ -42,6 +42,20 @@ public class ArticleVendusManagerImpl implements ArticleVendusManager {
 		
 		return result;
 	}
+	
+	@Override
+	public ArticlesVendu getFullArticlesVendus(int id) throws ManagerException {
+		ArticlesVendu result = null;
+		
+		try {
+			result = AVdao.findFullByArticleByNo(id);
+		} catch (DalException e) {
+			e.printStackTrace();
+			throw new ManagerException(e.getMessage());
+		}
+		
+		return result;
+	}
 
 	@Override
 	public void addArticlesVendus(ArticlesVendu articleVendu) throws ManagerException {

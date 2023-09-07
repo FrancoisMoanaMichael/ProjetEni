@@ -45,6 +45,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		
 		try {
 			lst = dao.findEnchereByArticleId(id);
+			System.out.println(lst);
 		} catch (DalException e) {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
@@ -87,5 +88,11 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 			throw new ManagerException(e.getMessage());
 		}
+	}
+
+	@Override
+	public Enchere findEnchereByArticleId(int id) throws ManagerException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
