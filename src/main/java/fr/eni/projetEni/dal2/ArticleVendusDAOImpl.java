@@ -119,7 +119,6 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
 	
     @Override
     public List<ArticlesVendu> getAll() throws DalException {
-
         List<ArticlesVendu> result = new ArrayList<>();
 
         try (Connection con = ConnectionProvider.getConnection()) {
@@ -132,6 +131,7 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
         return result;
     }
     
@@ -194,4 +194,22 @@ public class ArticleVendusDAOImpl implements ArticleVendusDAO {
     		rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateur, categorie, pointDeRetrait);
         return article;
     }
+
+	@Override
+	public List<ArticlesVendu> findTransaction() throws DalException {
+		List<ArticlesVendu> result = new ArrayList<>();
+
+        try (Connection con = ConnectionProvider.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement(SELECT_FIN_ENCHERES);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+            	ArticlesVendu article = map(rs);
+                result.add(article);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return result;
+	}
 }

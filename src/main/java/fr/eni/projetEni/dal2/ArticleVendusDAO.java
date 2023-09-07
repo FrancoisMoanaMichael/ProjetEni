@@ -12,4 +12,5 @@ public interface ArticleVendusDAO {
 	public List<ArticlesVendu> getAll()							throws DalException;
 	public List<ArticlesVendu> findByCategorieByNo(int id)		throws DalException;
 	public List<ArticlesVendu> findByUtilisateurByNo(int id)	throws DalException;
+	public List<ArticlesVendu> findTransaction()				throws DalException;
 }
