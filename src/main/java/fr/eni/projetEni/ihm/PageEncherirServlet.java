@@ -1,7 +1,14 @@
 package fr.eni.projetEni.ihm;
 
 import java.io.IOException;
+import java.util.List;
 
+import fr.eni.projetEni.bll2.ArticleVendusManager;
+import fr.eni.projetEni.bll2.ArticleVendusManagerSing;
+import fr.eni.projetEni.bll2.EnchereManager;
+import fr.eni.projetEni.bll2.EnchereManagerSing;
+import fr.eni.projetEni.bll2.ManagerException;
+import fr.eni.projetEni.bo2.ArticlesVendu;
 import fr.eni.projetEni.bo2.Enchere;
 import fr.eni.projetEni.bo2.Utilisateur;
 import fr.eni.projetEni.dal2.DalException;
@@ -21,6 +28,8 @@ import jakarta.servlet.http.HttpSession;
 public class PageEncherirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 //	private UtilisateurManager uManager = UtilisateurManagerSing.getInstance();
+	private EnchereManager eManager = EnchereManagerSing.getInstance();
+	private ArticleVendusManager aManager = ArticleVendusManagerSing.getInstance();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,13 +44,14 @@ public class PageEncherirServlet extends HttpServlet {
 		if (id != null) {
 			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
 			int num = Integer.parseInt(id);
+			
 			Enchere enchere = null;
 			try {
 				enchere = encheresDAO.findEnchereById(num);
+				System.out.println("test encheres : "+String.valueOf(enchere));
 			} catch (DalException e) {
 				e.printStackTrace();
 			}
-
 			request.setAttribute("enchere", enchere);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageEncherir.jsp");
@@ -77,25 +87,28 @@ public class PageEncherirServlet extends HttpServlet {
 			int montant_int = Integer.parseInt(montant);
 
 			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
-			Enchere enchere = null;
+			ArticlesVendu article = null;
+			List<Enchere> enchere = null;
 			try {
-				enchere = encheresDAO.findEnchereById(num);
-			} catch (DalException e) {
+				article = aManager.getArticlesVendus(num);
+			} catch (ManagerException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			try {
+				enchere= eManager.getEncheresByArticleID(num);
+				enchere.forEach(System.out::println);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			
 
-			if (enchere.getMontant_enchere() >= montant_int) {
-				// TODO
-				return;
-			}
-			
 			//System.out.println(utilisateur.getNo_utilisateur());
-			try {
-				encheresDAO.update(enchere, num, montant_int);
-			} catch (DalException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				encheresDAO.update(article, num, montant_int);
+//			} catch (DalException e) {
+//				e.printStackTrace();
+//			}
 
 		}
 
