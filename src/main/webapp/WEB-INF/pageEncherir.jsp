@@ -21,10 +21,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="acceuil">Enchères</a>
-						<a class="nav-link" href="vendre_un_article">Vendre un article</a>
-						<a class="nav-link" href="/ProjetEni/mon_profil">Mon Profil</a> <a
-						class="nav-link" href="acceuil">Déconnexion</a></li>
+				
 					<c:if test="${sessionScope.utilisateurConnecte != null}">
 						<li class="nav-item"><a class="nav-link dark"
 							href="mon_profil"><p>Bonjour

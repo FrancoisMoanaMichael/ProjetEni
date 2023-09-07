@@ -40,8 +40,8 @@ public class EnchereManagerImpl implements EnchereManager {
 	}
 	
 	@Override
-	public List<Enchere> getEncheresByArticleID(int id) throws ManagerException {
-		List<Enchere> lst = new ArrayList<Enchere>();
+	public Enchere getEncheresByArticleID(int id) throws ManagerException {
+		Enchere lst = new Enchere();
 		
 		try {
 			lst = dao.findEnchereByArticleId(id);
