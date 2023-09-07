@@ -40,6 +40,20 @@ public class PageEncherirServlet extends HttpServlet {
 		if (pathParts.length > 1) {
 			id = pathParts[1];
 		}
+		ArticlesVendu article = null;
+		Enchere enchere = null;
+		try {
+			article = aManager.getArticlesVendus(num);
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			enchere= eManager.findEnchereByArticleId(num);
+			System.out.println(enchere);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 		if (id != null) {
 			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
@@ -90,7 +104,7 @@ public class PageEncherirServlet extends HttpServlet {
 
 			EncheresDAOImpl encheresDAO = new EncheresDAOImpl();
 			ArticlesVendu article = null;
-			List<Enchere> enchere = null;
+			Enchere enchere = null;
 			try {
 				article = aManager.getArticlesVendus(num);
 			} catch (ManagerException e) {
@@ -98,8 +112,8 @@ public class PageEncherirServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			try {
-				enchere= eManager.getEncheresByArticleID(num);
-				enchere.forEach(System.out::println);
+				enchere= eManager.findEnchereByArticleId(num);
+				System.out.println(enchere);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
