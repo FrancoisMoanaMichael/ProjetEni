@@ -16,6 +16,7 @@ public class ArticlesVendu {
 	private Categorie		categorie;
 	private Retrait			retrait;
 	private List<Enchere>	lstEncheres;
+	private String nomCat ;
 	
 	public ArticlesVendu() {
 		super();
@@ -82,6 +83,26 @@ public class ArticlesVendu {
 
 	public Integer getNo_article() {
 		return no_article;
+	}
+
+	public ArticlesVendu(String nom_article, String description, LocalDate date_fin_encheres, Integer prix_initial,
+			Integer prix_vente, String nomCat, Retrait retrait) {
+		super();
+		this.nom_article = nom_article;
+		this.description = description;
+		this.date_fin_encheres = date_fin_encheres;
+		this.prix_initial = prix_initial;
+		this.prix_vente = prix_vente;
+		this.nomCat = nomCat;
+		this.retrait = retrait;
+	}
+
+	public String getNomCat() {
+		return nomCat;
+	}
+
+	public void setNomCat(String nomCat) {
+		this.nomCat = nomCat;
 	}
 
 	public void setNo_article(Integer no_article) {
