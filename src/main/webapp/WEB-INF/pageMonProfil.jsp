@@ -49,8 +49,8 @@
 					<div class="card">
 						<div class="card-body">
 							<form action="mon_profil" method="post">
-								<label for="nom">Pseudo :</label>
-								<p class="card-title">${sessionScope.utilisateurConnecte.pseudo}</p>
+<!-- 								<label for="nom">Pseudo :</label> -->
+								<h3 class="card-title">${sessionScope.utilisateurConnecte.pseudo}</h3>
 								<div class="form-group">
 									<label for="nom">Nom
 										:${sessionScope.utilisateurConnecte.nom}</label>
@@ -78,6 +78,10 @@
 								<div class="form-group">
 									<label for="ville">Ville
 										:${sessionScope.utilisateurConnecte.ville}</label>
+								</div>
+								<div class="form-group">
+									<label for="ville">Credit
+										:${sessionScope.utilisateurConnecte.credit}</label>
 								</div>
 								<button class="btn btn-success btn-block" type="submit">Modifier</button>
 							</form>

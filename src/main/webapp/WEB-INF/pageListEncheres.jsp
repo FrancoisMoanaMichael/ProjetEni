@@ -64,7 +64,7 @@
 							</c:forEach>
 						</select>
 					</div>
-					<c:if test="${sessionScope.utilisateurConnecte != null}">
+					<%-- <c:if test="${sessionScope.utilisateurConnecte != null}">
 						<div class="form-group">
 							<div>
 								<div>
@@ -110,7 +110,7 @@
 								</div>
 							</div>
 						</div>
-					</c:if>
+					</c:if> --%>
 					<button type="submit" name="btnRechercher" value="rechercher"
 						class="btn btn-primary">Rechercher</button>
 				</form>
